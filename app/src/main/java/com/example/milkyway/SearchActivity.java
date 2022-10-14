@@ -1,7 +1,9 @@
 package com.example.milkyway;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,13 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.search_activity);
 
         setNationalitySpinner();
+
+        Button toResults = findViewById(R.id.btnSearch);
+        toResults.setOnClickListener(view -> {
+            Intent intent = new Intent(this, ResultsPage.class);
+            startActivity(intent);
+        });
+
     }
 
     public void setNationalitySpinner() {
@@ -60,5 +69,7 @@ public class SearchActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, countries);
         spinner.setAdapter(countriesData);
     }
+
+
 
 }

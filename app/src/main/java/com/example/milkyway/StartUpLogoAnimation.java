@@ -1,12 +1,10 @@
 package com.example.milkyway;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartUpLogoAnimation extends AppCompatActivity {
 
@@ -19,7 +17,7 @@ public class StartUpLogoAnimation extends AppCompatActivity {
 //    ImageView logo = findViewById(R.id.imageView);
 
     public void plane(View view) {
-        Intent intent = new Intent(this, SearchActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
