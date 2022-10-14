@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MilkyWay</string>
+    <string name="search">SEARCH</string>
+    <string name="search_btn">Search</string>
+    <string name="select_your_interests">Select your interests:</string>
+    <string name="beer">Beer</string>
+    <string name="choose_a_country">Choose a country</string>
+    <string name="jeans">Jeans</string>
+    <string name="cappuccino">Cappuccino</string>
+    <string name="one_bedroom_apartment_in_city_centre">One bedroom apartment in city centre</string>
+    <string name="water_0_33_liter_bottle">Water, 0.33 liter Bottle</string>
 </resources>
