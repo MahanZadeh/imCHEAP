@@ -58,6 +58,9 @@
     <string name="email_address">Email Address</string>
     <string name="password">Password</string>
     <string name="login_to_your_account">Login to your account:</string>
+    <string name="berlin">Berlin</string>
+    <string name="to_city_highlights_page">To City Highlights page</string>
+    <string name="profileSearchButton">Search</string>
 
 
 </resources>
