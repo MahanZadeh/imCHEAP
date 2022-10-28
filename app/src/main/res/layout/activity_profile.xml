@@ -12,6 +12,7 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:text="@string/profile"
+        android:textColor="#A31010"
         android:textSize="30sp" />
 
 
