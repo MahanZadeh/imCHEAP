@@ -16,5 +16,5 @@
 local.properties
 *.apk
 *.ap_
-
+*local.properties
 bin/
