@@ -29,6 +29,12 @@ public class SearchActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button toSampleAPI = findViewById(R.id.sampleAPIbutton);
+        toSampleAPI.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SampleAPIconnection.class);
+            startActivity(intent);
+        });
+
     }
 
     public void setNationalitySpinner() {
