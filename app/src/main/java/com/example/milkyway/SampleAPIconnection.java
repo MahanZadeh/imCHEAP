@@ -23,7 +23,9 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -35,7 +37,7 @@ public class SampleAPIconnection extends AppCompatActivity {
     Button btnGetData;
     String country = "Germany";
     ArrayList<String> cities = new ArrayList<>();
-    ArrayList<String> cityInfo = new ArrayList<>();
+    HashMap<Double, List<String>> cityInfo = new HashMap<>();
 
     private final String url = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
 //    private final String appid = "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649";
@@ -86,7 +88,7 @@ public class SampleAPIconnection extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
 
-
+                        String cityName = response.getString("city_name");
                         JSONArray prices = response.getJSONArray("prices");
 
 
@@ -105,8 +107,11 @@ public class SampleAPIconnection extends AppCompatActivity {
                             }
                         }
                         Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
-                        String cityInformation = itemName + "\n" + "Price " + tempPrice + " " + currencyCode;
-                        cityInfo.add(cityInformation);
+                        List<String> cityItemCode = new ArrayList<>();
+                        cityItemCode.add(cityName);
+                        cityItemCode.add(itemName);
+                        cityItemCode.add(currencyCode);
+                        cityInfo.put(tempPrice, cityItemCode);
                         onSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -137,8 +142,16 @@ public class SampleAPIconnection extends AppCompatActivity {
 
         protected void onSuccess() {
             if (cityInfo.size() == cities.size()) {
-                String collectedInfo = String.join("\n", cityInfo);
-                tvResult.setText(collectedInfo);
+                List<Double> itemByPrice = new ArrayList<>(cityInfo.keySet());
+                Collections.sort(itemByPrice);
+                StringBuilder sb = new StringBuilder();
+                for (Double price : itemByPrice) {
+                    String eachInfo = String.format(Locale.ROOT, "%s: %s, Price: %f %s\n",
+                            cityInfo.get(price).get(0), cityInfo.get(price).get(1), price,
+                            cityInfo.get(price).get(2));
+                    sb.append(eachInfo);
+                }
+                tvResult.setText(sb.toString());
             }
         }
     }
