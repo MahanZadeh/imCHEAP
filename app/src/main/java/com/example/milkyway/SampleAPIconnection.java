@@ -38,9 +38,9 @@ public class SampleAPIconnection extends AppCompatActivity {
     EditText etCountry;
     TextView tvResult;
     Button btnGetData;
+    String countryName;
     Bundle bundle = new Bundle();
-    String country = "Germany";
-    ArrayList<String> cities = new ArrayList<>();
+    ArrayList<String> citiesList = new ArrayList<>();
     HashMap<Double, List<String>> cityInfo = new HashMap<>();
 
     private final String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
@@ -60,7 +60,7 @@ public class SampleAPIconnection extends AppCompatActivity {
             tvResult.setText("");
             String tempUrl = "";
             String cityName = etCity.getText().toString().trim();
-            String countryName = etCountry.getText().toString().trim();
+            countryName = etCountry.getText().toString().trim();
             if (cityName.equals("")) {
                 tvResult.setText("City field can not be empty!");
             } else if (countryName.equals("")) {
@@ -71,21 +71,18 @@ public class SampleAPIconnection extends AppCompatActivity {
 
             // Grab cities
             AsyncTaskRunner runnerCities = new AsyncTaskRunner();
-            try {
-                ArrayList<String> citiesList = runnerCities.execute(citiesUrl).get();
-                Toast.makeText(SampleAPIconnection.this, "Worked!!!", Toast.LENGTH_SHORT).show();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
+            runnerCities.execute(citiesUrl);
+            Toast.makeText(SampleAPIconnection.this, "Worked!!!", Toast.LENGTH_SHORT).show();
 
             // Testing API calls for two cities
 //            cities.add("Berlin");
 //            cities.add("Hamburg");
-//
-//            for (String city : cities) {
-//                tempUrl = pricesUrl + "?country_name=" + country + "&city_name=" + city;
-//                AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
-//                runner.execute(tempUrl);
+//            if (citiesList.size() != 0) {
+//                for (String city : citiesList) {
+//                    tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + city;
+//                    AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
+//                    runner.execute(tempUrl);
+//                }
 //            }
 //            Toast.makeText(SampleAPIconnection.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
         });
@@ -93,37 +90,45 @@ public class SampleAPIconnection extends AppCompatActivity {
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, ArrayList<String>> {
 
-        ArrayList<String> citiesArrayList = new ArrayList<>();
-
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(SampleAPIconnection.this);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
-                try {
-                    JSONArray cities = response.getJSONArray("cities");
-                    String userInputCountry = etCountry.getText().toString().trim();
-                    String city;
-                    String itemName;
-                    StringBuilder citiesStringBuilder = new StringBuilder();
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        JSONArray cities = response.getJSONArray("cities");
+                        String userInputCountry = etCountry.getText().toString().trim();
+                        String city;
+                        String itemName;
+                        StringBuilder citiesStringBuilder = new StringBuilder();
 
-                    for (int i = 0; i < cities.length(); i++) {
-                        JSONObject jsonObjectPrice = cities.getJSONObject(i);
-                        itemName = jsonObjectPrice.getString("country_name");
-                        itemName = itemName.toLowerCase(Locale.ROOT);
-                        if (itemName.contains(userInputCountry)) {
-                            city = jsonObjectPrice.getString("city_name");
-                            citiesArrayList.add(city);
+                        for (int i = 0; i < cities.length(); i++) {
+                            JSONObject jsonObjectPrice = cities.getJSONObject(i);
+                            itemName = jsonObjectPrice.getString("country_name");
+                            itemName = itemName.toLowerCase(Locale.ROOT);
+                            if (itemName.contains(userInputCountry)) {
+                                city = jsonObjectPrice.getString("city_name");
+                                citiesList.add(city);
+                            }
                         }
+                        for (String s : citiesList) {
+                            citiesStringBuilder.append(s).append("\n");
+                        }
+//                        tvResult.setText(citiesStringBuilder);
+                        onSuccess();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                    for (String s : citiesArrayList) {
-                        citiesStringBuilder.append(s).append("\n");
-                    }
-                    tvResult.setText(citiesStringBuilder);
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }, error -> Toast.makeText(SampleAPIconnection.this, error.toString(), Toast.LENGTH_SHORT).show()) {
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(SampleAPIconnection.this, error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            })
 
+            {
                 /** Passing some request headers* */
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
@@ -133,9 +138,18 @@ public class SampleAPIconnection extends AppCompatActivity {
                     return headers;
                 }
             };
-
             queue.add(request);
-            return citiesArrayList;
+            return null;
+        }
+
+        protected void onSuccess() {
+            if (citiesList.size() != 0) {
+                for (int i = 0; i < 10; i++) {
+                    String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(i);
+                    AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
+                    runner.execute(tempUrl);
+                }
+            }
         }
     }
 
@@ -192,7 +206,7 @@ public class SampleAPIconnection extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<>();
-                    headers.put("X-RapidAPI-Key", "4858721f31msh5ed87e7963024b3p1da073jsn4d95cf387203");
+                    headers.put("X-RapidAPI-Key", "a7a771dd33mshd86919ea5896511p1a2b01jsnd7f94fc97590");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
                 }
@@ -202,7 +216,7 @@ public class SampleAPIconnection extends AppCompatActivity {
         }
 
         protected void onSuccess() {
-            if (cityInfo.size() == cities.size()) {
+            if (cityInfo.size() <= 10) {
                 Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
                 Arrays.sort(itemsByPrice);
                 // We may need to implement more robust sorting in another class?
