@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -32,6 +33,10 @@ public class SampleAPIconnection extends AppCompatActivity {
     EditText etCountry;
     TextView tvResult;
     Button btnGetData;
+    String country = "Germany";
+    ArrayList<String> cities = new ArrayList<>();
+    ArrayList<String> cityInfo = new ArrayList<>();
+
     private final String url = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
 //    private final String appid = "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649";
     DecimalFormat df = new DecimalFormat("#.##");
@@ -57,8 +62,16 @@ public class SampleAPIconnection extends AppCompatActivity {
             } else {
                 tempUrl = url + "?country_name=" + countryName + "&city_name=" + cityName;
             }
-            AsyncTaskRunner runner = new AsyncTaskRunner();
-            runner.execute(tempUrl);
+
+            // Testing API calls for two cities
+            cities.add("Berlin");
+            cities.add("Hamburg");
+
+            for (String city : cities) {
+                tempUrl = url + "?country_name=" + country + "&city_name=" + city;
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                runner.execute(tempUrl);
+            }
 //            Toast.makeText(SampleAPIconnection.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
         });
     }
@@ -92,7 +105,9 @@ public class SampleAPIconnection extends AppCompatActivity {
                             }
                         }
                         Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
-                        tvResult.setText(itemName + "\n" + "Price " + tempPrice + " " + currencyCode);
+                        String cityInformation = itemName + "\n" + "Price " + tempPrice + " " + currencyCode;
+                        cityInfo.add(cityInformation);
+                        onSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -111,14 +126,20 @@ public class SampleAPIconnection extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("X-RapidAPI-Key", "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649");
+                    headers.put("X-RapidAPI-Key", "4858721f31msh5ed87e7963024b3p1da073jsn4d95cf387203");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
                 }
             };
-
             queue.add(request);
             return null;
+        }
+
+        protected void onSuccess() {
+            if (cityInfo.size() == cities.size()) {
+                String collectedInfo = String.join("\n", cityInfo);
+                tvResult.setText(collectedInfo);
+            }
         }
     }
 }
