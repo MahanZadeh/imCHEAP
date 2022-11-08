@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -55,15 +53,13 @@ public class SampleAllCities extends AppCompatActivity {
         btnGetData = findViewById(R.id.btnGetData);
         btnGetData.setOnClickListener(view -> {
             AsyncTaskRunner runner = new AsyncTaskRunner();
-            runner.execute(url);
+            try {
+                ArrayList<String> citiesList = runner.execute(url).get();
+                Toast.makeText(SampleAllCities.this, "Worked!!!", Toast.LENGTH_SHORT).show();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
         });
-
-        AsyncTaskRunner runner = new AsyncTaskRunner();
-        try {
-            ArrayList<String> citiesList = runner.execute(url).get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
 
     }
 
@@ -111,8 +107,7 @@ public class SampleAllCities extends AppCompatActivity {
             };
 
             queue.add(request);
-//            return citiesArrayList;
-            return null;
+            return citiesArrayList;
         }
 
 //        @Override
