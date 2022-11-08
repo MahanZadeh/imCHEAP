@@ -78,19 +78,21 @@ public class SampleAllCities extends AppCompatActivity {
                         String city = "";
                         String itemName = "";
                         String cityId = "";
+                        StringBuilder citiesStringBuilder = new StringBuilder();
+
                         for (int i=0; i < cities.length(); i++) {
                             JSONObject jsonObjectPrice = cities.getJSONObject(i);
                             itemName = jsonObjectPrice.getString("country_name");
                             itemName = itemName.toLowerCase(Locale.ROOT);
                             if (itemName.contains(userInputCountry)) {
                                 city = jsonObjectPrice.getString("city_name");
-                                cityId = jsonObjectPrice.getString("city_id");
+//                                cityId = jsonObjectPrice.getString("city_id");
+                                citiesStringBuilder.append(city).append("\n");
 //                                break;
                             }
                         }
                         Toast.makeText(SampleAllCities.this, city, Toast.LENGTH_SHORT).show();
-                        tvResult.setText(city);
-                        System.out.println(city);
+                        tvResult.setText(citiesStringBuilder);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
