@@ -57,21 +57,15 @@ public class SampleAllCities extends AppCompatActivity {
         btnGetData.setOnClickListener(view -> {
             AsyncTaskRunner runner = new AsyncTaskRunner();
             runner.execute(url);
-//            Toast.makeText(SampleAllCities.this, url, Toast.LENGTH_SHORT).show();
         });
 
-//        AsyncTaskRunner runner = new AsyncTaskRunner();
-//        StringBuilder citiesStringBuilder = new StringBuilder();
-//        try {
-//            ArrayList<String> citiesList = runner.execute(url).get();
-//            for (String city : citiesList) {
-//                citiesStringBuilder.append(city).append("\n");
-//            }
-//            tvResult.setText(citiesStringBuilder);
-//
-//        } catch (ExecutionException | InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        AsyncTaskRunner runner = new AsyncTaskRunner();
+        try {
+            ArrayList<String> citiesList = runner.execute(url).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, ArrayList<String>> {
@@ -86,7 +80,6 @@ public class SampleAllCities extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
                         JSONArray cities = response.getJSONArray("cities");
-//                        tvResult = findViewById(R.id.all_city_result);
                         String userInputCountry = etCountry.getText().toString().trim();
                         String city = "";
                         String itemName = "";
@@ -98,18 +91,12 @@ public class SampleAllCities extends AppCompatActivity {
                             itemName = itemName.toLowerCase(Locale.ROOT);
                             if (itemName.contains(userInputCountry)) {
                                 city = jsonObjectPrice.getString("city_name");
-//                                citiesStringBuilder.append(city).append("\n");
-//                                bundle.putString("rating", "rating");
                                 citiesArrayList.add(city);
                             }
                         }
-//                        Toast.makeText(SampleAllCities.this, city, Toast.LENGTH_SHORT).show();
-//                        tvResult.setText(citiesStringBuilder);
-
                         for (String s : citiesArrayList) {
                             citiesStringBuilder.append(s).append("\n");
                         }
-//            }
                         tvResult.setText(citiesStringBuilder);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -139,9 +126,6 @@ public class SampleAllCities extends AppCompatActivity {
 
 //        @Override
 //        protected void onPostExecute(String result) {
-//            progressBar.setVisibility(View.GONE);
-//            txt.setText(result);
-//            btn.setText(R.string.restart);
 //        }
     }
 }
