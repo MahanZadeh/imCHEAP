@@ -22,11 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -150,9 +148,6 @@ public class SampleAPIconnection extends AppCompatActivity {
             if (cityInfo.size() == cities.size()) {
                 Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
                 Arrays.sort(itemsByPrice);
-                // Convert from Double to double to pass to bundle
-                double[] itemsByPriceConverted = Stream.of(itemsByPrice)
-                        .mapToDouble(Double::doubleValue).toArray();
                 // We may need to implement more robust sorting in another class?
                 ArrayList<String> sortedCities = new ArrayList<>();
                 ArrayList<String> costsDescription = new ArrayList<>();
