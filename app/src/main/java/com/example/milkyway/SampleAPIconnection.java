@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -58,7 +59,7 @@ public class SampleAPIconnection extends AppCompatActivity {
             }
             AsyncTaskRunner runner = new AsyncTaskRunner();
             runner.execute(tempUrl);
-            Toast.makeText(SampleAPIconnection.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(SampleAPIconnection.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -77,14 +78,15 @@ public class SampleAPIconnection extends AppCompatActivity {
 
 
                         String userInputTextTest = "beer";
-                        String tempPrice = "";
+                        double tempPrice = 0.00;
                         String itemName = "";
                         String currencyCode = "";
                         for (int i=0; i < prices.length(); i++) {
                             JSONObject jsonObjectPrice = prices.getJSONObject(i);
                             itemName = jsonObjectPrice.getString("item_name");
+                            itemName = itemName.toLowerCase(Locale.ROOT);
                             if (itemName.contains(userInputTextTest)) {
-                                tempPrice = jsonObjectPrice.getString("avg");
+                                tempPrice = jsonObjectPrice.getDouble("avg");
                                 currencyCode = jsonObjectPrice.getString("currency_code");
                                 break;
                             }
