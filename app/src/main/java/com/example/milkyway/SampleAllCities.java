@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -70,49 +69,41 @@ public class SampleAllCities extends AppCompatActivity {
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, ArrayList<String>> {
 
-        ArrayList<String> citiesArrayList = new ArrayList<String>();
+        ArrayList<String> citiesArrayList = new ArrayList<>();
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(SampleAllCities.this);
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray cities = response.getJSONArray("cities");
-                        String userInputCountry = etCountry.getText().toString().trim();
-                        String city = "";
-                        String itemName = "";
-                        StringBuilder citiesStringBuilder = new StringBuilder();
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+                try {
+                    JSONArray cities = response.getJSONArray("cities");
+                    String userInputCountry = etCountry.getText().toString().trim();
+                    String city;
+                    String itemName;
+                    StringBuilder citiesStringBuilder = new StringBuilder();
 
-                        for (int i = 0; i < cities.length(); i++) {
-                            JSONObject jsonObjectPrice = cities.getJSONObject(i);
-                            itemName = jsonObjectPrice.getString("country_name");
-                            itemName = itemName.toLowerCase(Locale.ROOT);
-                            if (itemName.contains(userInputCountry)) {
-                                city = jsonObjectPrice.getString("city_name");
-                                citiesArrayList.add(city);
-                            }
+                    for (int i = 0; i < cities.length(); i++) {
+                        JSONObject jsonObjectPrice = cities.getJSONObject(i);
+                        itemName = jsonObjectPrice.getString("country_name");
+                        itemName = itemName.toLowerCase(Locale.ROOT);
+                        if (itemName.contains(userInputCountry)) {
+                            city = jsonObjectPrice.getString("city_name");
+                            citiesArrayList.add(city);
                         }
-                        for (String s : citiesArrayList) {
-                            citiesStringBuilder.append(s).append("\n");
-                        }
-                        tvResult.setText(citiesStringBuilder);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+                    for (String s : citiesArrayList) {
+                        citiesStringBuilder.append(s).append("\n");
+                    }
+                    tvResult.setText(citiesStringBuilder);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(SampleAllCities.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
+            }, error -> Toast.makeText(SampleAllCities.this, error.toString(), Toast.LENGTH_SHORT).show()) {
 
-            }) {
                 /** Passing some request headers* */
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
+                    HashMap<String, String> headers = new HashMap<>();
                     headers.put("X-RapidAPI-Key", "a7a771dd33mshd86919ea5896511p1a2b01jsnd7f94fc97590");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
