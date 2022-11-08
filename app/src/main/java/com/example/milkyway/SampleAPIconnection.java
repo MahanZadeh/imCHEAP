@@ -2,6 +2,7 @@ package com.example.milkyway;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Button;
@@ -21,13 +22,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 
 public class SampleAPIconnection extends AppCompatActivity {
@@ -35,6 +40,7 @@ public class SampleAPIconnection extends AppCompatActivity {
     EditText etCountry;
     TextView tvResult;
     Button btnGetData;
+    Bundle bundle = new Bundle();
     String country = "Germany";
     ArrayList<String> cities = new ArrayList<>();
     HashMap<Double, List<String>> cityInfo = new HashMap<>();
@@ -130,7 +136,7 @@ public class SampleAPIconnection extends AppCompatActivity {
                 /** Passing some request headers* */
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
+                    HashMap<String, String> headers = new HashMap<>();
                     headers.put("X-RapidAPI-Key", "4858721f31msh5ed87e7963024b3p1da073jsn4d95cf387203");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
@@ -142,16 +148,28 @@ public class SampleAPIconnection extends AppCompatActivity {
 
         protected void onSuccess() {
             if (cityInfo.size() == cities.size()) {
-                List<Double> itemByPrice = new ArrayList<>(cityInfo.keySet());
-                Collections.sort(itemByPrice);
-                StringBuilder sb = new StringBuilder();
-                for (Double price : itemByPrice) {
-                    String eachInfo = String.format(Locale.ROOT, "%s: %s, Price: %f %s\n",
-                            cityInfo.get(price).get(0), cityInfo.get(price).get(1), price,
-                            cityInfo.get(price).get(2));
-                    sb.append(eachInfo);
+                Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
+                Arrays.sort(itemsByPrice);
+                // Convert from Double to double to pass to bundle
+                double[] itemsByPriceConverted = Stream.of(itemsByPrice)
+                        .mapToDouble(Double::doubleValue).toArray();
+                // We may need to implement more robust sorting in another class?
+                ArrayList<String> sortedCities = new ArrayList<>();
+                ArrayList<String> costsDescription = new ArrayList<>();
+                for (Double price : itemsByPrice) {
+                    String cityName = Objects.requireNonNull(cityInfo.get(price)).get(0);
+                    sortedCities.add(cityName);
+                    String itemName = Objects.requireNonNull(cityInfo.get(price)).get(1);
+                    String cCode = Objects.requireNonNull(cityInfo.get(price)).get(2);
+                    String fullDescription = itemName + ", Price: " + price + " " + cCode;
+                    costsDescription.add(fullDescription);
                 }
-                tvResult.setText(sb.toString());
+                bundle.putStringArrayList("Sorted Cities", sortedCities);
+                bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
+
+                Intent intent = new Intent(SampleAPIconnection.this, ResultsPage.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         }
     }
