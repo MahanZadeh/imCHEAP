@@ -32,7 +32,6 @@ public class SampleAllCities extends AppCompatActivity {
     TextView tvResult;
     Button btnGetData;
     private final String url = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
-    //    private final String appid = "287bb744e2msh06023a70a90dc5cp1b7209jsn23df725e6649";
     DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
@@ -41,23 +40,11 @@ public class SampleAllCities extends AppCompatActivity {
         setContentView(R.layout.activity_sample_all_cities);
 
         etCountry = findViewById(R.id.country);
-//        tvResult = findViewById(R.id.all_city_result);
         btnGetData = findViewById(R.id.btnGetData);
         btnGetData.setOnClickListener(view -> {
-//            tvResult.setText("");
-//            String tempUrl = "";
-//            String countryName = etCountry.getText().toString().trim();
-//            if (countryName.equals("")) {
-//                tvResult.setText("Country field can not be empty!");
-//            } else {
-//                tempUrl = url + "?country_name=" + countryName + "&city_name=";
-//            }
             AsyncTaskRunner runner = new AsyncTaskRunner();
-//            runner.execute(tempUrl);
             runner.execute(url);
-//            Toast.makeText(SampleAllCities.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(SampleAllCities.this, url.toString(), Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(SampleAllCities.this, url, Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -71,13 +58,10 @@ public class SampleAllCities extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
                         JSONArray cities = response.getJSONArray("cities");
-
-//                        String userInputTextTest = "beer";
                         tvResult = findViewById(R.id.all_city_result);
                         String userInputCountry = etCountry.getText().toString().trim();
                         String city = "";
                         String itemName = "";
-                        String cityId = "";
                         StringBuilder citiesStringBuilder = new StringBuilder();
 
                         for (int i=0; i < cities.length(); i++) {
@@ -86,9 +70,7 @@ public class SampleAllCities extends AppCompatActivity {
                             itemName = itemName.toLowerCase(Locale.ROOT);
                             if (itemName.contains(userInputCountry)) {
                                 city = jsonObjectPrice.getString("city_name");
-//                                cityId = jsonObjectPrice.getString("city_id");
                                 citiesStringBuilder.append(city).append("\n");
-//                                break;
                             }
                         }
                         Toast.makeText(SampleAllCities.this, city, Toast.LENGTH_SHORT).show();
