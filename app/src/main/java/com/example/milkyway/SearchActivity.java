@@ -35,6 +35,12 @@ public class SearchActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button toSampleAllCities = findViewById(R.id.sampleAllCities);
+        toSampleAllCities.setOnClickListener(view -> {
+            Intent intent = new Intent(this, SampleAllCities.class);
+            startActivity(intent);
+        });
+
     }
 
     public void setNationalitySpinner() {
