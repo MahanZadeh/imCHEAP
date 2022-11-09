@@ -33,12 +33,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class SearchActivity extends AppCompatActivity {
 
     String countryName;
     Bundle bundle = new Bundle();
     int count = 0;
+    Random random = new Random();
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<Double, List<String>> cityInfo = new HashMap<>();
 
@@ -154,7 +156,8 @@ public class SearchActivity extends AppCompatActivity {
             if (citiesList.size() != 0) {
                 for (int i = 0; i < 10; i++) {
                     String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
-                    String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(i);
+                    int newRandom = random.nextInt(citiesList.size());
+                    String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(newRandom);
                     AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
                     runner.execute(tempUrl);
                 }
@@ -197,7 +200,9 @@ public class SearchActivity extends AppCompatActivity {
                         cityItemCode.add(currencyCode);
                         cityInfo.put(tempPrice, cityItemCode);
                         count++;
-                        onSuccess();
+                        if (count == 10) {
+                            onSuccess();
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -226,28 +231,26 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         protected void onSuccess() {
-            if (count == 10) {
-                Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
-                Arrays.sort(itemsByPrice);
-                // We may need to implement more robust sorting in another class?
-                ArrayList<String> sortedCities = new ArrayList<>();
-                ArrayList<String> costsDescription = new ArrayList<>();
-                for (Double price : itemsByPrice) {
-                    String cityName = Objects.requireNonNull(cityInfo.get(price)).get(0);
-                    sortedCities.add(cityName);
-                    String itemName = Objects.requireNonNull(cityInfo.get(price)).get(1);
-                    String cCode = Objects.requireNonNull(cityInfo.get(price)).get(2);
-                    String fullDescription = itemName + ", Price: " + price + " " + cCode;
-                    costsDescription.add(fullDescription);
-                }
-                bundle.putStringArrayList("Sorted Cities", sortedCities);
-                bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
-                bundle.putString("Country Name", countryName);
-
-                Intent intent = new Intent(SearchActivity.this, ResultsPage.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+            Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
+            Arrays.sort(itemsByPrice);
+            // We may need to implement more robust sorting in another class?
+            ArrayList<String> sortedCities = new ArrayList<>();
+            ArrayList<String> costsDescription = new ArrayList<>();
+            for (Double price : itemsByPrice) {
+                String cityName = Objects.requireNonNull(cityInfo.get(price)).get(0);
+                sortedCities.add(cityName);
+                String itemName = Objects.requireNonNull(cityInfo.get(price)).get(1);
+                String cCode = Objects.requireNonNull(cityInfo.get(price)).get(2);
+                String fullDescription = itemName + ", Price: " + price + " " + cCode;
+                costsDescription.add(fullDescription);
             }
+            bundle.putStringArrayList("Sorted Cities", sortedCities);
+            bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
+            bundle.putString("Country Name", countryName);
+
+            Intent intent = new Intent(SearchActivity.this, ResultsPage.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 }
