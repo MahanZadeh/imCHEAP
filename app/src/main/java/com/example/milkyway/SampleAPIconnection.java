@@ -43,9 +43,7 @@ public class SampleAPIconnection extends AppCompatActivity {
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<Double, List<String>> cityInfo = new HashMap<>();
 
-    private final String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
     private final String citiesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
-    DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,25 +64,12 @@ public class SampleAPIconnection extends AppCompatActivity {
             } else if (countryName.equals("")) {
                 tvResult.setText("Country field can not be empty!");
             } else {
-                tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + cityName;
+
+                // Grab cities
+                AsyncTaskRunner runnerCities = new AsyncTaskRunner();
+                runnerCities.execute(citiesUrl);
+//            Toast.makeText(SampleAPIconnection.this, "Worked!!!", Toast.LENGTH_SHORT).show();
             }
-
-            // Grab cities
-            AsyncTaskRunner runnerCities = new AsyncTaskRunner();
-            runnerCities.execute(citiesUrl);
-            Toast.makeText(SampleAPIconnection.this, "Worked!!!", Toast.LENGTH_SHORT).show();
-
-            // Testing API calls for two cities
-//            cities.add("Berlin");
-//            cities.add("Hamburg");
-//            if (citiesList.size() != 0) {
-//                for (String city : citiesList) {
-//                    tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + city;
-//                    AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
-//                    runner.execute(tempUrl);
-//                }
-//            }
-//            Toast.makeText(SampleAPIconnection.this, tempUrl.toString(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -98,10 +83,9 @@ public class SampleAPIconnection extends AppCompatActivity {
                 public void onResponse(JSONObject response) {
                     try {
                         JSONArray cities = response.getJSONArray("cities");
-                        String userInputCountry = etCountry.getText().toString().trim();
+                        String userInputCountry = countryName;
                         String city;
                         String itemName;
-                        StringBuilder citiesStringBuilder = new StringBuilder();
 
                         for (int i = 0; i < cities.length(); i++) {
                             JSONObject jsonObjectPrice = cities.getJSONObject(i);
@@ -112,10 +96,6 @@ public class SampleAPIconnection extends AppCompatActivity {
                                 citiesList.add(city);
                             }
                         }
-                        for (String s : citiesList) {
-                            citiesStringBuilder.append(s).append("\n");
-                        }
-//                        tvResult.setText(citiesStringBuilder);
                         onSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -145,6 +125,7 @@ public class SampleAPIconnection extends AppCompatActivity {
         protected void onSuccess() {
             if (citiesList.size() != 0) {
                 for (int i = 0; i < 10; i++) {
+                    String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
                     String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(i);
                     AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
                     runner.execute(tempUrl);
@@ -181,7 +162,7 @@ public class SampleAPIconnection extends AppCompatActivity {
                                 break;
                             }
                         }
-                        Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
                         List<String> cityItemCode = new ArrayList<>();
                         cityItemCode.add(cityName);
                         cityItemCode.add(itemName);
