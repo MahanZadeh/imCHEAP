@@ -94,11 +94,11 @@
             android:textSize="25sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/sampleAPIbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="To Sample API connection" />
+<!--    <Button-->
+<!--        android:id="@+id/sampleAPIbutton"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="To Sample API connection" />-->
 
 
 </LinearLayout>

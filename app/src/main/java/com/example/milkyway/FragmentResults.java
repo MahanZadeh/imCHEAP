@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,14 +31,11 @@ public class FragmentResults extends Fragment implements ResultsItemClickListene
 
         // Get search results
         Bundle bundle = this.getArguments();
-//        cities = getResources().getStringArray(R.array.cities);
         if (bundle != null) {
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
             costs = bundle.getStringArrayList("Sorted Price Descriptions")
                     .toArray(new String[0]);
         }
-
-//        costs = getResources().getStringArray(R.array.costs);
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
                 cities, costs, images);
