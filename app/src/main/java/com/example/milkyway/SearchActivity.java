@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
 
     String countryName;
     Bundle bundle = new Bundle();
+    int count = 0;
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<Double, List<String>> cityInfo = new HashMap<>();
 
@@ -195,6 +196,7 @@ public class SearchActivity extends AppCompatActivity {
                         cityItemCode.add(itemName);
                         cityItemCode.add(currencyCode);
                         cityInfo.put(tempPrice, cityItemCode);
+                        count++;
                         onSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -224,7 +226,7 @@ public class SearchActivity extends AppCompatActivity {
         }
 
         protected void onSuccess() {
-            if (cityInfo.size() <= 10) {
+            if (count == 10) {
                 Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
                 Arrays.sort(itemsByPrice);
                 // We may need to implement more robust sorting in another class?
