@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,8 +28,14 @@ public class FragmentResults extends Fragment implements ResultsItemClickListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_results, container, false);
         recyclerView = view.findViewById(R.id.recyclerView);
-        cities = getResources().getStringArray(R.array.cities);
-        costs = getResources().getStringArray(R.array.costs);
+
+        // Get search results
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
+            costs = bundle.getStringArrayList("Sorted Price Descriptions")
+                    .toArray(new String[0]);
+        }
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
                 cities, costs, images);

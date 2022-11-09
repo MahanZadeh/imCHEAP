@@ -11,7 +11,7 @@
         android:gravity="center"
         android:text="@string/choose_a_country"
         android:textSize="30sp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         />
 
     <Spinner
@@ -29,7 +29,7 @@
         android:gravity="center"
         android:text="@string/select_your_interests"
         android:textSize="30sp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         />
 
 
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         >
         <Button
             android:id="@+id/btnSearch"
@@ -93,12 +93,5 @@
             android:text="@string/search"
             android:textSize="25sp" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/sampleAPIbutton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="To Sample API connection" />
-
 
 </LinearLayout>
