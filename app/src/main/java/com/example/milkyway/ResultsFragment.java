@@ -5,13 +5,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FragmentResults extends Fragment implements ResultsItemClickListener{
+public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
     RecyclerView recyclerView;
     String[] cities, costs;

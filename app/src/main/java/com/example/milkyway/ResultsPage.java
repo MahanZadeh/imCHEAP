@@ -26,7 +26,7 @@ public class ResultsPage extends AppCompatActivity {
         String pageTitle = "Search Results for " + countryName;
         resultsDescription.setText(pageTitle);
 
-        Fragment results = new FragmentResults();
+        Fragment results = new ResultsFragment();
         results.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
