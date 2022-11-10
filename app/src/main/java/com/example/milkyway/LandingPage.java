@@ -17,8 +17,10 @@ public class LandingPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
 
-        BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation);        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
-
+        BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new ProfileFragment())
+                .commit();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")

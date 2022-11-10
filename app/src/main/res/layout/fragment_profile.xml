@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ProfileFragment">
+<!--    tools:context=".MainActivity">-->
+
 
 
     <TextView
@@ -58,7 +60,7 @@
             android:id="@+id/profileFragmentContainerView"
             android:name="com.example.milkyway.FavoritesFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="216dp"
             tools:layout="@layout/fragment_favorites" />
     </LinearLayout>
 
