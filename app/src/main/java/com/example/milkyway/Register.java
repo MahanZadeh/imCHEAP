@@ -105,6 +105,8 @@ public class Register extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         Toast.makeText(Register.this, "User Has Been Registered Successfully!", Toast.LENGTH_SHORT).show();
                                         progressBarRegister.setVisibility(View.GONE);
+                                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                        startActivity(intent);
 
                                         //redirect to login layout!!!!!
                                     }else {

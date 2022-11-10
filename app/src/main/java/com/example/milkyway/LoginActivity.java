@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
     private Button logIn;
     private ProgressBar progressBar;
+    private TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,18 +63,23 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        forgotPassword = findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(view->{
+            startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
+        });
+
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
-//            reload();
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(currentUser != null){
+////            reload();
+//        }
+//    }
 
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
@@ -108,9 +114,20 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()){
-                        //redirect to user profile
-                        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-                        startActivity(intent);
+//
+//                        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+//                        startActivity(intent);
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user.isEmailVerified()){
+                            //redirect to user profile
+                            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                            startActivity(intent);
+                        }else {
+                            user.sendEmailVerification();
+                            Toast.makeText(getApplicationContext(), "Check your email to verify your account!", Toast.LENGTH_SHORT).show();
+                        }
+
+
                     }else {
                         Toast.makeText(LoginActivity.this, "Failed To Login, please check your credentials!!", Toast.LENGTH_SHORT).show();
 //                        progressBarRegister.setVisibility(View.GONE);
