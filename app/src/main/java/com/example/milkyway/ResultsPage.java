@@ -26,7 +26,7 @@ public class ResultsPage extends AppCompatActivity {
         String pageTitle = "Search Results for " + countryName;
         resultsDescription.setText(pageTitle);
 
-        Fragment results = new FragmentResults();
+        Fragment results = new ResultsFragment();
         results.setArguments(bundle);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -35,7 +35,7 @@ public class ResultsPage extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.resultsBack);
         backButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SearchActivity.class);
+            Intent intent = new Intent(this, LandingPage.class);
             startActivity(intent);
         });
 
