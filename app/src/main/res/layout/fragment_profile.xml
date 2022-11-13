@@ -74,12 +74,14 @@
             android:id="@+id/profileFragmentContainerView"
             android:name="com.example.milkyway.FavoritesFragment"
             android:layout_width="match_parent"
-            android:layout_height="216dp"
+            android:layout_height="333dp"
             tools:layout="@layout/fragment_favorites" />
     </LinearLayout>
+
     <Button
         android:id="@+id/logout"
-        android:layout_width="match_parent"
+        android:layout_width="153dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Logout" />
 </LinearLayout>
