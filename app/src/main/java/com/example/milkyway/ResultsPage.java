@@ -35,7 +35,7 @@ public class ResultsPage extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.resultsBack);
         backButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, SearchActivity.class);
+            Intent intent = new Intent(this, LandingPage.class);
             startActivity(intent);
         });
 

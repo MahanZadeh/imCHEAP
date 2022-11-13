@@ -29,18 +29,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.activity_profile, container, false);
+        return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Button searchButton = getView().findViewById(R.id.profileSearchButton);
-        searchButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), SearchActivity.class);
-            startActivity(intent);
-
-        });
-
         // Change fragment when favorites button is clicked
         Button btn_favorites = getView().findViewById(R.id.btn_favorites);
         btn_favorites.setOnClickListener(nextView -> {

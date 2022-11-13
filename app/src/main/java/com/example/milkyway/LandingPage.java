@@ -19,7 +19,7 @@ public class LandingPage extends AppCompatActivity{
 
         BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new ProfileFragment())
+                .replace(R.id.fragment_container, new SearchFragment())
                 .commit();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -28,11 +28,6 @@ public class LandingPage extends AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()) {
-                    case R.id.home_panel:
-//                        selectedFragment = new FragmentHome();
-                        // temporary no home panel yet
-                        selectedFragment = new SearchFragment();
-                        break;
                     case R.id.search_panel:
                         selectedFragment = new SearchFragment();
                         break;

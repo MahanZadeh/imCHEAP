@@ -64,10 +64,5 @@
             tools:layout="@layout/fragment_favorites" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/profileSearchButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/profileSearchButton" />
 
 </LinearLayout>
