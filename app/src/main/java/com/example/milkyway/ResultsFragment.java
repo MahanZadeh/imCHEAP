@@ -29,7 +29,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     RecyclerView recyclerView;
     String[] cities, costs;
     String countryName;
-    int[] images = {R.drawable.usa_flag};
+    int[] images = {R.drawable.globe};
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
