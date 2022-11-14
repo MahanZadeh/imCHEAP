@@ -15,6 +15,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
     RecyclerView recyclerView;
     String[] cities, costs;
+    String countryName;
     int[] images = {R.drawable.usa_flag};
 
     @Override
@@ -35,6 +36,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
             costs = bundle.getStringArrayList("Sorted Price Descriptions")
                     .toArray(new String[0]);
+            countryName = bundle.getString("Country Name");
         }
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
@@ -57,6 +59,8 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     public void onClickFavorites(View view, int position) {
         // Save item to Firebase
         // Can grab city info from position in list, like bundle.putString("planet", planets[position]);
-        System.out.println("entered");
+        String city = cities[position];
+        String country = countryName;
+        String cost = costs[position];
     }
 }
