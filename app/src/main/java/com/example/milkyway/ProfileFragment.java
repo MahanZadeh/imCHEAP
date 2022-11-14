@@ -84,6 +84,8 @@ public class ProfileFragment extends Fragment {
             startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
         });
 
+        // BELOW IS MAHAN
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
