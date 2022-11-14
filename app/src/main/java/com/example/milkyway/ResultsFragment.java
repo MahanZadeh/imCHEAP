@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.Objects;
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
@@ -46,8 +49,16 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     }
 
     @Override
-    public void onClick(View view, int position) {
+    public void onClickCitySummary(View view, int position) {
+        // Go to city summary page
         Intent intent = new Intent(getActivity(), dynamic_test.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClickFavorites(View view, int position) {
+        // Save item to Firebase
+        // Can grab city info from position in list, like bundle.putString("planet", planets[position]);
+        System.out.println("entered");
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,17 +53,29 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         TextView text1, text2;
         ImageView image;
+        Button button;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             text1 = itemView.findViewById(R.id.city);
             text2 = itemView.findViewById(R.id.cost);
             image = itemView.findViewById(R.id.imageView);
+            button = itemView.findViewById(R.id.favoriteButton);
             itemView.setOnClickListener(this);
 //            image.setOnClickListener(this);
+            button.setOnClickListener(this);
         }
 
         public void onClick(View itemView) {
-            if (clickListener != null) clickListener.onClick(itemView, getBindingAdapterPosition());
+            if ((itemView.getId() != View.NO_ID) && (clickListener != null)) {
+                String id = itemView.getResources().getResourceName(itemView.getId());
+                if (id.contains("favoriteButton")) {
+                    clickListener.onClickFavorites(itemView, getBindingAdapterPosition());
+                }
+                else {
+                    clickListener.onClickCitySummary(itemView, getBindingAdapterPosition());
+                }
+            }
+
         }
     }
 }

@@ -3,5 +3,7 @@ package com.example.milkyway;
 import android.view.View;
 
 public interface ResultsItemClickListener {
-    void onClick(View view, int position);
+    void onClickCitySummary(View view, int position);
+
+    void onClickFavorites(View view, int position);
 }
