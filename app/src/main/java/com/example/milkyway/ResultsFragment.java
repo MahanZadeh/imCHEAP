@@ -79,9 +79,9 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         String city = cities[position];
         String country = countryName;
         String cost = costs[position];
-        FavInfo favInfo = new FavInfo(country, city, cost);
 
         String key = FirebaseDatabase.getInstance().getReference("Fav").child(userID).push().getKey();
+        FavInfo favInfo = new FavInfo(key, country, city, cost);
 
         FirebaseDatabase.getInstance().getReference("Fav")
                 .child(userID).child(key)

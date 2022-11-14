@@ -24,16 +24,23 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class FavoritesFragment extends Fragment {
 
     RecyclerView recyclerView;
-    String[] cities, costs;
-    String countryName;
-    int[] images = {R.drawable.usa_flag};
+    int[] images = {R.drawable.globe};
     private FirebaseUser user;
-    private DatabaseReference reference;
+    private DatabaseReference databaseReference ;
     private String userID;
+    private DatabaseReference userFavData;
+
+    ArrayList<String> cityArray = new ArrayList<>();
+    ArrayList<String> countryArray = new ArrayList<>();
+    ArrayList<String> costArray = new ArrayList<>();
+    ArrayList<String> keyArray = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,47 +51,52 @@ public class FavoritesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Fav");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Fav");
         userID = user.getUid();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         recyclerView = view.findViewById(R.id.recyclerView2);
 
-        FirebaseDatabase.getInstance().getReference("Fav")
-                .child(userID).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                    Toast.makeText(getActivity().getApplicationContext(), "Filed to retrieve data from db!", Toast.LENGTH_SHORT).show();
 
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                    //toast text: task.getResult().getValue().toString()
-                    Toast.makeText(getActivity().getApplicationContext(), "Success getting data from db", Toast.LENGTH_SHORT).show();
+        userFavData = FirebaseDatabase.getInstance().getReference("Fav").child(userID);
 
+        getData(view);
 
-
-
-//                    MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
-//                            cities, costs, images);
-////                    myRecyclerViewAdapter.setClickListener(this);
-//                    recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//                    recyclerView.setAdapter(myRecyclerViewAdapter);
-                }
-            }
-        });
-
-
-//        cities = new String[2];
-//        cities[0] = "berlin";
-//        cities[1] = "test";
-//        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
-//                cities, costs, images); //the info to be displayed comes here
-//        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-//        recyclerView.setAdapter(myRecyclerViewAdapter);
 
         return view;
+    }
+
+    private void getData(View view) {
+        userFavData.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                keyArray.removeAll(keyArray);
+                cityArray.removeAll(cityArray);
+                countryArray.removeAll(countryArray);
+                costArray.removeAll(costArray);
+                for (DataSnapshot singleNode: snapshot.getChildren()) {
+                    FavInfo favInfo = singleNode.getValue(FavInfo.class);
+                    keyArray.add(favInfo.key);
+                    cityArray.add(favInfo.city);
+                    countryArray.add(favInfo.country);
+                    costArray.add(favInfo.cost);
+
+                }
+
+                FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter = new FavoritesRecyclerViewAdapter(getActivity(),keyArray, countryArray, cityArray, costArray, images );
+                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                recyclerView.setAdapter(favoritesRecyclerViewAdapter);
+
+                System.out.println(cityArray);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+                Toast.makeText(getActivity().getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+            }
+
+
+        });
     }
 }

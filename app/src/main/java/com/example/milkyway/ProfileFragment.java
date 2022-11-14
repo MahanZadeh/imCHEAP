@@ -61,7 +61,8 @@ public class ProfileFragment extends Fragment {
         Button btn_favorites = getView().findViewById(R.id.btn_favorites);
         btn_favorites.setOnClickListener(nextView -> {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            ft.replace(R.id.profileFragmentContainerView, FavoritesFragment.class, null);
+            Fragment favs = new FavoritesFragment();
+            ft.replace(R.id.profileFragmentContainerView, favs);
             ft.setReorderingAllowed(true);
             ft.addToBackStack("name"); // name can be null
             ft.commit();
