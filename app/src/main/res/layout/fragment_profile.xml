@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
-<!--    tools:context=".MainActivity">-->
 
 
 
@@ -20,26 +19,19 @@
 
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/profile_description"
-        android:textSize="15sp" />
-    <TextView
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:gravity="center"
-        android:text="Name:"
-        android:textSize="15sp" />
-    <TextView
-        android:id="@+id/userEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Email:"
-        android:textSize="15sp" />
+        android:textSize="22sp" />
+<!--    <TextView-->
+<!--        android:id="@+id/userEmail"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center"-->
+<!--        android:text="Email:"-->
+<!--        android:textSize="15sp" />-->
 
 
     <LinearLayout
@@ -80,8 +72,9 @@
 
     <Button
         android:id="@+id/logout"
-        android:layout_width="153dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:text="Logout" />
+        android:text="Logout"
+        android:textSize="22sp" />
 </LinearLayout>
