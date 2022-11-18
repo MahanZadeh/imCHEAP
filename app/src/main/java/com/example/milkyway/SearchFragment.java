@@ -39,6 +39,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -53,7 +54,7 @@ public class SearchFragment extends Fragment {
     Random random = new Random();
     String searchChoice;
     ArrayList<String> citiesList = new ArrayList<>();
-    HashMap<List<String>, List<String>> cityInfo = new HashMap<>();
+    HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
     private final String citiesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
     private SearchViewModel mViewModel;
@@ -95,13 +96,13 @@ public class SearchFragment extends Fragment {
 
     public String provideQuery(String optionText) {
         switch (optionText) {
-            case "Beer":
-                return "Domestic Beer, 0.5 liter Bottle".toLowerCase(Locale.ROOT);
+            case "Bottle of Beer":
+                return "Beer".toLowerCase(Locale.ROOT); // needs full query
             case "Gasoline, 1 liter":
             case "Cappuccino":
                 return optionText.toLowerCase(Locale.ROOT);
             case "Taxi, price for 1 hour waiting":
-                return "Taxi, price for 1 hour Waiting, Normal Tariff".toLowerCase(Locale.ROOT);
+                return "Taxi".toLowerCase(Locale.ROOT); // needs full query
             case "Meal in inexpensive restaurant":
                 return "Meal in Inexpensive Restaurant".toLowerCase(Locale.ROOT);
             default:
@@ -189,7 +190,7 @@ public class SearchFragment extends Fragment {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<>();
-                    headers.put("X-RapidAPI-Key", "null");
+                    headers.put("X-RapidAPI-Key", "b81516d2e7msh9653b7faa822afdp115f6fjsn863c3bf66af5");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
                 }
@@ -232,20 +233,18 @@ public class SearchFragment extends Fragment {
                             JSONObject jsonObjectPrice = prices.getJSONObject(i);
                             itemName = jsonObjectPrice.getString("item_name");
                             itemName = itemName.toLowerCase(Locale.ROOT);
-                            if (itemName.equals(queryString)) {
+                            if (itemName.contains(queryString)) {
                                 tempPrice = jsonObjectPrice.getDouble("avg");
                                 currencyCode = jsonObjectPrice.getString("currency_code");
                                 break;
                             }
                         }
 //                        Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
-                        List<String> itemCode = new ArrayList<>();
-                        List<String> cityPrice = new ArrayList<>(); // Make this a hashmap
-                        cityPrice.add(cityName);
-                        cityPrice.add(Double.toString(tempPrice));
-                        itemCode.add(itemName);
-                        itemCode.add(currencyCode);
-                        cityInfo.put(cityPrice, itemCode);
+                        List<String> cityItemCode = new ArrayList<>();
+                        cityItemCode.add(cityName);
+                        cityItemCode.add(itemName);
+                        cityItemCode.add(currencyCode);
+                        cityInfo.put(cityItemCode, tempPrice);
                         count++;
                         if (count == 10) {
                             onSuccess();
@@ -266,7 +265,7 @@ public class SearchFragment extends Fragment {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<>();
-                    headers.put("X-RapidAPI-Key", "null");
+                    headers.put("X-RapidAPI-Key", "b81516d2e7msh9653b7faa822afdp115f6fjsn863c3bf66af5");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
                     return headers;
                 }
@@ -276,18 +275,28 @@ public class SearchFragment extends Fragment {
         }
 
         protected void onSuccess() {
-            ArrayList<ArrayList<String>> keys = cityInfo.keySet().toArray(new String[0]);
-//            Double[] itemsByPrice = cityInfo.keySet().toArray(new Double[0]);
-            Arrays.sort(itemsByPrice);
+            Double[] rawPrices = cityInfo.values().toArray(new Double[0]);
+            // Remove duplicate prices
+            LinkedHashSet<Double> pricesNoDuplicates = new LinkedHashSet<>(Arrays.asList(rawPrices));
+            Double[] prices = pricesNoDuplicates.toArray(new Double[0]);
+            Arrays.sort(prices);
+            ArrayList<List<String>> sortedData = new ArrayList<>();
+            for (Double price : prices) {
+                for (List<String> key : cityInfo.keySet()) {
+                    if (Objects.equals(cityInfo.get(key), price)) {
+                        sortedData.add(key);
+                    }
+                }
+            }
             // We may need to implement more robust sorting in another class?
             ArrayList<String> sortedCities = new ArrayList<>();
             ArrayList<String> costsDescription = new ArrayList<>();
-            for (Double price : itemsByPrice) {
-                String cityName = Objects.requireNonNull(cityInfo.get(price)).get(0);
+            for (List<String> data : sortedData) {
+                String cityName = data.get(0);
                 sortedCities.add(cityName);
-                String itemName = Objects.requireNonNull(cityInfo.get(price)).get(1);
-                String cCode = Objects.requireNonNull(cityInfo.get(price)).get(2);
-                String fullDescription = itemName + ", Price: " + price + " " + cCode;
+                String itemName = data.get(1);
+                String cCode = data.get(2);
+                String fullDescription = itemName + ", Price: " + cityInfo.get(data) + " " + cCode;
                 costsDescription.add(fullDescription);
             }
             bundle.putStringArrayList("Sorted Cities", sortedCities);
