@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         userID = user.getUid();
 
         final TextView nameView = getView().findViewById(R.id.userName);
-        final TextView emailView = getView().findViewById(R.id.userEmail);
+//        final TextView emailView = getView().findViewById(R.id.userEmail);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -102,8 +102,9 @@ public class ProfileFragment extends Fragment {
                 if(userProfile != null){
                     String name = userProfile.name;
                     String email = userProfile.email;
-                    nameView.setText(name);
-                    emailView.setText(email);
+                    String profileTitle = "Hello " + name;
+                    nameView.setText(profileTitle);
+//                    emailView.setText(email);
                 }
             }
 

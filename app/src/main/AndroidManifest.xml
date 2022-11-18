@@ -36,13 +36,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".StartUpLogoAnimation"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".dynamic_test"
             android:exported="false"
             android:parentActivityName=".ResultsPage">
@@ -80,7 +73,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:parentActivityName=".StartUpLogoAnimation">
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

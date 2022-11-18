@@ -45,8 +45,8 @@ public class LoginActivity extends AppCompatActivity {
         logIn = findViewById(R.id.loginButton);
         logIn.setOnClickListener(view -> {
             userLogin();
-            Intent intent = new Intent(this, LandingPage.class);
-            startActivity(intent);
+//            Intent intent = new Intent(this, LandingPage.class);
+//            startActivity(intent);
         });
 
         editTextEmail = findViewById(R.id.editTextEmail);
@@ -120,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user.isEmailVerified()){
                             //redirect to user profile
+                            progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
                             Intent intent = new Intent(getApplicationContext(), LandingPage.class);
                             startActivity(intent);
                         }else {
