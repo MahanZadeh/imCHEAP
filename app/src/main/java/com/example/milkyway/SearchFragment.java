@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment {
             case "Gasoline, 1 liter":
             case "Cappuccino":
                 return optionText;
-            case "Taxi, price for 1 hour waiting":
+            case "Taxi, price for 1 hour Waiting":
                 return "Taxi"; // needs full query
             case "Meal in inexpensive restaurant":
                 return "Meal in Inexpensive Restaurant";
@@ -242,11 +242,11 @@ public class SearchFragment extends Fragment {
                         cityItemCode.add(currencyCode);
                         cityInfo.put(cityItemCode, tempPrice);
                         currentCount++;
-                        if (currentCount == totalCount) {
-                            onSuccess();
-                        }
                     } else {
                         totalCount--;
+                    }
+                    if (currentCount == totalCount) {
+                        onSuccess();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
