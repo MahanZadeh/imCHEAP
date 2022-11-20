@@ -1,11 +1,13 @@
 Afghanistan
+Aland Islands
 Albania
 Algeria
 Andorra
 Angola
-Antigua & Deps
+Antigua And Barbuda
 Argentina
 Armenia
+Aruba
 Australia
 Austria
 Azerbaijan
@@ -16,80 +18,83 @@ Barbados
 Belarus
 Belgium
 Belize
-Benin
+Bermuda
 Bhutan
 Bolivia
-Bosnia Herzegovina
+Bonaire
+Bosnia And Herzegovina
 Botswana
 Brazil
+British Virgin Islands
 Brunei
 Bulgaria
-Burkina
+Burkina Faso
 Burundi
 Cambodia
 Cameroon
 Canada
 Cape Verde
-Central African Rep
+Cayman Islands
 Chad
 Chile
 China
 Colombia
-Comoros
 Congo
-Congo {Democratic Rep}
 Costa Rica
 Croatia
 Cuba
+Curacao
 Cyprus
 Czech Republic
 Denmark
 Djibouti
 Dominica
 Dominican Republic
-East Timor
 Ecuador
 Egypt
 El Salvador
 Equatorial Guinea
-Eritrea
 Estonia
 Ethiopia
+Faroe Islands
 Fiji
 Finland
 France
+French Polynesia
 Gabon
 Gambia
 Georgia
 Germany
 Ghana
+Gibraltar
 Greece
+Greenland
 Grenada
+Guam
 Guatemala
-Guinea
+Guernsey
 Guinea-Bissau
 Guyana
-Haiti
 Honduras
+Hong Kong
 Hungary
 Iceland
 India
 Indonesia
 Iran
 Iraq
-Ireland {Republic}
+Ireland
+Isle Of Man
 Israel
 Italy
 Ivory Coast
 Jamaica
 Japan
+Jersey
 Jordan
 Kazakhstan
 Kenya
-Kiribati
-Korea North
-Korea South
-Kosovo
+Kosovo (Disputed Territory)
 Kuwait
 Kyrgyzstan
 Laos
@@ -98,40 +103,36 @@ Lebanon
 Lesotho
 Liberia
 Libya
-Liechtenstein
 Lithuania
 Luxembourg
-Macedonia
+Macao
 Madagascar
 Malawi
 Malaysia
 Maldives
 Mali
 Malta
-Marshall Islands
 Mauritania
 Mauritius
 Mexico
-Micronesia
 Moldova
 Monaco
 Mongolia
 Montenegro
 Morocco
 Mozambique
-Myanmar, {Burma}
+Myanmar
 Namibia
-Nauru
 Nepal
 Netherlands
+New Caledonia
 New Zealand
 Nicaragua
-Niger
 Nigeria
+Northern Mariana Islands
 Norway
 Oman
 Pakistan
-Palau
 Panama
 Papua New Guinea
 Paraguay
@@ -139,27 +140,27 @@ Peru
 Philippines
 Poland
 Portugal
+Puerto Rico
 Qatar
+Reunion
 Romania
-Russian Federation
+Russia
 Rwanda
-St Kitts & Nevis
-St Lucia
-Saint Vincent & the Grenadines
+Saint Lucia
+Saint Vincent And The Grenadines
 Samoa
-San Marino
-Sao Tome & Principe
 Saudi Arabia
 Senegal
 Serbia
 Seychelles
-Sierra Leone
 Singapore
+Sint Maarten
 Slovakia
 Slovenia
 Solomon Islands
 Somalia
 South Africa
+South Korea
 South Sudan
 Spain
 Sri Lanka
@@ -168,18 +169,19 @@ Suriname
 Swaziland
 Sweden
 Switzerland
-Syria
 Taiwan
 Tajikistan
 Tanzania
 Thailand
+Timor-Leste
 Togo
 Tonga
-Trinidad & Tobago
+Trinidad And Tobago
 Tunisia
 Turkey
 Turkmenistan
-Tuvalu
+Turks And Caicos Islands
+US Virgin Islands
 Uganda
 Ukraine
 United Arab Emirates
@@ -188,7 +190,6 @@ United States
 Uruguay
 Uzbekistan
 Vanuatu
-Vatican City
 Venezuela
 Vietnam
 Yemen
