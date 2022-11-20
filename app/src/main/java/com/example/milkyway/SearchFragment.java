@@ -2,6 +2,7 @@ package com.example.milkyway;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,11 +21,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -59,7 +57,6 @@ public class SearchFragment extends Fragment {
     HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
     private final String citiesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
-    private SearchViewModel mViewModel;
 
     public static SearchFragment newInstance() {
         return new SearchFragment();
@@ -74,7 +71,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
+        SearchViewModel mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         // TODO: Use the ViewModel
 
         setNationalitySpinner();
@@ -99,24 +96,25 @@ public class SearchFragment extends Fragment {
     public String provideQuery(String optionText) {
         switch (optionText) {
             case "Bottle of Beer":
-                return "Beer".toLowerCase(Locale.ROOT); // needs full query
+                return "Beer"; // needs full query
             case "Gasoline, 1 liter":
             case "Cappuccino":
-                return optionText.toLowerCase(Locale.ROOT);
+                return optionText;
             case "Taxi, price for 1 hour waiting":
-                return "Taxi".toLowerCase(Locale.ROOT); // needs full query
+                return "Taxi"; // needs full query
             case "Meal in inexpensive restaurant":
-                return "Meal in Inexpensive Restaurant".toLowerCase(Locale.ROOT);
+                return "Meal in Inexpensive Restaurant";
             default:
                 return null;
         }
     }
 
     public void setNationalitySpinner() {
-        Spinner spinner = getView().findViewById(R.id.nationality_spinner);
+        Spinner spinner = requireView().findViewById(R.id.nationality_spinner);
         ArrayList<String> countries = new ArrayList<>();
 
-        InputStream inputStream = getActivity().getBaseContext().getResources().openRawResource(R.raw.countries);
+        InputStream inputStream = requireActivity().getBaseContext().getResources()
+                .openRawResource(R.raw.countries);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line = null;
         try {
@@ -151,46 +149,41 @@ public class SearchFragment extends Fragment {
         spinner.setAdapter(countriesData);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunnerCities extends AsyncTask<String, Void, ArrayList<String>> {
 
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray cities = response.getJSONArray("cities");
-                        Spinner spinner = getView().findViewById(R.id.nationality_spinner);
-                        countryName = spinner.getSelectedItem().toString()
-                                .toLowerCase(Locale.ROOT);
-                        String userInputCountry = countryName;
-                        String city;
-                        String itemName;
+            RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0],
+                    null, response -> {
+                try {
+                    JSONArray cities = response.getJSONArray("cities");
+                    Spinner spinner = requireView().findViewById(R.id.nationality_spinner);
+                    countryName = spinner.getSelectedItem().toString()
+                            .toLowerCase(Locale.ROOT);
+                    String userInputCountry = countryName;
+                    String city;
+                    String itemName;
 
-                        for (int i = 0; i < cities.length(); i++) {
-                            JSONObject jsonObjectPrice = cities.getJSONObject(i);
-                            itemName = jsonObjectPrice.getString("country_name");
-                            itemName = itemName.toLowerCase(Locale.ROOT);
-                            if (itemName.contains(userInputCountry)) {
-                                city = jsonObjectPrice.getString("city_name");
-                                citiesList.add(city);
-                            }
+                    for (int i = 0; i < cities.length(); i++) {
+                        JSONObject jsonObjectPrice = cities.getJSONObject(i);
+                        itemName = jsonObjectPrice.getString("country_name");
+                        itemName = itemName.toLowerCase(Locale.ROOT);
+                        if (itemName.contains(userInputCountry)) {
+                            city = jsonObjectPrice.getString("city_name");
+                            citiesList.add(city);
                         }
-                        onSuccess();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
+                    onSuccess();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+            }, error -> Toast.makeText(requireActivity().getApplicationContext(),
+                    error.toString(), Toast.LENGTH_SHORT).show()) {
                 /** Passing some request headers* */
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("X-RapidAPI-Key", "b81516d2e7msh9653b7faa822afdp115f6fjsn863c3bf66af5");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
@@ -206,7 +199,8 @@ public class SearchFragment extends Fragment {
                 for (int i = 0; i < numberOfCities; i++) {
                     String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
                     int newRandom = random.nextInt(citiesList.size());
-                    String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(newRandom);
+                    String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name="
+                            + citiesList.get(newRandom);
                     AsyncTaskRunnerPrices runner = new AsyncTaskRunnerPrices();
                     runner.execute(tempUrl);
                 }
@@ -214,62 +208,55 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunnerPrices extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
-            RequestQueue queue = Volley.newRequestQueue(getActivity().getApplicationContext());
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
+            RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+                try {
 
-                        String cityName = response.getString("city_name");
-                        JSONArray prices = response.getJSONArray("prices");
+                    String cityName = response.getString("city_name");
+                    JSONArray prices = response.getJSONArray("prices");
 
-                        String queryString = searchChoice;
-                        double tempPrice = 0.00;
-                        String itemName = "";
-                        String currencyCode = "";
-                        for (int i = 0; i < prices.length(); i++) {
-                            JSONObject jsonObjectPrice = prices.getJSONObject(i);
-                            itemName = jsonObjectPrice.getString("item_name");
-                            itemName = itemName.toLowerCase(Locale.ROOT);
-                            if (itemName.contains(queryString)) {
-                                tempPrice = jsonObjectPrice.getDouble("avg");
-                                currencyCode = jsonObjectPrice.getString("currency_code");
-                                break;
-                            }
-                            itemName = "";
+                    String queryString = searchChoice;
+                    double tempPrice = 0.00;
+                    String itemName = "";
+                    String currencyCode = "";
+                    for (int i = 0; i < prices.length(); i++) {
+                        JSONObject jsonObjectPrice = prices.getJSONObject(i);
+                        itemName = jsonObjectPrice.getString("item_name");
+                        if (itemName.toLowerCase(Locale.ROOT)
+                                .contains(queryString.toLowerCase(Locale.ROOT))) {
+                            tempPrice = jsonObjectPrice.getDouble("avg");
+                            currencyCode = jsonObjectPrice.getString("currency_code");
+                            break;
                         }
-                        if (!itemName.equals("")) {
-                            List<String> cityItemCode = new ArrayList<>();
-                            cityItemCode.add(cityName);
-                            cityItemCode.add(itemName);
-                            cityItemCode.add(currencyCode);
-                            cityInfo.put(cityItemCode, tempPrice);
-                            currentCount++;
-                            if (currentCount == totalCount) {
-                                onSuccess();
-                            }
-                        } else {
-                            totalCount--;
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        itemName = "";
                     }
+                    if (!itemName.equals("")) {
+                        List<String> cityItemCode = new ArrayList<>();
+                        cityItemCode.add(cityName);
+                        cityItemCode.add(itemName);
+                        cityItemCode.add(currencyCode);
+                        cityInfo.put(cityItemCode, tempPrice);
+                        currentCount++;
+                        if (currentCount == totalCount) {
+                            onSuccess();
+                        }
+                    } else {
+                        totalCount--;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }) {
+            }, error -> Toast.makeText(requireActivity().getApplicationContext(), error.toString(),
+                    Toast.LENGTH_SHORT).show()) {
 
                 /** Passing some request headers* */
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("X-RapidAPI-Key", "b81516d2e7msh9653b7faa822afdp115f6fjsn863c3bf66af5");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
@@ -309,7 +296,7 @@ public class SearchFragment extends Fragment {
             bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
             bundle.putString("Country Name", countryName);
 
-            Intent intent = new Intent(getActivity().getApplicationContext(), ResultsPage.class);
+            Intent intent = new Intent(requireActivity().getApplicationContext(), ResultsPage.class);
             intent.putExtras(bundle);
             startActivity(intent);
         }
