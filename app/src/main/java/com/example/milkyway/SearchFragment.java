@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -53,6 +54,7 @@ public class SearchFragment extends Fragment {
     Random random = new Random();
     String searchChoice;
     int numberOfCities = 10;
+    ProgressBar progressBarSearch;
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
@@ -74,10 +76,13 @@ public class SearchFragment extends Fragment {
         SearchViewModel mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         // TODO: Use the ViewModel
 
+        progressBarSearch = requireView().findViewById(R.id.progressBarSearch);
+
         setNationalitySpinner();
 
         Button toResults = requireView().findViewById(R.id.btnSearch);
         toResults.setOnClickListener(view -> {
+            progressBarSearch.setVisibility(View.VISIBLE);
             // Get selected search choice
             RadioGroup radioGroup = requireView().findViewById(R.id.searchRadioGroup);
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
@@ -282,7 +287,6 @@ public class SearchFragment extends Fragment {
                         }
                     }
                 }
-                // We may need to implement more robust sorting in another class?
                 ArrayList<String> sortedCities = new ArrayList<>();
                 ArrayList<String> costsDescription = new ArrayList<>();
                 for (List<String> data : sortedData) {
