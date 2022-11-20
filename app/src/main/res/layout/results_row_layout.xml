@@ -47,7 +47,7 @@
         <TextView
             android:id="@+id/cost"
             android:layout_width="193dp"
-            android:layout_height="34dp"
+            android:layout_height="32dp"
             android:width="280dp"
             android:paddingHorizontal="10dp"
             android:text="@string/cost"
@@ -57,7 +57,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/city"
-            app:layout_constraintVertical_bias="0.842" />
+            app:layout_constraintVertical_bias="0.6" />
 
         <Button
             android:id="@+id/favoriteButton"
