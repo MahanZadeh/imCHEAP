@@ -29,7 +29,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(c);
-        View view = inflater.inflate(R.layout.results_row_layout, parent, false);
+        View view;
+        if (cities[0].equals("No results were found.")) {
+            view = inflater.inflate(R.layout.results_error_layout, parent, false);
+        } else {
+            view = inflater.inflate(R.layout.results_row_layout, parent, false);
+        }
         return new MyViewHolder((view));
     }
 
@@ -37,7 +42,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.text1.setText(cities[position]);
         holder.text2.setText(costs[position]);
-        holder.image.setImageResource(images[0]);
+        if (holder.image != null) {
+            holder.image.setImageResource(images[0]);
+        }
     }
 
     @Override
@@ -62,7 +69,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             button = itemView.findViewById(R.id.favoriteButton);
             itemView.setOnClickListener(this);
 //            image.setOnClickListener(this);
-            button.setOnClickListener(this);
+            if (button != null) {
+                button.setOnClickListener(this);
+            }
         }
 
         public void onClick(View itemView) {

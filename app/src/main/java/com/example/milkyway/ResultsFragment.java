@@ -48,12 +48,21 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
         // Get search results
         Bundle bundle = this.getArguments();
-        if (bundle != null) {
+        if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
             costs = bundle.getStringArrayList("Sorted Price Descriptions")
                     .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
+        } else if (bundle != null && bundle.getString("Country Name") != null) {
+            String[] noResultsTitle = new String[1];
+            noResultsTitle[0] = "No results were found.";
+            String[] noResultsDescription = new String[1];
+            noResultsDescription[0] = "Please try again or try searching another country.";
+            cities = noResultsTitle;
+            costs = noResultsDescription;
+            countryName = bundle.getString("Country Name");
         }
+
 
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
                 cities, costs, images);

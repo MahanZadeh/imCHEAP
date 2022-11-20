@@ -83,7 +83,8 @@ public class SearchFragment extends Fragment {
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = radioGroup.findViewById(radioButtonID);
             String selectedText = (String) radioButton.getText();
-            searchChoice = provideQuery(selectedText);
+//            searchChoice = provideQuery(selectedText);
+            searchChoice = "Clown";
 
             if (searchChoice != null) {
                 // Grab cities
@@ -268,34 +269,36 @@ public class SearchFragment extends Fragment {
         }
 
         protected void onSuccess() {
-            Double[] rawPrices = cityInfo.values().toArray(new Double[0]);
-            // Remove duplicate prices
-            LinkedHashSet<Double> pricesNoDuplicates = new LinkedHashSet<>(Arrays.asList(rawPrices));
-            Double[] prices = pricesNoDuplicates.toArray(new Double[0]);
-            Arrays.sort(prices);
-            ArrayList<List<String>> sortedData = new ArrayList<>();
-            for (Double price : prices) {
-                for (List<String> key : cityInfo.keySet()) {
-                    if (Objects.equals(cityInfo.get(key), price)) {
-                        sortedData.add(key);
+            if (cityInfo.size() != 0) {
+                Double[] rawPrices = cityInfo.values().toArray(new Double[0]);
+                // Remove duplicate prices
+                LinkedHashSet<Double> pricesNoDuplicates = new LinkedHashSet<>(Arrays.asList(rawPrices));
+                Double[] prices = pricesNoDuplicates.toArray(new Double[0]);
+                Arrays.sort(prices);
+                ArrayList<List<String>> sortedData = new ArrayList<>();
+                for (Double price : prices) {
+                    for (List<String> key : cityInfo.keySet()) {
+                        if (Objects.equals(cityInfo.get(key), price)) {
+                            sortedData.add(key);
+                        }
                     }
                 }
+                // We may need to implement more robust sorting in another class?
+                ArrayList<String> sortedCities = new ArrayList<>();
+                ArrayList<String> costsDescription = new ArrayList<>();
+                for (List<String> data : sortedData) {
+                    String cityName = data.get(0);
+                    sortedCities.add(cityName);
+                    String itemName = data.get(1);
+                    String cCode = data.get(2);
+                    String fullDescription = itemName + ", Price: " + cityInfo.get(data) + " " + cCode;
+                    costsDescription.add(fullDescription);
+                }
+                bundle.putStringArrayList("Sorted Cities", sortedCities);
+                bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
             }
-            // We may need to implement more robust sorting in another class?
-            ArrayList<String> sortedCities = new ArrayList<>();
-            ArrayList<String> costsDescription = new ArrayList<>();
-            for (List<String> data : sortedData) {
-                String cityName = data.get(0);
-                sortedCities.add(cityName);
-                String itemName = data.get(1);
-                String cCode = data.get(2);
-                String fullDescription = itemName + ", Price: " + cityInfo.get(data) + " " + cCode;
-                costsDescription.add(fullDescription);
-            }
-            bundle.putStringArrayList("Sorted Cities", sortedCities);
-            bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
-            bundle.putString("Country Name", countryName);
 
+            bundle.putString("Country Name", countryName);
             Intent intent = new Intent(requireActivity().getApplicationContext(), ResultsPage.class);
             intent.putExtras(bundle);
             startActivity(intent);
