@@ -83,8 +83,7 @@ public class SearchFragment extends Fragment {
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = radioGroup.findViewById(radioButtonID);
             String selectedText = (String) radioButton.getText();
-//            searchChoice = provideQuery(selectedText);
-            searchChoice = "Clown";
+            searchChoice = provideQuery(selectedText);
 
             if (searchChoice != null) {
                 // Grab cities

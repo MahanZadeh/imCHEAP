@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
@@ -63,7 +65,6 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             countryName = bundle.getString("Country Name");
         }
 
-
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
                 cities, costs, images);
         myRecyclerViewAdapter.setClickListener(this);
@@ -92,16 +93,16 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         String key = FirebaseDatabase.getInstance().getReference("Fav").child(userID).push().getKey();
         FavInfo favInfo = new FavInfo(key, country, city, cost);
 
+        assert key != null;
         FirebaseDatabase.getInstance().getReference("Fav")
                 .child(userID).child(key)
-                .setValue(favInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getActivity().getApplicationContext(), "Added to favorites!", Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(getActivity().getApplicationContext(),"Failed to save to favorites!", Toast.LENGTH_SHORT).show();
-                        }
+                .setValue(favInfo).addOnCompleteListener(task -> {
+                    if(task.isSuccessful()){
+                        Toast.makeText(requireActivity().getApplicationContext(),
+                                "Added to favorites!", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(requireActivity().getApplicationContext(),
+                                "Failed to save to favorites!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
