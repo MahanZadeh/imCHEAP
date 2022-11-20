@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment {
     int totalCount = 10;
     Random random = new Random();
     String searchChoice;
+    int numberOfCities = 10;
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
@@ -202,7 +203,7 @@ public class SearchFragment extends Fragment {
 
         protected void onSuccess() {
             if (citiesList.size() != 0) {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < numberOfCities; i++) {
                     String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
                     int newRandom = random.nextInt(citiesList.size());
                     String tempUrl = pricesUrl + "?country_name=" + countryName + "&city_name=" + citiesList.get(newRandom);
@@ -241,7 +242,6 @@ public class SearchFragment extends Fragment {
                             }
                             itemName = "";
                         }
-//                        Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
                         if (!itemName.equals("")) {
                             List<String> cityItemCode = new ArrayList<>();
                             cityItemCode.add(cityName);
