@@ -50,7 +50,8 @@ public class SearchFragment extends Fragment {
 
     String countryName;
     Bundle bundle = new Bundle();
-    int count = 0;
+    int currentCount = 0;
+    int totalCount = 10;
     Random random = new Random();
     String searchChoice;
     ArrayList<String> citiesList = new ArrayList<>();
@@ -238,16 +239,21 @@ public class SearchFragment extends Fragment {
                                 currencyCode = jsonObjectPrice.getString("currency_code");
                                 break;
                             }
+                            itemName = "";
                         }
 //                        Toast.makeText(SampleAPIconnection.this, String.valueOf(prices.length()), Toast.LENGTH_SHORT).show();
-                        List<String> cityItemCode = new ArrayList<>();
-                        cityItemCode.add(cityName);
-                        cityItemCode.add(itemName);
-                        cityItemCode.add(currencyCode);
-                        cityInfo.put(cityItemCode, tempPrice);
-                        count++;
-                        if (count == 10) {
-                            onSuccess();
+                        if (!itemName.equals("")) {
+                            List<String> cityItemCode = new ArrayList<>();
+                            cityItemCode.add(cityName);
+                            cityItemCode.add(itemName);
+                            cityItemCode.add(currencyCode);
+                            cityInfo.put(cityItemCode, tempPrice);
+                            currentCount++;
+                            if (currentCount == totalCount) {
+                                onSuccess();
+                            }
+                        } else {
+                            totalCount--;
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
