@@ -2,12 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/resultsLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/itemRow"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@color/white"
@@ -36,9 +38,9 @@
             android:layout_width="193dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/city"
             android:textSize="20sp"
-            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -52,9 +54,9 @@
             android:layout_height="32dp"
             android:width="280dp"
             android:paddingHorizontal="10dp"
+            android:paddingTop="5dp"
             android:text="@string/cost"
             android:textSize="12sp"
-            android:paddingTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -2,7 +2,6 @@ package com.example.milkyway;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,12 +77,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
 
         public void onClick(View itemView) {
-            if ((itemView.getId() != View.NO_ID) && (clickListener != null)) {
+            if (clickListener != null) {
                 String id = itemView.getResources().getResourceName(itemView.getId());
                 if (id.contains("favoriteButton")) {
                     clickListener.onClickFavorites(itemView, getBindingAdapterPosition());
-                }
-                else {
+                } else {
                     clickListener.onClickCitySummary(itemView, getBindingAdapterPosition());
                 }
             }
