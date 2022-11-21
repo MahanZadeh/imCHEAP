@@ -45,8 +45,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.text1.setText(cities[position]);
         holder.text2.setText(costs[position]);
         if (holder.image != null) {
-            holder.image.setImageBitmap(Bitmap.createScaledBitmap(flag, 2560,
-                    1347, false));
+            holder.image.setImageBitmap(Bitmap.createScaledBitmap(flag, 4560,
+                    3347, false));
         }
     }
 
