@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -47,7 +48,7 @@ public class WeatherApi extends AppCompatActivity {
     Animation sunAnim,cloud1Anim,cloud2Anim,titleAnim;
     ImageView sun,cloud1,cloud2;
     Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
-
+    WeatherView weatherView;
 
     EditText etCity;
     TextView tvResult;
@@ -60,8 +61,7 @@ public class WeatherApi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_api);
 
-//        WeatherView weatherView = findViewById(R.id.weather_view);
-//        weatherView.setWeatherData(PrecipType.CUSTOM);
+        weatherView = findViewById(R.id.weather_view);
 
         etCity = findViewById(R.id.city);
         tvResult = findViewById(R.id.result);
@@ -88,26 +88,6 @@ public class WeatherApi extends AppCompatActivity {
         cloud1 = findViewById(R.id.cloud1);
         cloud2 = findViewById(R.id.cloud2);
 
-//        cloud1.startAnimation(cloud1Anim);
-//        cloud2.startAnimation(cloud2Anim);
-//        cloud1.startAnimation(sunAnim);
-//        sun.startAnimation(sunAnim);
-
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                sun.startAnimation(sunAnim);
-//
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        startActivity(new Intent(WeatherApi.this,MainActivity2.class));
-//                        finish();
-//                    }
-//                },1000);
-//            }
-//        },1500);
 
     }
 
@@ -162,42 +142,103 @@ public class WeatherApi extends AppCompatActivity {
         }
 
         protected void onSuccess() throws ParseException {
-            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
-            String key= entry.getKey();
-            String temperature = entry.getValue().get(0);
-            String description = entry.getValue().get(1);
-//            String value= String.valueOf(entry.getValue());
-            System.out.println(key);
-            System.out.println(temperature);
-            System.out.println(description);
-
-            Button btnDate = findViewById(R.id.date);
-
-            Calendar c = Calendar.getInstance();
-            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
+            int[] buttonViews = {R.id.date, R.id.button2};
             Locale currentLocale = Locale.getDefault();
+
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
-            String day = formatter.format(date1);
+//            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+            Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
+            for (int i =0; i < buttonViews.length; i++) {
+//                Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+                Map.Entry<String, ArrayList<String>> entry = itr.next();
+                String description = entry.getValue().get(1);
 
-            c.setTime(date1);
-            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-            System.out.println(day);
-            btnDate.setText(day);
-            btnDate.setOnClickListener(view -> {
-                if (description.equals("Clouds")) {
-                    sun.setVisibility(View.VISIBLE);
-                    sun.startAnimation(sunAnim);
-                }
-            });
+                String key= entry.getKey();
+                Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
+                String day = formatter.format(date1);
+                Button btn = findViewById(buttonViews[i]);
+                btn.setText(day);
+                btn.setOnClickListener(view -> {
+                    if (description.equals("Clouds")) {
+                        sun.setVisibility(View.GONE);
+                        sun.clearAnimation();
+                        cloud1.setVisibility(View.VISIBLE);
+                        cloud1.startAnimation(cloud1Anim);
+                    } else if (description.equals("Rain")) {
+                    cloud1.setVisibility(View.VISIBLE);
+                    cloud1.startAnimation(cloud1Anim);
+                    weatherView.setWeatherData(PrecipType.RAIN);
+                }else if (description.equals("Clear")) {
+                        cloud1.setVisibility(View.GONE);
+                        cloud1.clearAnimation();
+                        sun.setVisibility(View.VISIBLE);
+                        sun.startAnimation(sunAnim);
 
-            String testCon = "Clouds";
-            if (description.equals("Clouds")) {
-                cloud1.setVisibility(View.VISIBLE);
-                cloud1.startAnimation(cloud1Anim);
-            } else if (description.equals("Clear")) {
-                sun.setVisibility(View.VISIBLE);
-                sun.startAnimation(sunAnim);
+                    }
+                });
+
+
             }
+
+//            for (String key : fiveDaysWeather.keySet()) {
+//                ArrayList<String> value = fiveDaysWeather.get(key);
+//
+//                System.out.println(key + "=" + value);
+//            }
+
+//            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+//            String key= entry.getKey();
+//            String key2 = entry.getKey();
+//            String temperature = entry.getValue().get(0);
+//            String description = entry.getValue().get(1);
+//            String description2 = entry.getValue().get(1);
+//
+//
+//            Button btnDate = findViewById(R.id.date);
+//            Button btnTwo = findViewById(R.id.button2);
+//            Calendar c = Calendar.getInstance();
+//            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
+//            Date date2=new SimpleDateFormat("yyyy-MM-dd").parse(key2);
+//
+////            Locale currentLocale = Locale.getDefault();
+////            DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
+//            String day = formatter.format(date1);
+//            String day2 = formatter.format(date2);
+//
+////            c.setTime(date1);
+//            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+//            System.out.println(day);
+//            btnDate.setText(day);
+//            btnTwo.setText(day2);
+//            btnDate.setOnClickListener(view -> {
+//                if (description.equals("Clouds")) {
+//                    cloud1.setVisibility(View.VISIBLE);
+//                    cloud1.startAnimation(cloud1Anim);
+//                }
+//            });
+//            btnTwo.setOnClickListener(view -> {
+//                if (description2.equals("Rain")) {
+//                    cloud1.setVisibility(View.VISIBLE);
+//                    cloud1.startAnimation(cloud1Anim);
+//                    weatherView.setWeatherData(PrecipType.RAIN);
+//                }
+//            });
+//            String testCon = "Clouds";
+//            if (description.equals("Clouds")) {
+//                cloud1.setVisibility(View.VISIBLE);
+//                cloud1.startAnimation(cloud1Anim);
+//                weatherView.setWeatherData(PrecipType.RAIN);
+//
+//            } else if (description.equals("Clear")) {
+//                sun.setVisibility(View.VISIBLE);
+//                sun.startAnimation(sunAnim);
+//
+//            }else if (description.contains("rain")) {
+//                cloud1.setVisibility(View.VISIBLE);
+//                cloud1.startAnimation(cloud1Anim);
+//                weatherView.setWeatherData(PrecipType.RAIN);
+//
+//            }
         }
 
     }
