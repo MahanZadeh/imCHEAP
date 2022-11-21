@@ -27,11 +27,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ImageView
         android:id="@+id/sun"
-        android:visibility="gone"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:visibility="gone"
         android:src="@drawable/ic_baseline_wb_sunny_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +42,7 @@
 
     <ImageView
         android:id="@+id/cloud1"
+        android:visibility="gone"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_baseline_cloud_24"
@@ -51,6 +53,7 @@
 
     <ImageView
         android:id="@+id/cloud2"
+        android:visibility="gone"
         android:alpha="0.5"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -76,11 +79,17 @@
             android:inputType="textPersonName" />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnGetData"
             android:layout_marginBottom="10dp"
             android:text="Search" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="date"
+            android:id="@+id/date"/>
 
         <ScrollView
             android:layout_width="match_parent"

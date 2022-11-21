@@ -29,17 +29,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class WeatherApi extends AppCompatActivity {
 
     Animation sunAnim,cloud1Anim,cloud2Anim,titleAnim;
     ImageView sun,cloud1,cloud2;
-    Map<String, ArrayList<String>> fiveDaysWeather = new HashMap<String, ArrayList<String>>();
+    Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
 
 
     EditText etCity;
@@ -81,8 +88,8 @@ public class WeatherApi extends AppCompatActivity {
         cloud1 = findViewById(R.id.cloud1);
         cloud2 = findViewById(R.id.cloud2);
 
-        cloud1.startAnimation(cloud1Anim);
-        cloud2.startAnimation(cloud2Anim);
+//        cloud1.startAnimation(cloud1Anim);
+//        cloud2.startAnimation(cloud2Anim);
 //        cloud1.startAnimation(sunAnim);
 //        sun.startAnimation(sunAnim);
 
@@ -119,7 +126,7 @@ public class WeatherApi extends AppCompatActivity {
 
 
                         for(int i=0; i< fiveDayHourlyForecast.length(); i++) {
-                            String tempDate = fiveDayHourlyForecast.getJSONObject(i).getString("dt_txt").substring(0,11);
+                            String tempDate = fiveDayHourlyForecast.getJSONObject(i).getString("dt_txt").substring(0,10);
                             ArrayList<String> oneDayWeatherInfo = new ArrayList<>();
 
                             if (!fiveDaysWeather.containsKey(tempDate)) {
@@ -140,6 +147,8 @@ public class WeatherApi extends AppCompatActivity {
                         onSuccess();
                     } catch (JSONException e) {
                         e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
                 }
             }, new Response.ErrorListener() {
@@ -152,9 +161,40 @@ public class WeatherApi extends AppCompatActivity {
             return null;
         }
 
-        protected void onSuccess() {
+        protected void onSuccess() throws ParseException {
+            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+            String key= entry.getKey();
+            String temperature = entry.getValue().get(0);
+            String description = entry.getValue().get(1);
+//            String value= String.valueOf(entry.getValue());
+            System.out.println(key);
+            System.out.println(temperature);
+            System.out.println(description);
+
+            Button btnDate = findViewById(R.id.date);
+
+            Calendar c = Calendar.getInstance();
+            Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
+            Locale currentLocale = Locale.getDefault();
+            DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
+            String day = formatter.format(date1);
+
+            c.setTime(date1);
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            System.out.println(day);
+            btnDate.setText(day);
+            btnDate.setOnClickListener(view -> {
+                if (description.equals("Clouds")) {
+                    sun.setVisibility(View.VISIBLE);
+                    sun.startAnimation(sunAnim);
+                }
+            });
+
             String testCon = "Clouds";
-            if (testCon.equals("Clouds")) {
+            if (description.equals("Clouds")) {
+                cloud1.setVisibility(View.VISIBLE);
+                cloud1.startAnimation(cloud1Anim);
+            } else if (description.equals("Clear")) {
                 sun.setVisibility(View.VISIBLE);
                 sun.startAnimation(sunAnim);
             }
