@@ -49,7 +49,6 @@ public class CitySummary extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
     }
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
@@ -76,10 +75,7 @@ public class CitySummary extends AppCompatActivity {
                             itemName = jsonObjectPrice.getString("item_name");
                             tempPrice = jsonObjectPrice.getDouble("avg");
                             currencyCode = jsonObjectPrice.getString("currency_code");
-                            StringBuilder sb = new StringBuilder(itemName + " costs " + tempPrice
-                                    + " " + currencyCode);
-                            itemPrice = itemName + " costs " + tempPrice + " " + currencyCode;
-                            Toast.makeText(CitySummary.this, sb, Toast.LENGTH_SHORT).show();
+                            itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
                             break;
                         }
                         itemId = 1;
@@ -104,7 +100,6 @@ public class CitySummary extends AppCompatActivity {
         }
 
         protected void onSuccess() {
-            Toast.makeText(CitySummary.this, "onPostExecute", Toast.LENGTH_SHORT).show();
 
             TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
 
@@ -113,9 +108,8 @@ public class CitySummary extends AppCompatActivity {
             TextView textView = new TextView(CitySummary.this); //making the text for that row
 
             textView.setText(itemPrice);
-            textView.setWidth(900);
+            textView.setWidth(1000);
             textView.setHeight(100);
-//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
             textView.setGravity(Gravity.CENTER);
             textView.setBackgroundColor(Color.argb(255, randomColour.nextInt(256), randomColour.nextInt(256), randomColour.nextInt(256)));
 
