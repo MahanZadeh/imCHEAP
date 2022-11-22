@@ -1,6 +1,5 @@
 package com.example.milkyway;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,13 +22,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class CitySummary extends AppCompatActivity {
 
-    String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name=Taipei&country_name=Taiwan";
+    String pricesUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,9 @@ public class CitySummary extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras().getBundle("bundle") ;
         String countryName = bundle.getString("countryName");
-        String cityName = bundle.getString("cityName");
-        StringBuilder sb = new StringBuilder(countryName + cityName);
-
-        Toast.makeText(CitySummary.this, sb, Toast.LENGTH_SHORT).show();
-
+        String cityName = bundle.getString("cityName").toLowerCase(Locale.ROOT);
+        pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
+                + cityName + "&country_name=" + countryName;
 
         for (int i = 1; i <= 10; i++) {
 
@@ -65,39 +63,39 @@ public class CitySummary extends AppCompatActivity {
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
             boolean isExists = false;
 
-                try {
-                    JSONArray prices = response.getJSONArray("prices");
-                    int itemId;
-                    double tempPrice;
-                    String currencyCode;
-                    String itemName;
-                    Random random = new Random();
-                    int randomItemId = random.nextInt(prices.length());
+            try {
+                JSONArray prices = response.getJSONArray("prices");
+                int itemId;
+                double tempPrice;
+                String currencyCode;
+                String itemName;
+                Random random = new Random();
+                int randomItemId = random.nextInt(prices.length());
 
-                    for (int i = 0; i < prices.length(); i++) {
-                        JSONObject jsonObjectPrice = prices.getJSONObject(i);
-                        itemId = jsonObjectPrice.getInt("good_id");
-                        itemName = jsonObjectPrice.getString("item_name");
+                for (int i = 0; i < prices.length(); i++) {
+                    JSONObject jsonObjectPrice = prices.getJSONObject(i);
+                    itemId = jsonObjectPrice.getInt("good_id");
+                    itemName = jsonObjectPrice.getString("item_name");
 
-                        if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
-                            isExists = true;
-                            if (itemName.contains(",")) {
-                                String[] parts = itemName.split(",");
-                                itemName = parts[0];
-                            }
-
-                            tempPrice = jsonObjectPrice.getDouble("avg");
-                            currencyCode = jsonObjectPrice.getString("currency_code");
-                            itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
-                            break;
+                    if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
+                        isExists = true;
+                        if (itemName.contains(",")) {
+                            String[] parts = itemName.split(",");
+                            itemName = parts[0];
                         }
+
+                        tempPrice = jsonObjectPrice.getDouble("avg");
+                        currencyCode = jsonObjectPrice.getString("currency_code");
+                        itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
+                        break;
                     }
-                    if (isExists) {
-                        onSuccess();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                if (isExists) {
+                    onSuccess();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             }, error -> Toast.makeText(CitySummary.this, error.toString(), Toast.LENGTH_SHORT).show()) {
 
                 /** Passing some request headers* */
