@@ -1,11 +1,6 @@
 package com.example.milkyway;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,31 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
     RecyclerView recyclerView;
     View view;
-    ResultsFragment resultsFragment;
     String[] cities, costs;
     String countryName;
 
@@ -59,7 +38,6 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             costs = bundle.getStringArrayList("Sorted Price Descriptions")
                     .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
-            resultsFragment = this;
         } else if (bundle != null && bundle.getString("Country Name") != null) {
             String[] noResultsTitle = new String[1];
             noResultsTitle[0] = "No results were found.";
@@ -84,7 +62,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         String url = flagUrl + countryName;
         MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
             cities, costs, url);
-        myRecyclerViewAdapter.setClickListener(resultsFragment);
+        myRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         recyclerView.setAdapter(myRecyclerViewAdapter);
 

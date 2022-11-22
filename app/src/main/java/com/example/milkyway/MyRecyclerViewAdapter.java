@@ -49,6 +49,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     .load(url)
                     .resize(800, 600) // resizes the image to these dimensions (in pixel)
                     .centerCrop()
+                    .placeholder(R.drawable.placeholder)
                     .error(R.drawable.image_not_found)
                     .into(holder.image);
         }
