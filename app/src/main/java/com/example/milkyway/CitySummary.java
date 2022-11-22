@@ -3,7 +3,6 @@ package com.example.milkyway;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,9 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -62,7 +59,7 @@ public class CitySummary extends AppCompatActivity {
                 try {
                     JSONArray prices = response.getJSONArray("prices");
                     int itemId;
-                    double tempPrice = 0.00;
+                    double tempPrice;
                     String currencyCode;
                     String itemName;
                     Random random = new Random();
@@ -78,7 +75,6 @@ public class CitySummary extends AppCompatActivity {
                             itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
                             break;
                         }
-                        itemId = 1;
                     }
                     onSuccess();
                 } catch (JSONException e) {
