@@ -98,8 +98,10 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     @Override
     public void onClickCitySummary(View view, int position) {
         // Go to city summary page
-        Intent intent = new Intent(getActivity(), CitySummary.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getActivity(), CitySummary.class);
+//        startActivity(intent);
+        Fragment citySummaryFragment = new
+
     }
 
     @Override
