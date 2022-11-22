@@ -43,9 +43,6 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     ResultsFragment resultsFragment;
     String[] cities, costs;
     String countryName;
-    Bitmap flag;
-
-    private String flagUrl = "https://countryflagsapi.com/png/";
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -63,9 +60,6 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
                     .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
             resultsFragment = this;
-            AsyncTaskRunnerFlag runnerFlag = new AsyncTaskRunnerFlag();
-            String completeUrl = flagUrl + countryName;
-            runnerFlag.execute(completeUrl);
         } else if (bundle != null && bundle.getString("Country Name") != null) {
             String[] noResultsTitle = new String[1];
             noResultsTitle[0] = "No results were found.";
@@ -85,6 +79,14 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         recyclerView = view.findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+        String flagUrl = "https://countryflagsapi.com/png/";
+        String url = flagUrl + countryName;
+        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
+            cities, costs, url);
+        myRecyclerViewAdapter.setClickListener(resultsFragment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(myRecyclerViewAdapter);
 
         return view;
     }
@@ -120,33 +122,5 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
                                 "Failed to save to favorites!", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class AsyncTaskRunnerFlag extends AsyncTask<String, Void, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(String... strings) {
-            try {
-                InputStream in = (InputStream) new URL(strings[0]).getContent(); //Reads whatever content found with the given URL Asynchronously And returns.
-                flag = BitmapFactory.decodeStream(in); //Decodes the stream returned from getContent and converts It into a Bitmap Format
-                System.out.println(flag.getRowBytes());
-                System.out.println(flag.getHeight());
-                in.close(); //Closes the InputStream
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> strings) {
-            super.onPostExecute(strings);
-            MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
-                cities, costs, flag);
-            myRecyclerViewAdapter.setClickListener(resultsFragment);
-            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            recyclerView.setAdapter(myRecyclerViewAdapter);
-        }
     }
 }
