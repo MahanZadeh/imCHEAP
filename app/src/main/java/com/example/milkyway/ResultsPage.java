@@ -21,23 +21,23 @@ public class ResultsPage extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        TextView resultsDescription = findViewById(R.id.resultsTitle);
-        String countryName = bundle.getString("Country Name").toUpperCase(Locale.ROOT);
-        String pageTitle = "Search Results for " + countryName;
-        resultsDescription.setText(pageTitle);
-
-        Fragment results = new ResultsFragment();
-        results.setArguments(bundle);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.ctnFragment, results);
-        fragmentTransaction.commit();
-
-        Button backButton = findViewById(R.id.resultsBack);
-        backButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, LandingPage.class);
-            startActivity(intent);
-        });
+//        TextView resultsDescription = findViewById(R.id.resultsTitle);
+//        String countryName = bundle.getString("Country Name").toUpperCase(Locale.ROOT);
+//        String pageTitle = "Search Results for " + countryName;
+//        resultsDescription.setText(pageTitle);
+//
+//        Fragment results = new ResultsFragment();
+//        results.setArguments(bundle);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.ctnFragment, results);
+//        fragmentTransaction.commit();
+//
+//        Button backButton = findViewById(R.id.resultsBack);
+//        backButton.setOnClickListener(view -> {
+//            Intent intent = new Intent(this, LandingPage.class);
+//            startActivity(intent);
+//        });
 
     }
 }

@@ -7,11 +7,15 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +37,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
@@ -56,6 +62,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         super.onCreate(savedInstanceState);
 
         // Get search results
+        Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
@@ -87,6 +94,15 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView resultsDescription = requireView().findViewById(R.id.resultsTitle);
+        countryName = countryName.toUpperCase(Locale.ROOT);
+        String pageTitle = "Search Results for " + countryName;
+        resultsDescription.setText(pageTitle);
     }
 
     @Override
