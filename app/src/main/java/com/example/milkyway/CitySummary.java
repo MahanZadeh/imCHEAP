@@ -98,8 +98,12 @@ public class CitySummary extends AppCompatActivity {
         protected void onSuccess() {
 
             TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
+            final int baseColor = Color.WHITE;
+            final int baseRed = Color.red(baseColor);
+            final int baseGreen = Color.green(baseColor);
+            final int baseBlue = Color.blue(baseColor);
 
-            Random randomColour = new Random();
+            Random random = new Random();
             TableRow tableRow = new TableRow(CitySummary.this); //making a row
             TextView textView = new TextView(CitySummary.this); //making the text for that row
 
@@ -107,7 +111,10 @@ public class CitySummary extends AppCompatActivity {
             textView.setWidth(1000);
             textView.setHeight(100);
             textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundColor(Color.argb(255, randomColour.nextInt(256), randomColour.nextInt(256), randomColour.nextInt(256)));
+            textView.setBackgroundColor(Color.argb(255,
+                    (baseRed + random.nextInt(256)) / 2,
+                    (baseGreen + random.nextInt(256)) /2 ,
+                    (baseBlue + random.nextInt(256)) / 2));
 
             tableRow.addView(textView); // adding the text to the row
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
