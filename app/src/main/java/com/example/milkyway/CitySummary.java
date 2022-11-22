@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Random;
 
-public class dynamic_test extends AppCompatActivity {
+public class CitySummary extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dynamic_test);
+        setContentView(R.layout.activity_city_summary);
 
         TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
 
