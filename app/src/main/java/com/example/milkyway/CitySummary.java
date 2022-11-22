@@ -35,8 +35,6 @@ public class CitySummary extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_summary);
 
-        // City Highlight #1: Domestic beer costs 51.12 TWD!
-
         for (int i = 1; i <= 10; i++) {
 
             AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -56,6 +54,8 @@ public class CitySummary extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(CitySummary.this);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+            boolean isExists = false;
+
                 try {
                     JSONArray prices = response.getJSONArray("prices");
                     int itemId;
@@ -68,15 +68,24 @@ public class CitySummary extends AppCompatActivity {
                     for (int i = 0; i < prices.length(); i++) {
                         JSONObject jsonObjectPrice = prices.getJSONObject(i);
                         itemId = jsonObjectPrice.getInt("good_id");
-                        if (itemId == randomItemId) {
-                            itemName = jsonObjectPrice.getString("item_name");
+                        itemName = jsonObjectPrice.getString("item_name");
+
+                        if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
+                            isExists = true;
+                            if (itemName.contains(",")) {
+                                String[] parts = itemName.split(",");
+                                itemName = parts[0];
+                            }
+
                             tempPrice = jsonObjectPrice.getDouble("avg");
                             currencyCode = jsonObjectPrice.getString("currency_code");
                             itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
                             break;
                         }
                     }
-                    onSuccess();
+                    if (isExists) {
+                        onSuccess();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
