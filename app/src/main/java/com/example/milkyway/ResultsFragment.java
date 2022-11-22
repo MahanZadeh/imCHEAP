@@ -34,6 +34,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     String[] cities, costs;
     String countryName;
     Bitmap flag;
+    boolean noResults = false;
 
     private String flagUrl = "https://countryflagsapi.com/png/";
 
@@ -57,6 +58,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             String completeUrl = flagUrl + countryName;
             runnerFlag.execute(completeUrl);
         } else if (bundle != null && bundle.getString("Country Name") != null) {
+            noResults = true;
             String[] noResultsTitle = new String[1];
             noResultsTitle[0] = "No results were found.";
             String[] noResultsDescription = new String[1];
@@ -81,9 +83,17 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
     @Override
     public void onClickCitySummary(View view, int position) {
+        System.out.println("if blocked not entered");
         // Go to city summary page
-        Intent intent = new Intent(getActivity(), CitySummary.class);
-        startActivity(intent);
+        if (countryName != null && !noResults) {
+            System.out.println("onClickCitySummary");
+            Bundle bundle = new Bundle();
+            bundle.putString("countryName", countryName);
+            bundle.putString("cityName", cities[position]);
+            Intent intent = new Intent(getActivity(), CitySummary.class);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
     }
 
     @Override
