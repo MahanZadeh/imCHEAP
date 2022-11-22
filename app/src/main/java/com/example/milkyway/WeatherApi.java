@@ -81,8 +81,8 @@ public class WeatherApi extends AppCompatActivity {
 
         sunAnim = AnimationUtils.loadAnimation(this,R.anim.sun);
         cloud1Anim = AnimationUtils.loadAnimation(this,R.anim.cloud1);
-        cloud1Anim.setRepeatCount(Animation.INFINITE);
-        cloud1Anim.setRepeatMode(Animation.INFINITE);
+//        cloud1Anim.setRepeatCount(Animation.INFINITE);
+//        cloud1Anim.setRepeatMode(Animation.INFINITE);
         cloud2Anim = AnimationUtils.loadAnimation(this,R.anim.cloud2);
         sun = findViewById(R.id.sun);
         cloud1 = findViewById(R.id.cloud1);
@@ -90,7 +90,6 @@ public class WeatherApi extends AppCompatActivity {
 
 
     }
-
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
 
@@ -164,10 +163,14 @@ public class WeatherApi extends AppCompatActivity {
                         sun.clearAnimation();
                         cloud1.setVisibility(View.VISIBLE);
                         cloud1.startAnimation(cloud1Anim);
+                        cloud2.setVisibility(View.VISIBLE);
+                        cloud2.startAnimation(cloud2Anim);
                     } else if (description.equals("Rain")) {
-                    cloud1.setVisibility(View.VISIBLE);
-                    cloud1.startAnimation(cloud1Anim);
-                    weatherView.setWeatherData(PrecipType.RAIN);
+                        cloud1.setVisibility(View.VISIBLE);
+                        cloud1.startAnimation(cloud1Anim);
+                        cloud2.setVisibility(View.VISIBLE);
+                        cloud2.startAnimation(cloud2Anim);
+                        weatherView.setWeatherData(PrecipType.RAIN);
                 }else if (description.equals("Clear")) {
                         cloud1.setVisibility(View.GONE);
                         cloud1.clearAnimation();

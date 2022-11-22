@@ -43,6 +43,7 @@
     <ImageView
         android:id="@+id/cloud1"
         android:visibility="gone"
+        android:alpha="0.3"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/ic_baseline_cloud_24"
@@ -65,7 +66,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.05"/>
+        app:layout_constraintVertical_bias="0.5"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
     <LinearLayout
         android:layout_width="match_parent"
