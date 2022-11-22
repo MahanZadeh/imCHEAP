@@ -3,6 +3,7 @@ package com.example.milkyway;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -39,39 +40,15 @@ public class CitySummary extends AppCompatActivity {
 
         // City Highlight #1: Domestic beer costs 51.12 TWD!
 
-//        TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
-//
-//        Random randomColour = new Random();
+        for (int i = 1; i <= 10; i++) {
 
-        for(int i=1; i<6; i++) {
-
-//            TableRow tableRow = new TableRow(this); //making a row
-//            TextView textView = new TextView(this); //making the text for that row
-
-            // new
             AsyncTaskRunner runner = new AsyncTaskRunner();
             try {
-                String itemPrice = runner.execute(pricesUrl).get();
-//                Toast.makeText(CitySummary.this, "Worked!!!", Toast.LENGTH_SHORT).show();
-
-//                String text = "City Highlight #" + i + ": " + itemPrice;  // adding details and params of the text view to be added
-//                textView.setText(text); // for the text/images/etc, look at the adapter thing for the city spinner lab
-//                textView.setWidth(900); // mahan how do I set this to match parent or something?
-//
-//                textView.setHeight(100);
-//                textView.setGravity(Gravity.CENTER);
-//                textView.setBackgroundColor(Color.argb(255, randomColour.nextInt(256), randomColour.nextInt(256), randomColour.nextInt(256)));
-//
-//                tableRow.addView(textView); // adding the text to the row
-//
-//                tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
-
-
+                runner.execute(pricesUrl).get();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
-//        tableLayout1.setForegroundGravity(Gravity.CENTER);
 
     }
 
@@ -93,7 +70,6 @@ public class CitySummary extends AppCompatActivity {
                     int randomItemId = random.nextInt(prices.length());
 
                     for (int i = 0; i < prices.length(); i++) {
-                        // City Highlight #1: Domestic beer costs 51.12 TWD!
                         JSONObject jsonObjectPrice = prices.getJSONObject(i);
                         itemId = jsonObjectPrice.getInt("good_id");
                         if (itemId == randomItemId) {
@@ -123,14 +99,12 @@ public class CitySummary extends AppCompatActivity {
                     return headers;
                 }
             };
-
             queue.add(request);
-            return itemPrice;  // seems to only return null?
+            return null;
         }
 
         protected void onSuccess() {
             Toast.makeText(CitySummary.this, "onPostExecute", Toast.LENGTH_SHORT).show();
-//            setData("hi");
 
             TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
 
@@ -138,24 +112,18 @@ public class CitySummary extends AppCompatActivity {
             TableRow tableRow = new TableRow(CitySummary.this); //making a row
             TextView textView = new TextView(CitySummary.this); //making the text for that row
 
-            String text = "City Highlight: " + itemPrice;  // adding details and params of the text view to be added
-            textView.setText(text); // for the text/images/etc, look at the adapter thing for the city spinner lab
-            textView.setWidth(900); // mahan how do I set this to match parent or something?
-
+            textView.setText(itemPrice);
+            textView.setWidth(900);
             textView.setHeight(100);
+//            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
             textView.setGravity(Gravity.CENTER);
             textView.setBackgroundColor(Color.argb(255, randomColour.nextInt(256), randomColour.nextInt(256), randomColour.nextInt(256)));
 
             tableRow.addView(textView); // adding the text to the row
-
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
 
             tableLayout1.setForegroundGravity(Gravity.CENTER);
         }
 
-        private void setData(String data){
-            Toast.makeText(CitySummary.this, "setData", Toast.LENGTH_SHORT).show();
-//            mTextView.setText(data);
-        }
     }
 }
