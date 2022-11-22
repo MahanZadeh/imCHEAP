@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -78,7 +79,7 @@ public class CitySummaryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         for (int i = 1; i <= 10; i++) {
 
-            AsyncTaskRunner runner = new CitySummary.AsyncTaskRunner();
+            AsyncTaskRunner runner = new CitySummaryFragment.AsyncTaskRunner();
             try {
                 runner.execute(pricesUrl).get();
             } catch (ExecutionException | InterruptedException e) {
@@ -100,7 +101,7 @@ public class CitySummaryFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
-            RequestQueue queue = Volley.newRequestQueue(CitySummary.this);
+            RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
                 boolean isExists = false;
 
@@ -137,7 +138,7 @@ public class CitySummaryFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }, error -> Toast.makeText(CitySummary.this, error.toString(), Toast.LENGTH_SHORT).show()) {
+            }, error -> Toast.makeText(getActivity().getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show()) {
 
                 /** Passing some request headers* */
                 @Override
@@ -154,15 +155,15 @@ public class CitySummaryFragment extends Fragment {
 
         protected void onSuccess() {
 
-            TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
+            TableLayout tableLayout1 = requireView().findViewById(R.id.table_layout1); // here we grab the tablelayout
             final int baseColor = Color.WHITE;
             final int baseRed = Color.red(baseColor);
             final int baseGreen = Color.green(baseColor);
             final int baseBlue = Color.blue(baseColor);
 
             Random random = new Random();
-            TableRow tableRow = new TableRow(CitySummary.this); //making a row
-            TextView textView = new TextView(CitySummary.this); //making the text for that row
+            TableRow tableRow = new TableRow(requireActivity().getApplicationContext()); //making a row
+            TextView textView = new TextView(requireActivity().getApplicationContext()); //making the text for that row
 
             textView.setText(itemPrice);
             textView.setWidth(1000);
