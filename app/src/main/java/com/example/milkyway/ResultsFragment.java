@@ -22,6 +22,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     View view;
     String[] cities, costs;
     String countryName;
+    boolean noResults = false;
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -39,6 +40,7 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
                     .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
         } else if (bundle != null && bundle.getString("Country Name") != null) {
+            noResults = true;
             String[] noResultsTitle = new String[1];
             noResultsTitle[0] = "No results were found.";
             String[] noResultsDescription = new String[1];
@@ -71,9 +73,17 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
     @Override
     public void onClickCitySummary(View view, int position) {
+        System.out.println("if blocked not entered");
         // Go to city summary page
-        Intent intent = new Intent(getActivity(), dynamic_test.class);
-        startActivity(intent);
+        if (countryName != null && !noResults) {
+            System.out.println("onClickCitySummary");
+            Bundle bundle = new Bundle();
+            bundle.putString("countryName", countryName);
+            bundle.putString("cityName", cities[position]);
+            Intent intent = new Intent(getActivity(), CitySummary.class);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
     }
 
     @Override
