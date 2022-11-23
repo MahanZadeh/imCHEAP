@@ -2,6 +2,7 @@ package com.example.milkyway;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -165,10 +166,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
             View linearLayout =  findViewById(R.id.linearSpinner);
             Spinner spinner = new Spinner(getApplicationContext());
-            spinner.setDropDownWidth(100);
-            spinner.setMinimumWidth(100);
-            spinner.setBackgroundColor(Color.GRAY);
-            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
+            spinner.setDropDownWidth(200);
+//            spinner.setMinimumWidth(100);
+            spinner.setBackgroundColor(0);
+//            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
+//            spinner.set;
             spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
 
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
@@ -195,7 +197,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                 Button btn = findViewById(buttonViews[i]);
                 btn.setText(day.substring(0, 2));
 
-                spinnerList.add(day.substring(0, 2));
+                spinnerList.add(day.substring(0, 3));
 
                 btn.setOnClickListener(view -> {
                     if (description.equals("Clouds")) {
