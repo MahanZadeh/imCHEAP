@@ -42,6 +42,9 @@ public class CitySummary extends AppCompatActivity {
         pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                 + cityName + "&country_name=" + countryName;
 
+        TextView cityNameView = findViewById(R.id.summary_city_name);
+        cityNameView.setText(cityName);
+
         for (int i = 1; i <= 10; i++) {
 
             AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -79,6 +82,7 @@ public class CitySummary extends AppCompatActivity {
 
                     if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
                         isExists = true;
+
                         if (itemName.contains(",")) {
                             String[] parts = itemName.split(",");
                             itemName = parts[0];
