@@ -99,11 +99,9 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
     @Override
     public void onClickCitySummary(View view, int position) {
-        System.out.println("if blocked not entered");
         // Go to city summary page
 
         if (countryName != null && !noResults) {
-            System.out.println("onClickCitySummary");
             Bundle bundle = new Bundle();
             bundle.putString("countryName", countryName);
             bundle.putString("cityName", cities[position]);
