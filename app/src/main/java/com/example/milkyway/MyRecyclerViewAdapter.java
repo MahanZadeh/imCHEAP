@@ -1,6 +1,7 @@
 package com.example.milkyway;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     Context c;
     String[] cities, costs;
-    int[] images;
+    Bitmap flag;
     private ResultsItemClickListener clickListener;
 
-    public MyRecyclerViewAdapter(Context c, String[] cities, String[] costs, int[] images) {
+    public MyRecyclerViewAdapter(Context c, String[] cities, String[] costs, Bitmap flag) {
         this.c = c;
         this.cities = cities;
         this.costs = costs;
-        this.images = images;
+        this.flag = flag;
     }
 
     @NonNull
@@ -43,13 +44,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.text1.setText(cities[position]);
         holder.text2.setText(costs[position]);
         if (holder.image != null) {
-            holder.image.setImageResource(images[0]);
+            holder.image.setImageBitmap(Bitmap.createScaledBitmap(flag, 4560,
+                    3347, false));
         }
     }
 
     @Override
     public int getItemCount() {
-        return cities.length;
+        return cities == null ? 0 : cities.length;
     }
 
     public void setClickListener(ResultsItemClickListener resultsItemClickListener) {
@@ -75,12 +77,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
 
         public void onClick(View itemView) {
-            if ((itemView.getId() != View.NO_ID) && (clickListener != null)) {
+            if (clickListener != null) {
                 String id = itemView.getResources().getResourceName(itemView.getId());
                 if (id.contains("favoriteButton")) {
                     clickListener.onClickFavorites(itemView, getBindingAdapterPosition());
-                }
-                else {
+                } else {
                     clickListener.onClickCitySummary(itemView, getBindingAdapterPosition());
                 }
             }

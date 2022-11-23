@@ -15,21 +15,8 @@
         android:theme="@style/Theme.MilkyWay"
         tools:targetApi="31" >
         <activity
-            android:name=".WeatherApi"
-            android:exported="true" > <!--change this to false and remove the intent filter below, and uncomment it for main activity-->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".FavoritesRecyclerViewAdapter"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -43,27 +30,27 @@
         </activity>
         <activity
             android:name=".Register"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".dynamic_test"
+            android:name=".CitySummary"
             android:exported="false"
-            android:parentActivityName=".ResultsPage" >
+            android:parentActivityName=".ResultsPage">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -72,7 +59,7 @@
         <activity
             android:name=".ResultsPage"
             android:exported="true"
-            android:parentActivityName=".LandingPage" >
+            android:parentActivityName=".LandingPage">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,7 +73,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -95,7 +82,7 @@
         </activity>
         <activity
             android:name=".LandingPage"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
