@@ -50,7 +50,8 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.getSerializable("City Data") != null) {
-            LinkedHashMap<List<String>, Double> sortedData = (LinkedHashMap<List<String>, Double>) bundle.getSerializable("City Data");
+            @SuppressWarnings("unchecked") LinkedHashMap<List<String>, Double> sortedData =
+                    (LinkedHashMap<List<String>, Double>) bundle.getSerializable("City Data");
             Set<List<String>> keys = sortedData.keySet();
             cities = new String[sortedData.size()];
             costs = new String[sortedData.size()];
