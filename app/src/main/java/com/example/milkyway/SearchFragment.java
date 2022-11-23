@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -285,7 +287,20 @@ public class SearchFragment extends Fragment {
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1,
                                 LinkedHashMap::new));
-                bundle.putSerializable("City Data", sortedData);
+                List<List<String>> keys = new ArrayList<>(sortedData.keySet());
+
+                ArrayList<String> sortedCities = new ArrayList<>();
+                ArrayList<String> costsDescription = new ArrayList<>();
+                for (List<String> key : keys) {
+                    String cityName = key.get(0);
+                    sortedCities.add(cityName);
+                    String itemName = key.get(1);
+                    String cCode = key.get(2);
+                    String fullDescription = itemName + ", Price: " + cityInfo.get(key) + " " + cCode;
+                    costsDescription.add(fullDescription);
+                }
+                bundle.putStringArrayList("Sorted Cities", sortedCities);
+                bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
             }
 
             bundle.putString("Country Name", countryName);

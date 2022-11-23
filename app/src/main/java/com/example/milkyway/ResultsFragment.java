@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -45,22 +46,10 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         // Get search results
         Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
-        if (bundle != null && bundle.getSerializable("City Data") != null) {
-            @SuppressWarnings("unchecked") LinkedHashMap<List<String>, Double> sortedData =
-                    (LinkedHashMap<List<String>, Double>) bundle.getSerializable("City Data");
-            Set<List<String>> keys = sortedData.keySet();
-            cities = new String[sortedData.size()];
-            costs = new String[sortedData.size()];
-            int count = 0;
-            for (List<String> key : keys) {
-                String cityName = key.get(0);
-                cities[count] = (cityName);
-                String itemName = key.get(1);
-                String cCode = key.get(2);
-                String fullDescription = itemName + ", Price: " + sortedData.get(key) + " " + cCode;
-                costs[count] = (fullDescription);
-                count++;
-            }
+        if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
+            cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
+            costs = bundle.getStringArrayList("Sorted Price Descriptions")
+                    .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
         } else if (bundle != null && bundle.getString("Country Name") != null) {
             noResults = true;
