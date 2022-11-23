@@ -59,13 +59,14 @@ public class WeatherApi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_weather_api);
+        setContentView(R.layout.activity_city_summary);
 
         weatherView = findViewById(R.id.weather_view);
 
-        etCity = findViewById(R.id.city);
-        tvResult = findViewById(R.id.result);
-        btnGetData = findViewById(R.id.btnGetData);
+//        etCity = findViewById(R.id.city);
+//        tvResult = findViewById(R.id.result);
+//        btnGetData = findViewById(R.id.btnGetData);
+        //need to grab the data via bundle. NO ONCLICK NEEDED
         btnGetData.setOnClickListener(view -> {
             tvResult.setText("");
             String tempUrl = "";
@@ -183,6 +184,29 @@ public class WeatherApi extends AppCompatActivity {
 
             }
 
+        }
+
+    }
+}
+
+///Copyright 2019 Matteo Battilana
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//	http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+
+
+
+
 //            for (String key : fiveDaysWeather.keySet()) {
 //                ArrayList<String> value = fiveDaysWeather.get(key);
 //
@@ -242,21 +266,3 @@ public class WeatherApi extends AppCompatActivity {
 //                weatherView.setWeatherData(PrecipType.RAIN);
 //
 //            }
-        }
-
-    }
-}
-
-///Copyright 2019 Matteo Battilana
-//
-//Licensed under the Apache License, Version 2.0 (the "License");
-//you may not use this file except in compliance with the License.
-//You may obtain a copy of the License at
-//
-//	http://www.apache.org/licenses/LICENSE-2.0
-//
-//Unless required by applicable law or agreed to in writing, software
-//distributed under the License is distributed on an "AS IS" BASIS,
-//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//See the License for the specific language governing permissions and
-//limitations under the License.

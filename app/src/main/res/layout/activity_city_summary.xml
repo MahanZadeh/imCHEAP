@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/table_layout" >
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#b3e8e5">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="40"
+>
+    <com.github.matteobattilana.weather.WeatherView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:paddingTop="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        tools:ignore="UseCompoundDrawables">
+        android:layout_height="match_parent"
+        android:id="@+id/weather_view">
 
+    </com.github.matteobattilana.weather.WeatherView>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
         <ImageView
+            android:id="@+id/cityImage"
             android:layout_width="163dp"
             android:layout_height="123dp"
             app:srcCompat="@drawable/flag_of_berlin"
@@ -29,29 +31,161 @@
 
         <TextView
             android:id="@+id/summary_city_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/berlin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cityName"
             android:textStyle="bold"
-            android:gravity="bottom">
+            android:layout_toRightOf="@+id/cityImage"
+            android:layout_alignBottom="@+id/cityImage"
+            android:textSize="17sp">
 
         </TextView>
-    </LinearLayout>
 
+    <Button
+        android:id="@+id/date1"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:text="Today1"
+        android:textSize="8sp"/>
 
-    <TableRow
+    <Button
+        android:id="@+id/date2"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:textSize="8sp"
+        android:text="Tm2"
+        android:layout_toRightOf="@+id/date1"/>
+    <Button
+        android:id="@+id/date3"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:textSize="8sp"
+        android:text="Tm3"
+        android:layout_toRightOf="@+id/date2"/>
+    <Button
+        android:id="@+id/date4"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:textSize="8sp"
+        android:text="Tm4"
+        android:layout_toRightOf="@+id/date3"/>
+    <Button
+        android:id="@+id/date5"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:textSize="8sp"
+        android:text="Tm5"
+        android:layout_toRightOf="@+id/date4"/>
+
+    <Button
+        android:id="@+id/date6"
+        android:layout_width="62dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/cityImage"
+        android:textSize="8sp"
+        android:text="Tm6"
+        android:layout_toRightOf="@+id/date5"/>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearSpinner"
+        android:orientation="vertical"
+        android:layout_below="@+id/date6"/>
+<!--    <Spinner-->
+<!--        android:id="@+id/spinner"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:dropDownWidth="50dp"-->
+
+<!--        android:layout_below="@+id/date6"/>-->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TableLayout
-            android:id="@+id/table_layout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="165dp">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableLayout
+                    android:id="@+id/table_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="50dp">
+
+                </TableLayout>
+            </TableRow>
 
         </TableLayout>
-    </TableRow>
+        <ImageView
+            android:id="@+id/sun"
+            android:alpha="0.5"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_wb_sunny_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05" />
 
+        <ImageView
+            android:id="@+id/cloud1"
+            android:visibility="gone"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_cloud_24"
+            app:tint="@color/white"
+            android:alpha="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05"/>
 
-</TableLayout>
+        <ImageView
+            android:id="@+id/cloud2"
+            android:visibility="gone"
+            android:alpha="0.5"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_cloud_24"
+            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <ImageView
+            android:id="@+id/cloud3"
+            android:visibility="gone"
+            android:alpha="0.5"
+
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/ic_baseline_cloud_24"
+            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.27"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
+
+</FrameLayout>

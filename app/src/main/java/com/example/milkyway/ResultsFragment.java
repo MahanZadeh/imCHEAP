@@ -128,8 +128,8 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             try {
                 InputStream in = (InputStream) new URL(strings[0]).getContent(); //Reads whatever content found with the given URL Asynchronously And returns.
                 flag = BitmapFactory.decodeStream(in); //Decodes the stream returned from getContent and converts It into a Bitmap Format
-                System.out.println(flag.getRowBytes());
-                System.out.println(flag.getHeight());
+//                System.out.println(flag.getRowBytes());
+//                System.out.println(flag.getHeight());
                 in.close(); //Closes the InputStream
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,9 +1,20 @@
 package com.example.milkyway;
 
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -14,23 +25,42 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
+import com.github.matteobattilana.weather.PrecipType;
+import com.github.matteobattilana.weather.WeatherView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
-public class CitySummary extends AppCompatActivity {
+public class CitySummary extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String pricesUrl;
-
+    Animation sunAnim,cloud1Anim,cloud2Anim, cloud3Anim, AnimtitleAnim;
+    ImageView sun,cloud1,cloud2, cloud3;
+    Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
+    WeatherView weatherView;
+    String tempUrl;
+    EditText etCity;
+    TextView tvResult;
+    Button btnGetData;
+    private final String url = "https://api.openweathermap.org/data/2.5/forecast";
+    private final String appid = "fa211ad253385ab5e5f303af6dfebb44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +75,21 @@ public class CitySummary extends AppCompatActivity {
         TextView cityNameView = findViewById(R.id.summary_city_name);
         cityNameView.setText(cityName);
 
+        tempUrl = url + "?q=" + cityName + "&appid=" + appid;
+        AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
+        runnerWeather.execute(tempUrl);
+
+
+
+        sunAnim = AnimationUtils.loadAnimation(this,R.anim.sun);
+        cloud1Anim = AnimationUtils.loadAnimation(this,R.anim.cloud1);
+        cloud2Anim = AnimationUtils.loadAnimation(this,R.anim.cloud2);
+        cloud3Anim = AnimationUtils.loadAnimation(this, R.anim.cloud3);
+        sun = findViewById(R.id.sun);
+        cloud1 = findViewById(R.id.cloud1);
+        cloud2 = findViewById(R.id.cloud2);
+        cloud3 = findViewById(R.id.cloud3);
+
         for (int i = 1; i <= 10; i++) {
 
             AsyncTaskRunner runner = new AsyncTaskRunner();
@@ -55,6 +100,188 @@ public class CitySummary extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    private class AsyncTaskRunnerWeather extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            RequestQueue queue = Volley.newRequestQueue(CitySummary.this);
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+
+                        JSONArray fiveDayHourlyForecast = response.getJSONArray("list");
+
+
+                        for(int i=0; i< fiveDayHourlyForecast.length(); i++) {
+                            String tempDate = fiveDayHourlyForecast.getJSONObject(i).getString("dt_txt").substring(0,10);
+                            ArrayList<String> oneDayWeatherInfo = new ArrayList<>();
+
+                            if (!fiveDaysWeather.containsKey(tempDate)) {
+                                oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONObject("main").getString("temp"));
+                                oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main"));
+
+                                fiveDaysWeather.put(tempDate, oneDayWeatherInfo);
+
+                            }
+
+                        }
+
+                        onSuccess();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(CitySummary.this, error.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            queue.add(request);
+            return null;
+        }
+
+        protected void onSuccess() throws ParseException {
+            int[] buttonViews = {R.id.date1, R.id.date2, R.id.date3, R.id.date4, R.id.date5, R.id.date6};
+            Locale currentLocale = Locale.getDefault();
+            weatherView = findViewById(R.id.weather_view);
+
+            ArrayList<String> spinnerList = new ArrayList<>();
+            spinnerList.add("5 Day Forecast");
+
+            View linearLayout =  findViewById(R.id.linearSpinner);
+            Spinner spinner = new Spinner(getApplicationContext());
+            spinner.setDropDownWidth(100);
+            spinner.setMinimumWidth(100);
+            spinner.setBackgroundColor(Color.GRAY);
+            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
+            spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
+//            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+            Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
+            ArrayList<String> descriptionList = new ArrayList<>();
+            for (int i =0; i < buttonViews.length; i++) {
+//                Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+                Map.Entry<String, ArrayList<String>> entry = itr.next();
+                String description = entry.getValue().get(1);
+                descriptionList.add(description);
+
+                String key= entry.getKey();
+                Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
+                String day = formatter.format(date1);
+
+//                Spinner spinner = findViewById(R.id.spinner);
+
+//                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+//                        R.array.planets_array, android.R.layout.simple_spinner_item);
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinner.setAdapter(adapter);
+
+                Button btn = findViewById(buttonViews[i]);
+                btn.setText(day.substring(0, 2));
+
+                spinnerList.add(day.substring(0, 2));
+
+                btn.setOnClickListener(view -> {
+                    if (description.equals("Clouds")) {
+                        sun.setVisibility(View.GONE);
+                        sun.clearAnimation();
+                        cloud1.setVisibility(View.VISIBLE);
+                        cloud1.startAnimation(cloud1Anim);
+                        cloud2.setVisibility(View.VISIBLE);
+                        cloud2.startAnimation(cloud2Anim);
+                        cloud3.setVisibility(View.VISIBLE);
+                        cloud3.startAnimation(cloud3Anim);
+                    } else if (description.equals("Rain")) {
+                        sun.clearAnimation();
+                        cloud1.setVisibility(View.VISIBLE);
+                        cloud1.startAnimation(cloud1Anim);
+                        cloud2.setVisibility(View.VISIBLE);
+                        cloud2.startAnimation(cloud2Anim);
+                        weatherView.setWeatherData(PrecipType.RAIN);
+                    }else if (description.equals("Clear")) {
+                        cloud1.setVisibility(View.GONE);
+                        cloud2.setVisibility(View.GONE);
+                        cloud3.setVisibility(View.GONE);
+
+                        cloud1.clearAnimation();
+                        sun.setVisibility(View.VISIBLE);
+                        sun.startAnimation(sunAnim);
+
+                    }
+
+                }); // Clouds (few, scattered, overcast, broken), rain (light, moderate)   clear sky
+
+
+
+            }
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int item, long l) {
+                    if(item == 1) {
+                        String desc = descriptionList.get(0);
+//                        if (descriptionList.get(0).equals()
+                        if (desc.equals("Clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.equals("Rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.equals("Clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList);
+
+            spinner.setAdapter(spinnerArrayAdapter);
+            ((LinearLayout) linearLayout).addView(spinner );
+
+
+        }
+
+    }
+
+
 
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
 
@@ -130,11 +357,12 @@ public class CitySummary extends AppCompatActivity {
             textView.setText(itemPrice);
             textView.setWidth(1000);
             textView.setHeight(100);
-            textView.setGravity(Gravity.CENTER);
-            textView.setBackgroundColor(Color.argb(255,
-                    (baseRed + random.nextInt(256)) / 2,
-                    (baseGreen + random.nextInt(256)) /2 ,
-                    (baseBlue + random.nextInt(256)) / 2));
+//            textView.setTextColor(Color.BLUE);
+            textView.setGravity(Gravity.LEFT);
+//            textView.setBackgroundColor(Color.argb(255,
+//                    (baseRed + random.nextInt(256)) / 2,
+//                    (baseGreen + random.nextInt(256)) /2 ,
+//                    (baseBlue + random.nextInt(256)) / 2));
 
             tableRow.addView(textView); // adding the text to the row
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
