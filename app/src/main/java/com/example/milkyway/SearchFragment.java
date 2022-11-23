@@ -1,5 +1,7 @@
 package com.example.milkyway;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -302,9 +304,12 @@ public class SearchFragment extends Fragment {
             }
 
             bundle.putString("Country Name", countryName);
-            Intent intent = new Intent(requireActivity().getApplicationContext(), ResultsPage.class);
-            intent.putExtras(bundle);
-            startActivity(intent);
+            Fragment resultsFragment = new ResultsFragment();
+            resultsFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, resultsFragment)
+                    .commit();
         }
     }
 }

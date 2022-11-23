@@ -59,7 +59,7 @@ public class WeatherApi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_summary);
+        setContentView(R.layout.fragment_city_summary);
 
         weatherView = findViewById(R.id.weather_view);
 

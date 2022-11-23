@@ -1,16 +1,16 @@
 package com.example.milkyway;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,19 +24,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Locale;
+
 
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
     RecyclerView recyclerView;
     View view;
-    ResultsFragment resultsFragment;
     String[] cities, costs;
     String countryName;
-    Bitmap flag;
     boolean noResults = false;
-
-    private String flagUrl = "https://countryflagsapi.com/png/";
 
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -47,16 +45,13 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         super.onCreate(savedInstanceState);
 
         // Get search results
+        Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
             costs = bundle.getStringArrayList("Sorted Price Descriptions")
                     .toArray(new String[0]);
             countryName = bundle.getString("Country Name");
-            resultsFragment = this;
-            AsyncTaskRunnerFlag runnerFlag = new AsyncTaskRunnerFlag();
-            String completeUrl = flagUrl + countryName;
-            runnerFlag.execute(completeUrl);
         } else if (bundle != null && bundle.getString("Country Name") != null) {
             noResults = true;
             String[] noResultsTitle = new String[1];
@@ -78,21 +73,60 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
+        String flagUrl = "https://countryflagsapi.com/png/";
+        String url = flagUrl + countryName;
+        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
+            cities, costs, url);
+        myRecyclerViewAdapter.setClickListener(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(myRecyclerViewAdapter);
+
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView resultsDescription = requireView().findViewById(R.id.resultsTitle);
+        countryName = countryName.toUpperCase(Locale.ROOT);
+        String pageTitle = "Search Results for " + countryName;
+        resultsDescription.setText(pageTitle);
     }
 
     @Override
     public void onClickCitySummary(View view, int position) {
         // Go to city summary page
+
         if (countryName != null && !noResults) {
             Bundle bundle = new Bundle();
             bundle.putString("countryName", countryName);
             bundle.putString("cityName", cities[position]);
-            Intent intent = new Intent(getActivity(), CitySummary.class);
-            intent.putExtra("bundle", bundle);
-            startActivity(intent);
+
+            Fragment citySummaryFragment = new CitySummaryFragment();
+            citySummaryFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, citySummaryFragment)
+                    .commit();
+
+//            Intent intent = new Intent(getActivity(), CitySummary.class);
+//            intent.putExtra("bundle", bundle);
+//            startActivity(intent);
         }
     }
+
+//    @Override
+//    public void onClickCitySummary2(View view, int position) {
+//        // Go to city summary page
+//        if (countryName != null && !noResults) {
+//            Bundle bundle = new Bundle();
+//            bundle.putString("countryName", countryName);
+//            bundle.putString("cityName", cities[position]);
+//            Intent intent = new Intent(getActivity(), CitySummary.class);
+//            intent.putExtra("bundle", bundle);
+//            startActivity(intent);
+//        }
+//    }
 
     @Override
     public void onClickFavorites(View view, int position) {
@@ -118,33 +152,5 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
                                 "Failed to save to favorites!", Toast.LENGTH_SHORT).show();
                     }
                 });
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private class AsyncTaskRunnerFlag extends AsyncTask<String, Void, ArrayList<String>> {
-
-        @Override
-        protected ArrayList<String> doInBackground(String... strings) {
-            try {
-                InputStream in = (InputStream) new URL(strings[0]).getContent(); //Reads whatever content found with the given URL Asynchronously And returns.
-                flag = BitmapFactory.decodeStream(in); //Decodes the stream returned from getContent and converts It into a Bitmap Format
-//                System.out.println(flag.getRowBytes());
-//                System.out.println(flag.getHeight());
-                in.close(); //Closes the InputStream
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<String> strings) {
-            super.onPostExecute(strings);
-            MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
-                cities, costs, flag);
-            myRecyclerViewAdapter.setClickListener(resultsFragment);
-            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            recyclerView.setAdapter(myRecyclerViewAdapter);
-        }
     }
 }

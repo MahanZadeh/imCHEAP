@@ -1,7 +1,6 @@
 package com.example.milkyway;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
 
     Context c;
     String[] cities, costs;
-    Bitmap flag;
+    String url;
     private ResultsItemClickListener clickListener;
 
-    public MyRecyclerViewAdapter(Context c, String[] cities, String[] costs, Bitmap flag) {
+    public MyRecyclerViewAdapter(Context c, String[] cities, String[] costs, String url) {
         this.c = c;
         this.cities = cities;
         this.costs = costs;
-        this.flag = flag;
+        this.url = url;
     }
 
     @NonNull
@@ -44,8 +45,13 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         holder.text1.setText(cities[position]);
         holder.text2.setText(costs[position]);
         if (holder.image != null) {
-            holder.image.setImageBitmap(Bitmap.createScaledBitmap(flag, 4560,
-                    3347, false));
+            Picasso.get()
+                    .load(url)
+                    .resize(800, 600) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.image_not_found)
+                    .into(holder.image);
         }
     }
 
@@ -85,7 +91,6 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
                     clickListener.onClickCitySummary(itemView, getBindingAdapterPosition());
                 }
             }
-
         }
     }
 }

@@ -90,7 +90,7 @@
         android:textSize="8sp"
         android:text="Tm6"
         android:layout_toRightOf="@+id/date5"/>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

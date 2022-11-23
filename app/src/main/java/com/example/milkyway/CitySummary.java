@@ -64,7 +64,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_summary);
+        setContentView(R.layout.fragment_city_summary);
 
         Bundle bundle = this.getIntent().getExtras().getBundle("bundle") ;
         String countryName = bundle.getString("countryName");
@@ -291,42 +291,42 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(CitySummary.this);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
-            boolean isExists = false;
+                boolean isExists = false;
 
-            try {
-                JSONArray prices = response.getJSONArray("prices");
-                int itemId;
-                double tempPrice;
-                String currencyCode;
-                String itemName;
-                Random random = new Random();
-                int randomItemId = random.nextInt(prices.length());
+                try {
+                    JSONArray prices = response.getJSONArray("prices");
+                    int itemId;
+                    double tempPrice;
+                    String currencyCode;
+                    String itemName;
+                    Random random = new Random();
+                    int randomItemId = random.nextInt(prices.length());
 
-                for (int i = 0; i < prices.length(); i++) {
-                    JSONObject jsonObjectPrice = prices.getJSONObject(i);
-                    itemId = jsonObjectPrice.getInt("good_id");
-                    itemName = jsonObjectPrice.getString("item_name");
+                    for (int i = 0; i < prices.length(); i++) {
+                        JSONObject jsonObjectPrice = prices.getJSONObject(i);
+                        itemId = jsonObjectPrice.getInt("good_id");
+                        itemName = jsonObjectPrice.getString("item_name");
 
-                    if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
-                        isExists = true;
+                        if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
+                            isExists = true;
 
-                        if (itemName.contains(",")) {
-                            String[] parts = itemName.split(",");
-                            itemName = parts[0];
+                            if (itemName.contains(",")) {
+                                String[] parts = itemName.split(",");
+                                itemName = parts[0];
+                            }
+
+                            tempPrice = jsonObjectPrice.getDouble("avg");
+                            currencyCode = jsonObjectPrice.getString("currency_code");
+                            itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
+                            break;
                         }
-
-                        tempPrice = jsonObjectPrice.getDouble("avg");
-                        currencyCode = jsonObjectPrice.getString("currency_code");
-                        itemPrice = itemName + " costs " + tempPrice + " " + currencyCode + "!";
-                        break;
                     }
+                    if (isExists) {
+                        onSuccess();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                if (isExists) {
-                    onSuccess();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             }, error -> Toast.makeText(CitySummary.this, error.toString(), Toast.LENGTH_SHORT).show()) {
 
                 /** Passing some request headers* */
