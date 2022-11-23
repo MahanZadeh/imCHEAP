@@ -233,7 +233,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                             cloud2.setVisibility(View.VISIBLE);
                             cloud2.startAnimation(cloud2Anim);
                             weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
+//                            weatherView.setBackgroundColor(Color.RED);
                         }
                     } else if(item == 2) {
                         String desc = descriptionList.get(1).toLowerCase();
