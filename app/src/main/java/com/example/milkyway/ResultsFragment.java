@@ -93,40 +93,40 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         resultsDescription.setText(pageTitle);
     }
 
-    @Override
-    public void onClickCitySummary(View view, int position) {
-        // Go to city summary page
-
-        if (countryName != null && !noResults) {
-            Bundle bundle = new Bundle();
-            bundle.putString("countryName", countryName);
-            bundle.putString("cityName", cities[position]);
-
-            Fragment citySummaryFragment = new CitySummaryFragment();
-            citySummaryFragment.setArguments(bundle);
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, citySummaryFragment)
-                    .commit();
-
-//            Intent intent = new Intent(getActivity(), CitySummary.class);
-//            intent.putExtra("bundle", bundle);
-//            startActivity(intent);
-        }
-    }
-
 //    @Override
-//    public void onClickCitySummary2(View view, int position) {
+//    public void onClickCitySummary(View view, int position) {
 //        // Go to city summary page
+//
 //        if (countryName != null && !noResults) {
 //            Bundle bundle = new Bundle();
 //            bundle.putString("countryName", countryName);
 //            bundle.putString("cityName", cities[position]);
-//            Intent intent = new Intent(getActivity(), CitySummary.class);
-//            intent.putExtra("bundle", bundle);
-//            startActivity(intent);
+//
+//            Fragment citySummaryFragment = new CitySummaryFragment();
+//            citySummaryFragment.setArguments(bundle);
+//            getParentFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragment_container, citySummaryFragment)
+//                    .commit();
+//
+////            Intent intent = new Intent(getActivity(), CitySummary.class);
+////            intent.putExtra("bundle", bundle);
+////            startActivity(intent);
 //        }
 //    }
+
+    @Override
+    public void onClickCitySummary(View view, int position) {
+        // Go to city summary page
+        if (countryName != null && !noResults) {
+            Bundle bundle = new Bundle();
+            bundle.putString("countryName", countryName);
+            bundle.putString("cityName", cities[position]);
+            Intent intent = new Intent(getActivity(), CitySummary.class);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
+    }
 
     @Override
     public void onClickFavorites(View view, int position) {
