@@ -281,24 +281,12 @@ public class SearchFragment extends Fragment {
 
         protected void onSuccess() {
             if (cityInfo.size() != 0) {
-                Map<List<String>, Double> sortedData = cityInfo.entrySet().stream()
+                LinkedHashMap<List<String>, Double> sortedData = cityInfo.entrySet().stream()
                         .sorted(Map.Entry.comparingByValue())
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1,
                                 LinkedHashMap::new));
-                Set<List<String>> keys = sortedData.keySet();
-                ArrayList<String> sortedCities = new ArrayList<>();
-                ArrayList<String> costsDescription = new ArrayList<>();
-                for (List<String> key : keys) {
-                    String cityName = key.get(0);
-                    sortedCities.add(cityName);
-                    String itemName = key.get(1);
-                    String cCode = key.get(2);
-                    String fullDescription = itemName + ", Price: " + cityInfo.get(key) + " " + cCode;
-                    costsDescription.add(fullDescription);
-                }
-                bundle.putStringArrayList("Sorted Cities", sortedCities);
-                bundle.putStringArrayList("Sorted Price Descriptions", costsDescription);
+                bundle.putSerializable("City Data", sortedData);
             }
 
             bundle.putString("Country Name", countryName);

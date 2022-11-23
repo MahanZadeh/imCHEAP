@@ -24,8 +24,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
-
+import java.util.Set;
 
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
@@ -47,10 +49,21 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         // Get search results
         Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
-        if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
-            cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
-            costs = bundle.getStringArrayList("Sorted Price Descriptions")
-                    .toArray(new String[0]);
+        if (bundle != null && bundle.getSerializable("City Data") != null) {
+            LinkedHashMap<List<String>, Double> sortedData = (LinkedHashMap<List<String>, Double>) bundle.getSerializable("City Data");
+            Set<List<String>> keys = sortedData.keySet();
+            cities = new String[sortedData.size()];
+            costs = new String[sortedData.size()];
+            int count = 0;
+            for (List<String> key : keys) {
+                String cityName = key.get(0);
+                cities[count] = (cityName);
+                String itemName = key.get(1);
+                String cCode = key.get(2);
+                String fullDescription = itemName + ", Price: " + sortedData.get(key) + " " + cCode;
+                costs[count] = (fullDescription);
+                count++;
+            }
             countryName = bundle.getString("Country Name");
         } else if (bundle != null && bundle.getString("Country Name") != null) {
             noResults = true;
