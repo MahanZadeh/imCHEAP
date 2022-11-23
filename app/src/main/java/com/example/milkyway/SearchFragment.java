@@ -39,13 +39,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SearchFragment extends Fragment {
 
@@ -276,27 +281,20 @@ public class SearchFragment extends Fragment {
 
         protected void onSuccess() {
             if (cityInfo.size() != 0) {
-                Double[] rawPrices = cityInfo.values().toArray(new Double[0]);
-                // Remove duplicate prices
-                LinkedHashSet<Double> pricesNoDuplicates = new LinkedHashSet<>(Arrays.asList(rawPrices));
-                Double[] prices = pricesNoDuplicates.toArray(new Double[0]);
-                Arrays.sort(prices);
-                ArrayList<List<String>> sortedData = new ArrayList<>();
-                for (Double price : prices) {
-                    for (List<String> key : cityInfo.keySet()) {
-                        if (Objects.equals(cityInfo.get(key), price)) {
-                            sortedData.add(key);
-                        }
-                    }
-                }
+                Map<List<String>, Double> sortedData = cityInfo.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue())
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1,
+                                LinkedHashMap::new));
+                Set<List<String>> keys = sortedData.keySet();
                 ArrayList<String> sortedCities = new ArrayList<>();
                 ArrayList<String> costsDescription = new ArrayList<>();
-                for (List<String> data : sortedData) {
-                    String cityName = data.get(0);
+                for (List<String> key : keys) {
+                    String cityName = key.get(0);
                     sortedCities.add(cityName);
-                    String itemName = data.get(1);
-                    String cCode = data.get(2);
-                    String fullDescription = itemName + ", Price: " + cityInfo.get(data) + " " + cCode;
+                    String itemName = key.get(1);
+                    String cCode = key.get(2);
+                    String fullDescription = itemName + ", Price: " + cityInfo.get(key) + " " + cCode;
                     costsDescription.add(fullDescription);
                 }
                 bundle.putStringArrayList("Sorted Cities", sortedCities);
