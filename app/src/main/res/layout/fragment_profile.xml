@@ -6,17 +6,33 @@
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:orientation="horizontal" >
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:text="@string/profile"
-        android:textColor="@color/green_primary"
-        android:textSize="30sp"/>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
 
+            android:text="@string/profile"
+            android:textColor="@color/green_primary"
+            android:textSize="45sp"/>
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="64dp"
+            android:layout_height="61dp"
+            android:layout_gravity="center"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/ic_log_out_foreground"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:textSize="12sp" />
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/userName"
@@ -66,15 +82,9 @@
             android:id="@+id/profileFragmentContainerView"
             android:name="com.example.milkyway.FavoritesFragment"
             android:layout_width="match_parent"
-            android:layout_height="333dp"
+            android:layout_height="445dp"
             tools:layout="@layout/fragment_favorites" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:text="Logout"
-        android:textSize="22sp" />
+
 </LinearLayout>
