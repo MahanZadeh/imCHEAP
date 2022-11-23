@@ -83,7 +83,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
         ImageView image = findViewById(R.id.cityImage);
         Picasso.get()
-                .load("https://countryflagsapi.com/svg/" + countryName)
+                .load("https://countryflagsapi.com/png/" + countryName)
                 .resize(600, 400) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
                 .placeholder(R.drawable.placeholder)
