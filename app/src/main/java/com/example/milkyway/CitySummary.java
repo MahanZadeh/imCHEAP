@@ -166,7 +166,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         }
 
         protected void onSuccess() throws ParseException {
-            int[] buttonViews = {R.id.date1, R.id.date2, R.id.date3, R.id.date4, R.id.date5, R.id.date6};
+//            int[] buttonViews = {R.id.date1, R.id.date2, R.id.date3, R.id.date4, R.id.date5, R.id.date6};
             Locale currentLocale = Locale.getDefault();
             weatherView = findViewById(R.id.weather_view);
 
@@ -179,75 +179,29 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 //            spinner.setMinimumWidth(100);
             spinner.setBackgroundColor(0);
 //            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
-//            spinner.set;
             spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
 
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
-//            Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
             Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
             ArrayList<String> descriptionList = new ArrayList<>();
-            for (int i =0; i < buttonViews.length; i++) {
-//                Map.Entry<String, ArrayList<String>> entry = fiveDaysWeather.entrySet().iterator().next();
+            for (int i =0; i < 6; i++) {
                 Map.Entry<String, ArrayList<String>> entry = itr.next();
                 String description = entry.getValue().get(1);
                 descriptionList.add(description);
-
                 String key= entry.getKey();
                 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
                 String day = formatter.format(date1);
-
-//                Spinner spinner = findViewById(R.id.spinner);
-
-//                ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-//                        R.array.planets_array, android.R.layout.simple_spinner_item);
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//                spinner.setAdapter(adapter);
-
-                Button btn = findViewById(buttonViews[i]);
-                btn.setText(day.substring(0, 2));
-
                 spinnerList.add(day.substring(0, 3));
 
-                btn.setOnClickListener(view -> {
-                    if (description.equals("Clouds")) {
-                        sun.setVisibility(View.GONE);
-                        sun.clearAnimation();
-                        cloud1.setVisibility(View.VISIBLE);
-                        cloud1.startAnimation(cloud1Anim);
-                        cloud2.setVisibility(View.VISIBLE);
-                        cloud2.startAnimation(cloud2Anim);
-                        cloud3.setVisibility(View.VISIBLE);
-                        cloud3.startAnimation(cloud3Anim);
-                    } else if (description.equals("Rain")) {
-                        sun.clearAnimation();
-                        cloud1.setVisibility(View.VISIBLE);
-                        cloud1.startAnimation(cloud1Anim);
-                        cloud2.setVisibility(View.VISIBLE);
-                        cloud2.startAnimation(cloud2Anim);
-                        weatherView.setWeatherData(PrecipType.RAIN);
-                    }else if (description.equals("Clear")) {
-                        cloud1.setVisibility(View.GONE);
-                        cloud2.setVisibility(View.GONE);
-                        cloud3.setVisibility(View.GONE);
-
-                        cloud1.clearAnimation();
-                        sun.setVisibility(View.VISIBLE);
-                        sun.startAnimation(sunAnim);
-
-                    }
-
-                }); // Clouds (few, scattered, overcast, broken), rain (light, moderate)   clear sky
-
-
+// Clouds (few, scattered, overcast, broken), rain (light, moderate)   clear sky
 
             }
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int item, long l) {
                     if(item == 1) {
-                        String desc = descriptionList.get(0);
-//                        if (descriptionList.get(0).equals()
-                        if (desc.equals("Clouds")) {
+                        String desc = descriptionList.get(0).toLowerCase();
+                        if (desc.contains("clouds")) {
                             sun.setVisibility(View.GONE);
                             sun.clearAnimation();
                             cloud1.setVisibility(View.VISIBLE);
@@ -256,22 +210,246 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                             cloud2.startAnimation(cloud2Anim);
                             cloud3.setVisibility(View.VISIBLE);
                             cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.equals("Rain")) {
+                        } else if (desc.contains("rain")) {
                             sun.clearAnimation();
                             cloud1.setVisibility(View.VISIBLE);
                             cloud1.startAnimation(cloud1Anim);
                             cloud2.setVisibility(View.VISIBLE);
                             cloud2.startAnimation(cloud2Anim);
                             weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.equals("Clear")) {
+                        }else if (desc.contains("clear")) {
                             cloud1.setVisibility(View.GONE);
                             cloud2.setVisibility(View.GONE);
                             cloud3.setVisibility(View.GONE);
-
                             cloud1.clearAnimation();
                             sun.setVisibility(View.VISIBLE);
                             sun.startAnimation(sunAnim);
 
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    } else if(item == 2) {
+                        String desc = descriptionList.get(1).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    }else if(item == 3) {
+                        String desc = descriptionList.get(2).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    }else if(item == 4) {
+                        String desc = descriptionList.get(3).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    }else if(item == 5) {
+                        String desc = descriptionList.get(4).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    }else if(item == 6) {
+                        String desc = descriptionList.get(5).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
+                        }
+                    }else if(item == 7) {
+                        String desc = descriptionList.get(6).toLowerCase();
+                        if (desc.contains("clouds")) {
+                            sun.setVisibility(View.GONE);
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            cloud3.setVisibility(View.VISIBLE);
+                            cloud3.startAnimation(cloud3Anim);
+                        } else if (desc.contains("rain")) {
+                            sun.clearAnimation();
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.RAIN);
+                        }else if (desc.contains("clear")) {
+                            cloud1.setVisibility(View.GONE);
+                            cloud2.setVisibility(View.GONE);
+                            cloud3.setVisibility(View.GONE);
+                            cloud1.clearAnimation();
+                            sun.setVisibility(View.VISIBLE);
+                            sun.startAnimation(sunAnim);
+
+                        } else if (desc.contains("snow")){
+                            sun.clearAnimation();
+                            sun.setVisibility(View.GONE);
+                            cloud1.setVisibility(View.VISIBLE);
+                            cloud1.startAnimation(cloud1Anim);
+                            cloud2.setVisibility(View.VISIBLE);
+                            cloud2.startAnimation(cloud2Anim);
+                            weatherView.setWeatherData(PrecipType.SNOW);
+                            weatherView.setBackgroundColor(Color.RED);
                         }
                     }
 
@@ -383,3 +561,33 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     }
 }
+
+
+//                btn.setOnClickListener(view -> {
+//                        if (description.toLowerCase().contains("clouds")) {
+//                        sun.setVisibility(View.GONE);
+//                        sun.clearAnimation();
+//                        cloud1.setVisibility(View.VISIBLE);
+//                        cloud1.startAnimation(cloud1Anim);
+//                        cloud2.setVisibility(View.VISIBLE);
+//                        cloud2.startAnimation(cloud2Anim);
+//                        cloud3.setVisibility(View.VISIBLE);
+//                        cloud3.startAnimation(cloud3Anim);
+//                        } else if (description.toLowerCase().contains("rain")) {
+//                        sun.clearAnimation();
+//                        cloud1.setVisibility(View.VISIBLE);
+//                        cloud1.startAnimation(cloud1Anim);
+//                        cloud2.setVisibility(View.VISIBLE);
+//                        cloud2.startAnimation(cloud2Anim);
+//                        weatherView.setWeatherData(PrecipType.RAIN);
+//                        }else if (description.toLowerCase().contains("clear")) {
+//                        cloud1.setVisibility(View.GONE);
+//                        cloud2.setVisibility(View.GONE);
+//                        cloud3.setVisibility(View.GONE);
+//                        cloud1.clearAnimation();
+//                        sun.setVisibility(View.VISIBLE);
+//                        sun.startAnimation(sunAnim);
+//
+//                        }
+//
+//                        });
