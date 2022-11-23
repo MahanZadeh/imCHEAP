@@ -1,11 +1,8 @@
 package com.example.milkyway;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -38,19 +35,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SearchFragment extends Fragment {
 
@@ -164,6 +155,10 @@ public class SearchFragment extends Fragment {
     @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunnerCities extends AsyncTask<String, Void, ArrayList<String>> {
 
+        AsyncTaskRunnerCities() {
+            super();
+        }
+
         @Override
         protected ArrayList<String> doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
@@ -222,6 +217,10 @@ public class SearchFragment extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunnerPrices extends AsyncTask<String, Void, String> {
+
+        AsyncTaskRunnerPrices() {
+            super();
+        }
 
         @Override
         protected String doInBackground(String... strings) {
