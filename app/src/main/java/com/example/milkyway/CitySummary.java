@@ -32,6 +32,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.github.matteobattilana.weather.PrecipType;
 import com.github.matteobattilana.weather.WeatherView;
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,7 +82,14 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
         runnerWeather.execute(tempUrl);
 
-
+        ImageView image = findViewById(R.id.cityImage);
+        Picasso.get()
+                .load("https://countryflagsapi.com/svg/" + countryName)
+                .resize(600, 400) // resizes the image to these dimensions (in pixel)
+                .centerCrop()
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.image_not_found)
+                .into(image);
 
         sunAnim = AnimationUtils.loadAnimation(this,R.anim.sun);
         cloud1Anim = AnimationUtils.loadAnimation(this,R.anim.cloud1);

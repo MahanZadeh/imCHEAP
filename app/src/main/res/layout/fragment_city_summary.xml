@@ -24,7 +24,7 @@
             android:id="@+id/cityImage"
             android:layout_width="163dp"
             android:layout_height="123dp"
-            app:srcCompat="@drawable/flag_of_berlin"
+            app:srcCompat="@drawable/image_not_found"
             tools:layout_editor_absoluteX="2dp"
             tools:layout_editor_absoluteY="26dp"
             tools:ignore="ContentDescription" />
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cityName"
             android:textStyle="bold"
-            android:layout_toRightOf="@+id/cityImage"
+            android:layout_toEndOf="@+id/cityImage"
             android:layout_alignBottom="@+id/cityImage"
             android:textSize="17sp">
 
