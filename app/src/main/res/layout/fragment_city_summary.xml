@@ -41,62 +41,62 @@
 
         </TextView>
 
-    <Button
-        android:id="@+id/date1"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:text="Today1"
-        android:textSize="8sp"/>
+<!--    <Button-->
+<!--        android:id="@+id/date1"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:text="Today1"-->
+<!--        android:textSize="8sp"/>-->
 
-    <Button
-        android:id="@+id/date2"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:textSize="8sp"
-        android:text="Tm2"
-        android:layout_toRightOf="@+id/date1"/>
-    <Button
-        android:id="@+id/date3"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:textSize="8sp"
-        android:text="Tm3"
-        android:layout_toRightOf="@+id/date2"/>
-    <Button
-        android:id="@+id/date4"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:textSize="8sp"
-        android:text="Tm4"
-        android:layout_toRightOf="@+id/date3"/>
-    <Button
-        android:id="@+id/date5"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:textSize="8sp"
-        android:text="Tm5"
-        android:layout_toRightOf="@+id/date4"/>
+<!--    <Button-->
+<!--        android:id="@+id/date2"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:textSize="8sp"-->
+<!--        android:text="Tm2"-->
+<!--        android:layout_toRightOf="@+id/date1"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/date3"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:textSize="8sp"-->
+<!--        android:text="Tm3"-->
+<!--        android:layout_toRightOf="@+id/date2"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/date4"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:textSize="8sp"-->
+<!--        android:text="Tm4"-->
+<!--        android:layout_toRightOf="@+id/date3"/>-->
+<!--    <Button-->
+<!--        android:id="@+id/date5"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:textSize="8sp"-->
+<!--        android:text="Tm5"-->
+<!--        android:layout_toRightOf="@+id/date4"/>-->
 
-    <Button
-        android:id="@+id/date6"
-        android:layout_width="62dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/cityImage"
-        android:textSize="8sp"
-        android:text="Tm6"
-        android:layout_toRightOf="@+id/date5"/>
+<!--    <Button-->
+<!--        android:id="@+id/date6"-->
+<!--        android:layout_width="62dp"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_below="@+id/cityImage"-->
+<!--        android:textSize="8sp"-->
+<!--        android:text="Tm6"-->
+<!--        android:layout_toRightOf="@+id/date5"/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearSpinner"
         android:orientation="vertical"
-        android:layout_below="@+id/date6"/>
+        android:layout_below="@+id/cityImage"/>
 <!--    <Spinner-->
 <!--        android:id="@+id/spinner"-->
 <!--        android:layout_width="match_parent"-->
