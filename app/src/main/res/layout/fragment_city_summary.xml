@@ -19,7 +19,8 @@
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:backgroundTint="#b3e8e5">
         <ImageView
             android:id="@+id/cityImage"
             android:layout_width="163dp"
@@ -27,7 +28,8 @@
             app:srcCompat="@drawable/image_not_found"
             tools:layout_editor_absoluteX="2dp"
             tools:layout_editor_absoluteY="26dp"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:backgroundTint="#b3e8e5"/>
 
         <TextView
             android:id="@+id/summary_city_name"
@@ -37,59 +39,18 @@
             android:textStyle="bold"
             android:layout_toEndOf="@+id/cityImage"
             android:layout_alignBottom="@+id/cityImage"
-            android:textSize="17sp">
+            android:textSize="26sp"
+            android:textColor="#2f8f9d">
 
         </TextView>
 
-<!--    <Button-->
-<!--        android:id="@+id/date1"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:text="Today1"-->
-<!--        android:textSize="8sp"/>-->
-
-<!--    <Button-->
-<!--        android:id="@+id/date2"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:textSize="8sp"-->
-<!--        android:text="Tm2"-->
-<!--        android:layout_toRightOf="@+id/date1"/>-->
-<!--    <Button-->
-<!--        android:id="@+id/date3"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:textSize="8sp"-->
-<!--        android:text="Tm3"-->
-<!--        android:layout_toRightOf="@+id/date2"/>-->
-<!--    <Button-->
-<!--        android:id="@+id/date4"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:textSize="8sp"-->
-<!--        android:text="Tm4"-->
-<!--        android:layout_toRightOf="@+id/date3"/>-->
-<!--    <Button-->
-<!--        android:id="@+id/date5"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:textSize="8sp"-->
-<!--        android:text="Tm5"-->
-<!--        android:layout_toRightOf="@+id/date4"/>-->
-
-<!--    <Button-->
-<!--        android:id="@+id/date6"-->
-<!--        android:layout_width="62dp"-->
-<!--        android:layout_height="35dp"-->
-<!--        android:layout_below="@+id/cityImage"-->
-<!--        android:textSize="8sp"-->
-<!--        android:text="Tm6"-->
-<!--        android:layout_toRightOf="@+id/date5"/>-->
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearSpinner"
+        android:layout_marginLeft="8dp"
+        android:text="Temp:"/>
 
     <LinearLayout
         android:layout_width="match_parent"

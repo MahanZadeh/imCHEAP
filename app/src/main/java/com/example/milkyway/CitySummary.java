@@ -49,36 +49,38 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 public class CitySummary extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     String pricesUrl;
-    Animation sunAnim,cloud1Anim,cloud2Anim, cloud3Anim, AnimtitleAnim;
+    Animation sunAnim,cloud1Anim,cloud2Anim, cloud3Anim;
     ImageView sun,cloud1,cloud2, cloud3;
     Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
     WeatherView weatherView;
     String tempUrl;
-    EditText etCity;
-    TextView tvResult;
-    Button btnGetData;
+    TextView temp;
+    ArrayList<String> descriptionList = new ArrayList<>();
+
     private final String url = "https://api.openweathermap.org/data/2.5/forecast";
     private final String appid = "fa211ad253385ab5e5f303af6dfebb44";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_city_summary);
-
+        temp = findViewById(R.id.temp);
         Bundle bundle = this.getIntent().getExtras().getBundle("bundle") ;
         String countryName = bundle.getString("countryName");
-        String cityName = bundle.getString("cityName").toLowerCase(Locale.ROOT);
+        String cityName = bundle.getString("cityName");
         pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                 + cityName + "&country_name=" + countryName;
 
+
         TextView cityNameView = findViewById(R.id.summary_city_name);
         cityNameView.setText(cityName);
-
-        tempUrl = url + "?q=" + cityName + "&appid=" + appid;
+        String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
+        tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
         AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
         runnerWeather.execute(tempUrl);
 
@@ -118,6 +120,52 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+    public void chooseWeather(String desc, String dayTemp) {
+        String tempText = "Temp: " + dayTemp + "\u2109";
+        temp.setText(tempText);
+        if (desc.contains("clouds")) {
+            sun.setVisibility(View.GONE);
+            sun.clearAnimation();
+            cloud1.setVisibility(View.VISIBLE);
+            cloud1.startAnimation(cloud1Anim);
+            cloud2.setVisibility(View.VISIBLE);
+            cloud2.startAnimation(cloud2Anim);
+            cloud3.setVisibility(View.VISIBLE);
+            cloud3.startAnimation(cloud3Anim);
+            weatherView.setWeatherData(PrecipType.CLEAR);
+
+        } else if (desc.contains("rain")) {
+            sun.clearAnimation();
+            sun.setVisibility(View.GONE);
+            cloud1.setVisibility(View.VISIBLE);
+            cloud1.startAnimation(cloud1Anim);
+            cloud2.setVisibility(View.VISIBLE);
+            cloud2.startAnimation(cloud2Anim);
+            weatherView.setWeatherData(PrecipType.RAIN);
+        }else if (desc.contains("clear")) {
+            cloud1.setVisibility(View.GONE);
+            cloud2.setVisibility(View.GONE);
+            cloud3.setVisibility(View.GONE);
+            cloud1.clearAnimation();
+            cloud2.clearAnimation();
+            cloud3.clearAnimation();
+            sun.setVisibility(View.VISIBLE);
+            sun.startAnimation(sunAnim);
+            weatherView.setWeatherData(PrecipType.CLEAR);
+
+        } else if (desc.contains("snow")){
+            sun.clearAnimation();
+            sun.setVisibility(View.GONE);
+            cloud1.setVisibility(View.VISIBLE);
+            cloud1.startAnimation(cloud1Anim);
+            cloud2.setVisibility(View.VISIBLE);
+            cloud2.startAnimation(cloud2Anim);
+            weatherView.setWeatherData(PrecipType.SNOW);
+
+        }
 
     }
 
@@ -183,12 +231,16 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
             Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
-            ArrayList<String> descriptionList = new ArrayList<>();
-            for (int i =0; i < 6; i++) {
-                Map.Entry<String, ArrayList<String>> entry = itr.next();
-                String description = entry.getValue().get(1);
+            Set<String> keys = fiveDaysWeather.keySet();
+//            ArrayList<String> descriptionList = new ArrayList<>();
+            ArrayList<String> tempList = new ArrayList<>();
+            for (String key : keys) {
+//                Map.Entry<String, ArrayList<String>> entry = itr.next();
+                String description = fiveDaysWeather.get(key).get(1);
+                String temperature = fiveDaysWeather.get(key).get(0);
                 descriptionList.add(description);
-                String key= entry.getKey();
+                tempList.add(temperature);
+//                String key= entry.getKey();
                 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
                 String day = formatter.format(date1);
                 spinnerList.add(day.substring(0, 3));
@@ -199,258 +251,48 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int item, long l) {
+                    if (item==0) {
+                        String dayTemp = tempList.get(0);
+//                        temp.setText(dayTemp);
+                        Toast.makeText(CitySummary.this, dayTemp, Toast.LENGTH_SHORT).show();
+//                        sun.setVisibility(View.GONE);
+                        cloud1.setVisibility(View.GONE);
+                        cloud2.setVisibility(View.GONE);
+                        cloud3.setVisibility(View.GONE);
+//                        sun.clearAnimation();
+                        cloud1.clearAnimation();
+                        cloud2.clearAnimation();
+                        cloud3.clearAnimation();
+                        weatherView.setWeatherData(PrecipType.CLEAR);
+                    }
                     if(item == 1) {
                         String desc = descriptionList.get(0).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-//                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(0);
+                        chooseWeather(desc, dayTemp);
                     } else if(item == 2) {
                         String desc = descriptionList.get(1).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(1);
+                        chooseWeather(desc, dayTemp);
                     }else if(item == 3) {
                         String desc = descriptionList.get(2).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(2);
+                        chooseWeather(desc, dayTemp);
                     }else if(item == 4) {
                         String desc = descriptionList.get(3).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(3);
+                        chooseWeather(desc, dayTemp);
                     }else if(item == 5) {
                         String desc = descriptionList.get(4).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(4);
+                        chooseWeather(desc, dayTemp);
                     }else if(item == 6) {
                         String desc = descriptionList.get(5).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(5);
+                        chooseWeather(desc, dayTemp);
                     }else if(item == 7) {
                         String desc = descriptionList.get(6).toLowerCase();
-                        if (desc.contains("clouds")) {
-                            sun.setVisibility(View.GONE);
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            cloud3.setVisibility(View.VISIBLE);
-                            cloud3.startAnimation(cloud3Anim);
-                        } else if (desc.contains("rain")) {
-                            sun.clearAnimation();
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.RAIN);
-                        }else if (desc.contains("clear")) {
-                            cloud1.setVisibility(View.GONE);
-                            cloud2.setVisibility(View.GONE);
-                            cloud3.setVisibility(View.GONE);
-                            cloud1.clearAnimation();
-                            sun.setVisibility(View.VISIBLE);
-                            sun.startAnimation(sunAnim);
-
-                        } else if (desc.contains("snow")){
-                            sun.clearAnimation();
-                            sun.setVisibility(View.GONE);
-                            cloud1.setVisibility(View.VISIBLE);
-                            cloud1.startAnimation(cloud1Anim);
-                            cloud2.setVisibility(View.VISIBLE);
-                            cloud2.startAnimation(cloud2Anim);
-                            weatherView.setWeatherData(PrecipType.SNOW);
-                            weatherView.setBackgroundColor(Color.RED);
-                        }
+                        String dayTemp = tempList.get(6);
+                        chooseWeather(desc, dayTemp);
                     }
 
                 }

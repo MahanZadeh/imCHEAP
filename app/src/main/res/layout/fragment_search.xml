@@ -4,33 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".SearchFragment">
+    tools:context=".SearchFragment"
+    android:background="#b3e8e5">
 
-<TextView
-    android:id="@+id/textViewCountry"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/choose_a_country"
-    android:textSize="30sp"
-    android:layout_marginTop="30dp"
-    />
+    <TextView
+        android:id="@+id/textViewCountry"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="left"
+        android:text="@string/choose_a_country"
 
-<Spinner
+        android:textSize="20sp" />
+
+    <Spinner
     android:id="@+id/nationality_spinner"
-    android:layout_width="314dp"
+    android:layout_width="190dp"
     android:layout_height="48dp"
-    android:gravity="center"
-    android:layout_marginTop="20dp"
-    android:layout_marginStart="60dp"/>
+    android:gravity="left"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="20dp"/>
 
 <TextView
     android:id="@+id/textViewInterests"
-    android:layout_width="match_parent"
+    android:layout_width="190dp"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:text="@string/select_your_interests"
-    android:textSize="30sp"
+    android:textSize="20sp"
     android:layout_marginTop="20dp"
     />
 
@@ -38,38 +39,45 @@
         android:id="@+id/searchRadioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="left"
+        android:layout_marginLeft="20dp"
         android:checkedButton="@+id/radioButton1" >
 
         <RadioButton
+            android:layout_marginTop="10dp"
             android:id="@+id/radioButton1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beer" />
+            android:text="@string/beer"
+            android:buttonTint="#2f8f9d"/>
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gasoline" />
+            android:text="@string/gasoline"
+            android:buttonTint="#2f8f9d"/>
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/cappuccino" />
+            android:text="@string/cappuccino"
+            android:buttonTint="#2f8f9d"/>
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/taxi" />
+            android:text="@string/taxi"
+            android:buttonTint="#2f8f9d"/>
 
         <RadioButton
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/restaurant" />
+            android:text="@string/restaurant"
+            android:buttonTint="#2f8f9d"/>
     </RadioGroup>
 
 
@@ -77,8 +85,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="100dp"
     android:orientation="vertical"
+
     >
     <Button
         android:id="@+id/btnSearch"
@@ -86,7 +95,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/search"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:backgroundTint="#2f8f9d"/>
 
     <ProgressBar
         android:id="@+id/progressBarSearch"
