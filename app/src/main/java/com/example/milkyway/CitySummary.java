@@ -232,15 +232,12 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
             Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
             Set<String> keys = fiveDaysWeather.keySet();
-//            ArrayList<String> descriptionList = new ArrayList<>();
             ArrayList<String> tempList = new ArrayList<>();
             for (String key : keys) {
-//                Map.Entry<String, ArrayList<String>> entry = itr.next();
                 String description = fiveDaysWeather.get(key).get(1);
                 String temperature = fiveDaysWeather.get(key).get(0);
                 descriptionList.add(description);
                 tempList.add(temperature);
-//                String key= entry.getKey();
                 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
                 String day = formatter.format(date1);
                 spinnerList.add(day.substring(0, 3));
@@ -252,7 +249,6 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int item, long l) {
                     if (item==0) {
-                        String dayTemp = tempList.get(0);
                         sun.setVisibility(View.GONE);
                         cloud1.setVisibility(View.GONE);
                         cloud2.setVisibility(View.GONE);
@@ -386,12 +382,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             textView.setText(itemPrice);
             textView.setWidth(1000);
             textView.setHeight(100);
-//            textView.setTextColor(Color.BLUE);
-            textView.setGravity(Gravity.LEFT);
-//            textView.setBackgroundColor(Color.argb(255,
-//                    (baseRed + random.nextInt(256)) / 2,
-//                    (baseGreen + random.nextInt(256)) /2 ,
-//                    (baseBlue + random.nextInt(256)) / 2));
+            textView.setGravity(Gravity.START);
 
             tableRow.addView(textView); // adding the text to the row
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
@@ -401,33 +392,3 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     }
 }
-
-
-//                btn.setOnClickListener(view -> {
-//                        if (description.toLowerCase().contains("clouds")) {
-//                        sun.setVisibility(View.GONE);
-//                        sun.clearAnimation();
-//                        cloud1.setVisibility(View.VISIBLE);
-//                        cloud1.startAnimation(cloud1Anim);
-//                        cloud2.setVisibility(View.VISIBLE);
-//                        cloud2.startAnimation(cloud2Anim);
-//                        cloud3.setVisibility(View.VISIBLE);
-//                        cloud3.startAnimation(cloud3Anim);
-//                        } else if (description.toLowerCase().contains("rain")) {
-//                        sun.clearAnimation();
-//                        cloud1.setVisibility(View.VISIBLE);
-//                        cloud1.startAnimation(cloud1Anim);
-//                        cloud2.setVisibility(View.VISIBLE);
-//                        cloud2.startAnimation(cloud2Anim);
-//                        weatherView.setWeatherData(PrecipType.RAIN);
-//                        }else if (description.toLowerCase().contains("clear")) {
-//                        cloud1.setVisibility(View.GONE);
-//                        cloud2.setVisibility(View.GONE);
-//                        cloud3.setVisibility(View.GONE);
-//                        cloud1.clearAnimation();
-//                        sun.setVisibility(View.VISIBLE);
-//                        sun.startAnimation(sunAnim);
-//
-//                        }
-//
-//                        });
