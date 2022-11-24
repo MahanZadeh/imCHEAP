@@ -253,13 +253,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                 public void onItemSelected(AdapterView<?> adapterView, View view, int item, long l) {
                     if (item==0) {
                         String dayTemp = tempList.get(0);
-//                        temp.setText(dayTemp);
-                        Toast.makeText(CitySummary.this, dayTemp, Toast.LENGTH_SHORT).show();
-//                        sun.setVisibility(View.GONE);
+                        sun.setVisibility(View.GONE);
                         cloud1.setVisibility(View.GONE);
                         cloud2.setVisibility(View.GONE);
                         cloud3.setVisibility(View.GONE);
-//                        sun.clearAnimation();
+                        sun.clearAnimation();
                         cloud1.clearAnimation();
                         cloud2.clearAnimation();
                         cloud3.clearAnimation();
