@@ -53,6 +53,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
         holder.text1.setText(cities.get(position));
         holder.text2.setText(costs.get(position));
         holder.image.setImageResource(images[0]);
+            // countries[position]
         holder.hiddenInfoKey.setText(keys.get(position));
 //        holder.hiddenInfoKey.setVisibility(View.GONE);
     }

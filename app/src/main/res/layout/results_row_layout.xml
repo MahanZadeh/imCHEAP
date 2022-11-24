@@ -14,14 +14,15 @@
         android:layout_height="90dp"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-195dp">
+        tools:layout_editor_absoluteX="-195dp"
+        android:backgroundTint="#b3e8e5">
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:background="#FAF0E6"
+            android:background="#b3e8e5"
             android:contentDescription="@string/image_of_the_city"
             android:maxWidth="100dp"
             android:maxHeight="100dp"
@@ -71,6 +72,7 @@
             android:layout_width="65dp"
             android:layout_height="33dp"
             android:layout_marginStart="192dp"
+            android:backgroundTint="#2f8f9d"
             android:text="@string/favoriteButton"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"

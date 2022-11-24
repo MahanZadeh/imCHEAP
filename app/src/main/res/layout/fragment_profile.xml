@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
@@ -11,17 +12,30 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:orientation="horizontal" >
+    <androidx.cardview.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="250dp"
+        android:layout_gravity="center"
+        android:backgroundTint="#949494">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_baseline_person_24"
 
+            />
+    </androidx.cardview.widget.CardView>
+<!--        <TextView-->
+<!--            android:id="@+id/textView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-
-            android:text="@string/profile"
-            android:textColor="@color/green_primary"
-            android:textSize="45sp"/>
+<!--            android:text="@string/profile"-->
+<!--            android:textColor="@color/green_primary"-->
+<!--            android:textSize="45sp"/>-->
 
         <Button
             android:id="@+id/logout"
@@ -39,6 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textColor="#949494"
         android:gravity="center"
         android:textSize="22sp" />
 <!--    <TextView-->
