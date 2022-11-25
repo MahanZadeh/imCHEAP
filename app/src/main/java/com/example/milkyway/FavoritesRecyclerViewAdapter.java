@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +31,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     Context c;
     ArrayList<String> keys, countries, cities, costs;
     String url;
-//    private ResultsItemClickListener clickListener;
+    private FavoritesItemClickListener clickListener;
 
     public FavoritesRecyclerViewAdapter(Context c,ArrayList<String> keys,
                                         ArrayList<String> countries, ArrayList<String> cities,
@@ -69,12 +70,14 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
 
     @Override
     public int getItemCount()  {
-        return cities.size();
+        return cities == null ? 0 : cities.size();
     }
 
-//    public void setClickListener(View.OnClickListener lis)
+    public void setClickListener(FavoritesItemClickListener favoritesItemClickListener) {
+        this.clickListener = favoritesItemClickListener;
+    }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView text1, text2, hiddenInfoKey;
         ImageView image;
@@ -86,26 +89,23 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
             image = itemView.findViewById(R.id.imageViewFav);
             button = itemView.findViewById(R.id.deleteButton);
             hiddenInfoKey = itemView.findViewById(R.id.hiddenInfoKey);
-//            itemView.setOnClickListener(this);
-//            image.setOnClickListener(this);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-//                    Toast.makeText(c.getApplicationContext(), "DELETED.", Toast.LENGTH_SHORT).show();
 
-
-                    user = FirebaseAuth.getInstance().getCurrentUser();
-                    reference = FirebaseDatabase.getInstance().getReference("Fav");
-                    userID = user.getUid();
-                    DatabaseReference dr = FirebaseDatabase.getInstance().getReference("Fav")
-                            .child(userID);
-                    dr.child(hiddenInfoKey.getText().toString()).removeValue();
-//                    Toast.makeText(c.getApplicationContext(), "Huh", Toast.LENGTH_SHORT).show();
-
-                }
-            });
+            itemView.setOnClickListener(this);
+            image.setOnClickListener(this);
+            button.setOnClickListener(this);
         }
 
 
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) {
+                String id = view.getResources().getResourceName(view.getId());
+                if (id.contains("deleteButton")) {
+                    clickListener.onClickDelete(view, getBindingAdapterPosition());
+                } else {
+                    clickListener.onClickCitySummary(view, getBindingAdapterPosition());
+                }
+            }
+        }
     }
 }
