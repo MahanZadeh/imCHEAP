@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,13 +27,10 @@ import java.util.ArrayList;
 public class FavoritesFragment extends Fragment implements FavoritesItemClickListener{
 
     RecyclerView recyclerView;
-    private FirebaseUser user;
-    private DatabaseReference databaseReference ;
+    private DatabaseReference databaseReference;
     private String userID;
     private DatabaseReference userFavData;
-    private TextView hiddenInfoKey;
     FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter;
-//    View.OnClickListener onClickListener = null;
 
     ArrayList<String> cityArray = new ArrayList<>();
     ArrayList<String> countryArray = new ArrayList<>();
@@ -49,7 +45,7 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav");
         userID = user.getUid();
         // Inflate the layout for this fragment
@@ -70,10 +66,6 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
 
         return view;
     }
-
-//    public FavoritesFragment(View.OnClickListener listener) {
-//        this.onClickListener = listener;
-//    }
 
     private void getData(View view) {
         userFavData.addValueEventListener(new ValueEventListener() {
