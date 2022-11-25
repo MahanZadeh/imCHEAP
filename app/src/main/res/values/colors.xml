@@ -8,9 +8,14 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-<!--    Green Color Palette-->
+    Green Color Palette
     <color name="green_primary">#2e7c31</color>
     <color name="green_light">#60ac5d</color>
     <color name="green_dark">#004f04</color>
     <color name="text_on_primary">#ffffff</color>
+
+    <color name="blue_primary">#145DA0</color>
+    <color name="blue_light">#2E8BC0</color>
+    <color name="blue_dark">#0C2D48</color>
+
 </resources>
