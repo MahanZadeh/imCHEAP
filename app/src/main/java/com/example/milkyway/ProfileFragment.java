@@ -53,11 +53,11 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
         // Change fragment when favorites button is clicked
-        Button btn_favorites = getView().findViewById(R.id.btn_favorites);
+        Button btn_favorites = requireView().findViewById(R.id.btn_favorites);
         btn_favorites.setOnClickListener(nextView -> {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             Fragment favs = new FavoritesFragment();
@@ -68,7 +68,7 @@ public class ProfileFragment extends Fragment {
         });
 
         // Change fragment when history button is clicked
-        Button btn_history = getView().findViewById(R.id.btn_history);
+        Button btn_history = requireView().findViewById(R.id.btn_history);
         btn_history.setOnClickListener(nextView -> {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             ft.replace(R.id.profileFragmentContainerView, HistoryFragment.class, null);
@@ -76,10 +76,11 @@ public class ProfileFragment extends Fragment {
             ft.addToBackStack("name"); // name can be null
             ft.commit();
         });
-        logout = getView().findViewById(R.id.logout);
+        logout = requireView().findViewById(R.id.logout);
         logout.setOnClickListener(nextView -> {
             FirebaseAuth.getInstance().signOut();;
-            startActivity(new Intent(getActivity().getApplicationContext(), LoginActivity.class));
+            startActivity(new Intent(requireActivity().getApplicationContext(),
+                    LoginActivity.class));
         });
 
         // BELOW IS MAHAN
@@ -88,7 +89,7 @@ public class ProfileFragment extends Fragment {
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        final TextView nameView = getView().findViewById(R.id.userName);
+        final TextView nameView = requireView().findViewById(R.id.userName);
 //        final TextView emailView = getView().findViewById(R.id.userEmail);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -107,7 +108,8 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getActivity().getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity().getApplicationContext(),
+                        "Something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }

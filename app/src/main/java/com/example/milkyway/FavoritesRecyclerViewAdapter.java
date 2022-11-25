@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,16 +29,18 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     private String userID;
     Context c;
     ArrayList<String> keys, countries, cities, costs;
-    int[] images;
+    String url;
 //    private ResultsItemClickListener clickListener;
 
-    public FavoritesRecyclerViewAdapter(Context c,ArrayList<String> keys, ArrayList<String> countries, ArrayList<String> cities, ArrayList<String> costs, int[] images) {
+    public FavoritesRecyclerViewAdapter(Context c,ArrayList<String> keys,
+                                        ArrayList<String> countries, ArrayList<String> cities,
+                                        ArrayList<String> costs, String url) {
         this.c = c;
         this.keys = keys;
         this.countries = countries;
         this.cities = cities;
         this.costs = costs;
-        this.images = images;
+        this.url = url;
     }
 
     @NonNull
@@ -52,7 +55,13 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.text1.setText(cities.get(position));
         holder.text2.setText(costs.get(position));
-        holder.image.setImageResource(images[0]);
+        Picasso.get()
+                .load(url + countries.get(position))
+                .resize(800, 600) // resizes the image to these dimensions (in pixel)
+                .centerCrop()
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.image_not_found)
+                .into(holder.image);
         holder.hiddenInfoKey.setText(keys.get(position));
 //        holder.hiddenInfoKey.setVisibility(View.GONE);
     }
@@ -67,14 +76,13 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView text1, text2, text3, hiddenInfoKey;
+        TextView text1, text2, hiddenInfoKey;
         ImageView image;
         Button button;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            text1 = itemView.findViewById(R.id.countryFav);
+            text1 = itemView.findViewById(R.id.cityFav);
             text2 = itemView.findViewById(R.id.costFav);
-            text3 = itemView.findViewById(R.id.cityFav);
             image = itemView.findViewById(R.id.imageViewFav);
             button = itemView.findViewById(R.id.deleteButton);
             hiddenInfoKey = itemView.findViewById(R.id.hiddenInfoKey);

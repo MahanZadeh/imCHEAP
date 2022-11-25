@@ -26,12 +26,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class FavoritesFragment extends Fragment {
 
     RecyclerView recyclerView;
-    int[] images = {R.drawable.globe};
     private FirebaseUser user;
     private DatabaseReference databaseReference ;
     private String userID;
@@ -83,7 +83,11 @@ public class FavoritesFragment extends Fragment {
 
                 }
 
-                FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter = new FavoritesRecyclerViewAdapter(getActivity(),keyArray, countryArray, cityArray, costArray, images );
+                String flagUrl = "https://countryflagsapi.com/png/";
+
+                FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter =
+                        new FavoritesRecyclerViewAdapter(getActivity(),keyArray, countryArray,
+                                cityArray, costArray, flagUrl);
                 recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
                 recyclerView.setAdapter(favoritesRecyclerViewAdapter);
 
@@ -93,7 +97,8 @@ public class FavoritesFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-                Toast.makeText(getActivity().getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity().getApplicationContext(),
+                        "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
 
 

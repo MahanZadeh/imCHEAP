@@ -131,7 +131,8 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         String country = countryName;
         String cost = costs[position];
 
-        String key = FirebaseDatabase.getInstance().getReference("Fav").child(userID).push().getKey();
+        String key = FirebaseDatabase.getInstance().getReference("Fav")
+                .child(userID).push().getKey();
         FavInfo favInfo = new FavInfo(key, country, city, cost);
 
         assert key != null;
