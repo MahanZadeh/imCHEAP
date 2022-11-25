@@ -1,12 +1,11 @@
 package com.example.milkyway;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,17 +22,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FavoritesItemClickListener{
 
     RecyclerView recyclerView;
-    int[] images = {R.drawable.globe};
-    private FirebaseUser user;
-    private DatabaseReference databaseReference ;
+    private DatabaseReference databaseReference;
     private String userID;
     private DatabaseReference userFavData;
+    FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter;
 
     ArrayList<String> cityArray = new ArrayList<>();
     ArrayList<String> countryArray = new ArrayList<>();
@@ -50,24 +45,31 @@ public class FavoritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav");
         userID = user.getUid();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
         recyclerView = view.findViewById(R.id.recyclerView2);
 
-
         userFavData = FirebaseDatabase.getInstance().getReference("Fav").child(userID);
 
-        getData(view);
+        String flagUrl = "https://countryflagsapi.com/png/";
 
+        favoritesRecyclerViewAdapter = new FavoritesRecyclerViewAdapter(view.getContext(),
+                keyArray, countryArray, cityArray, costArray, flagUrl);
+        favoritesRecyclerViewAdapter.setClickListener(this);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        recyclerView.setAdapter(favoritesRecyclerViewAdapter);
+
+        getData(view);
 
         return view;
     }
 
     private void getData(View view) {
         userFavData.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 keyArray.removeAll(keyArray);
@@ -80,23 +82,36 @@ public class FavoritesFragment extends Fragment {
                     cityArray.add(favInfo.city);
                     countryArray.add(favInfo.country);
                     costArray.add(favInfo.cost);
-
                 }
-
-                FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter = new FavoritesRecyclerViewAdapter(getActivity(),keyArray, countryArray, cityArray, costArray, images );
-                recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                recyclerView.setAdapter(favoritesRecyclerViewAdapter);
-
-                System.out.println(cityArray);
+                favoritesRecyclerViewAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-                Toast.makeText(getActivity().getApplicationContext(), "Fail to get data.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity().getApplicationContext(),
+                        "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
-
-
         });
+    }
+
+    @Override
+    public void onClickCitySummary(View view, int position) {
+        // Go to city summary page
+        if (countryArray != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("countryName", countryArray.get(position));
+            bundle.putString("cityName", cityArray.get(position));
+            Intent intent = new Intent(getActivity(), CitySummary.class);
+            intent.putExtra("bundle", bundle);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onClickDelete(View view, int position) {
+        DatabaseReference dr = databaseReference.child(userID);
+        String key = keyArray.get(position);
+        dr.child(key).removeValue();
     }
 }
