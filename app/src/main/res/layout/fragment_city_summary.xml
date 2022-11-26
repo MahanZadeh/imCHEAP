@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/sand">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,7 +43,8 @@
             tools:layout_editor_absoluteY="26dp"
             tools:ignore="ContentDescription"
             android:backgroundTint="@color/white"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="20dp"
             />
 
         <TextView
@@ -55,7 +56,9 @@
             android:layout_toEndOf="@+id/cityImage"
             android:layout_alignBottom="@+id/cityImage"
             android:textSize="26sp"
-            android:textColor="#2f8f9d">
+            android:textColor="@color/white"
+            android:layout_marginStart="10dp"
+            >
 
         </TextView>
 
@@ -64,8 +67,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linearSpinner"
-            android:layout_marginLeft="8dp"
-            android:text="Temp:"/>
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/temp"
+            android:textSize="20sp"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,6 +110,10 @@
                 </TableRow>
 
             </TableLayout>
+
+
+<!-- Weather Animation -->
+
             <ImageView
                 android:id="@+id/sun"
                 android:alpha="0.5"
