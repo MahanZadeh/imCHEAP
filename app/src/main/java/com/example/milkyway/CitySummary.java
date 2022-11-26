@@ -1,8 +1,6 @@
 package com.example.milkyway;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,8 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -308,8 +304,12 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     }
 
 
-
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
+
+        AsyncTaskRunner() {
+            super();
+        }
 
         String itemPrice;
 
@@ -371,12 +371,6 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         protected void onSuccess() {
 
             TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
-            final int baseColor = Color.WHITE;
-            final int baseRed = Color.red(baseColor);
-            final int baseGreen = Color.green(baseColor);
-            final int baseBlue = Color.blue(baseColor);
-
-            Random random = new Random();
             TableRow tableRow = new TableRow(CitySummary.this); //making a row
             TextView textView = new TextView(CitySummary.this); //making the text for that row
 
