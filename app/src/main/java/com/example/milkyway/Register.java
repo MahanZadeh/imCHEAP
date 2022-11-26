@@ -22,12 +22,10 @@ public class Register extends AppCompatActivity {
     private EditText name, email, password;
     private ProgressBar progressBarRegister;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
@@ -109,8 +107,6 @@ public class Register extends AppCompatActivity {
                         progressBarRegister.setVisibility(View.GONE);
                     }
                 });
-
-
     }
 
 }

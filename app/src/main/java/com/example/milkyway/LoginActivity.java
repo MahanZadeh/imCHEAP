@@ -10,23 +10,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextView register;
     private EditText editTextEmail, editTextPassword;
-    private Button logIn;
     private ProgressBar progressBar;
-    private TextView forgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,18 +29,14 @@ public class LoginActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
-        register = findViewById(R.id.register);
+        TextView register = findViewById(R.id.register);
         register.setOnClickListener(view -> {
             Intent intent = new Intent(this, Register.class);
             startActivity(intent);
         });
 
-        logIn = findViewById(R.id.loginButton);
-        logIn.setOnClickListener(view -> {
-            userLogin();
-//            Intent intent = new Intent(this, LandingPage.class);
-//            startActivity(intent);
-        });
+        Button logIn = findViewById(R.id.loginButton);
+        logIn.setOnClickListener(view -> userLogin());
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextEmail.setOnClickListener(view -> {
@@ -63,23 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        forgotPassword = findViewById(R.id.forgotPassword);
-        forgotPassword.setOnClickListener(view->{
-            startActivity(new Intent(getApplicationContext(), ForgotPassword.class));
-        });
-
-
+        TextView forgotPassword = findViewById(R.id.forgotPassword);
+        forgotPassword.setOnClickListener(view->
+                startActivity(new Intent(getApplicationContext(), ForgotPassword.class)));
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(currentUser != null){
-////            reload();
-//        }
-//    }
 
     private void userLogin() {
         String email = editTextEmail.getText().toString().trim();
@@ -110,30 +86,28 @@ public class LoginActivity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                    if(task.isSuccessful()){
-//
-//                        Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
-//                        startActivity(intent);
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        if (user.isEmailVerified()){
-                            //redirect to user profile
-                            progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
-                            Intent intent = new Intent(getApplicationContext(), LandingPage.class);
-                            startActivity(intent);
-                        }else {
-                            user.sendEmailVerification();
-                            Toast.makeText(getApplicationContext(), "Check your email to verify your account!", Toast.LENGTH_SHORT).show();
-                        }
-
-
-                    }else {
-                        Toast.makeText(LoginActivity.this, "Failed To Login, please check your credentials!!", Toast.LENGTH_SHORT).show();
-//                        progressBarRegister.setVisibility(View.GONE);
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if(task.isSuccessful()){
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    assert user != null;
+                    if (user.isEmailVerified()){
+                        //redirect to user profile
+                        progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
+                        Intent intent = new Intent(getApplicationContext(), LandingPage.class);
+                        startActivity(intent);
+                    } else {
+                        user.sendEmailVerification();
+                        Toast.makeText(getApplicationContext(),
+                                "Check your email to verify your account!",
+                                Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
-            }
+                } else {
+                    Toast.makeText(LoginActivity.this,
+                            "Failed To Login, please check your credentials!!",
+                            Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                }
         });
     }
 
