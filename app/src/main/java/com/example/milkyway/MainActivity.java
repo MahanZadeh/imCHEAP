@@ -40,11 +40,4 @@ public class MainActivity extends AppCompatActivity {
         }, SPLASH_SCREEN_TIMEOUT);
 
     }
-
-    public void plane(View view) {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-
 }
