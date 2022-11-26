@@ -7,6 +7,31 @@
     tools:context=".SearchFragment"
     android:background="#b3e8e5">
 
+    <LinearLayout
+        android:id="@+id/loadingScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/paper_airplane"
+            />
+
+        <TextView
+            android:id="@+id/loadingMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load_message"
+            android:layout_marginTop="30dp"
+            android:textSize="24sp"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/textViewCountry"
         android:layout_width="190dp"
@@ -97,15 +122,6 @@
         android:text="@string/search"
         android:textSize="25sp"
         android:backgroundTint="#2f8f9d"/>
-
-    <ProgressBar
-        android:id="@+id/progressBarSearch"
-        style="?android:attr/progressBarStyle"
-        android:gravity="center"
-        android:layout_width="150dp"
-        android:layout_marginTop="35dp"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
 </LinearLayout>
 
 

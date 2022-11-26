@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -45,6 +47,9 @@ import java.util.stream.Collectors;
 
 public class SearchFragment extends Fragment {
 
+    Animation animation1;
+    Animation animation2;
+    Animation animation3;
     String countryName;
     Bundle bundle = new Bundle();
     int currentCount = 0;
@@ -74,13 +79,20 @@ public class SearchFragment extends Fragment {
         SearchViewModel mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         // TODO: Use the ViewModel
 
-        progressBarSearch = requireView().findViewById(R.id.progressBarSearch);
+//        progressBarSearch = requireView().findViewById(R.id.progressBarSearch);
 
         setNationalitySpinner();
 
+        animation1 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+                R.anim.loading_text1);
+//        animation2 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+//                R.anim.loading_text2);
+//        animation3 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+//                R.anim.loading_text3);
+
         Button toResults = requireView().findViewById(R.id.btnSearch);
         toResults.setOnClickListener(view -> {
-            progressBarSearch.setVisibility(View.VISIBLE);
+//            progressBarSearch.setVisibility(View.VISIBLE);
             // Get selected search choice
             RadioGroup radioGroup = requireView().findViewById(R.id.searchRadioGroup);
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
@@ -160,6 +172,16 @@ public class SearchFragment extends Fragment {
         }
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            requireView().findViewById(R.id.loadingScreen).setVisibility(View.VISIBLE);
+//            requireView().findViewById(R.id.sitBack).startAnimation(animation1);
+//            requireView().findViewById(R.id.andRelax).startAnimation(animation2);
+//            requireView().findViewById(R.id.whileLoad).startAnimation(animation3);
+            requireView().findViewById(R.id.loadingMessage).startAnimation(animation1);
+        }
+
+        @Override
         protected ArrayList<String> doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0],
@@ -225,7 +247,8 @@ public class SearchFragment extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0],
+                    null, response -> {
                 try {
 
                     String cityName = response.getString("city_name");

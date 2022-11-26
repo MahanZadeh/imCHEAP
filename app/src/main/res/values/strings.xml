@@ -70,6 +70,7 @@
 
     <string name="test">test</string>
     <string name="delete">Delete</string>
+    <string name="load_message">Sit back and relax\nwhile we retrieve your results!</string>
 
 
 </resources>
