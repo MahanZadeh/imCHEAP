@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SearchFragment"
-    android:background="@color/sand">
+    android:background="@drawable/road_trip">
 
     <LinearLayout
         android:id="@+id/loadingScreen"
@@ -63,7 +63,7 @@
         android:text="@string/select_your_interests"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:paddingTop="20dp"
+        android:paddingTop="40dp"
         android:paddingStart="30dp"
         android:paddingEnd="5dp"
         />
@@ -82,37 +82,46 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/beer"
-            android:textSize="15sp"
-            android:buttonTint="@color/sand_dark"/>
+            android:textColor="@color/white"
+            android:backgroundTint="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/sand"/>
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gasoline"
-            android:textSize="15sp"
-            android:buttonTint="@color/sand_dark"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/sand"/>
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cappuccino"
-            android:buttonTint="@color/sand_dark"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/sand"/>
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/taxi"
-            android:buttonTint="@color/sand_dark"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/sand"/>
 
         <RadioButton
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/restaurant"
-            android:buttonTint="@color/sand_dark"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:buttonTint="@color/sand"/>
     </RadioGroup>
 
 
@@ -120,9 +129,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="30dp"
     android:orientation="vertical"
     >
+
+</LinearLayout>
 
     <Button
         android:id="@+id/btnSearch"
@@ -137,10 +148,7 @@
         android:gravity="center"
         android:text="@string/search"
         android:textColor="#ffffff"
-        android:textSize="12sp"
-        />
-</LinearLayout>
-
+        android:textSize="12sp" />
 
 
 </LinearLayout>
