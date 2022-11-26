@@ -58,7 +58,7 @@
         android:id="@+id/textViewInterests"
         android:layout_width="354dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/select_your_interests"
         android:textColor="@color/white"
@@ -133,8 +133,6 @@
     android:orientation="vertical"
     >
 
-</LinearLayout>
-
     <Button
         android:id="@+id/btnSearch"
         android:layout_width="match_parent"
@@ -143,12 +141,16 @@
         android:layout_marginLeft="62dp"
         android:layout_marginTop="18.7dp"
         android:layout_marginRight="62dp"
-        android:background="@drawable/blue_fill__rounded_color"
+        android:background="@drawable/sand_fill__rounded_color"
         android:fontFamily="@font/poppins_medium"
         android:gravity="center"
         android:text="@string/search"
-        android:textColor="#ffffff"
+        android:textColor="@color/black"
         android:textSize="12sp" />
+
+</LinearLayout>
+
+
 
 
 </LinearLayout>
