@@ -14,8 +14,7 @@
         android:background="#FFFAFA"
         android:id="@+id/favItemView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-195dp"
-        android:backgroundTint="#b3e8e5">
+        tools:layout_editor_absoluteX="-195dp">
 
         <ImageView
             android:id="@+id/imageViewFav"
@@ -51,32 +50,33 @@
 
         <TextView
             android:id="@+id/costFav"
-            android:layout_width="193dp"
-            android:layout_height="32dp"
+            android:layout_width="178dp"
+            android:layout_height="41dp"
             android:width="280dp"
             android:paddingHorizontal="10dp"
             android:paddingTop="5dp"
             android:text="@string/cost"
-            android:textSize="12sp"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageViewFav"
             app:layout_constraintTop_toTopOf="@+id/cityFav"
-            app:layout_constraintVertical_bias="0.379" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="93dp"
+            android:layout_height="47dp"
             android:layout_marginStart="192dp"
+            android:backgroundTint="@color/sand"
             android:text="@string/delete"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.739"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/imageViewFav"
             app:layout_constraintTop_toTopOf="parent"
-            android:backgroundTint="#2f8f9d"/>
+            app:layout_constraintVertical_bias="0.52" />
 
         <TextView
             android:id="@+id/hiddenInfoKey"

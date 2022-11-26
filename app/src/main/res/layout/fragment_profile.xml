@@ -7,71 +7,73 @@
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:orientation="horizontal" >
-    <androidx.cardview.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginLeft="10dp"
-        app:cardCornerRadius="250dp"
-        android:layout_gravity="center"
-        android:backgroundTint="#949494">
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_baseline_person_24"
+        android:orientation="vertical">
 
-            />
-    </androidx.cardview.widget.CardView>
-<!--        <TextView-->
-<!--            android:id="@+id/textView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/sand_bg">
 
-<!--            android:text="@string/profile"-->
-<!--            android:textColor="@color/green_primary"-->
-<!--            android:textSize="45sp"/>-->
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/profile"
-            android:textColor="@color/green_primary"
-            android:textSize="45sp"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="64dp"
-            android:layout_height="61dp"
-            android:layout_gravity="center"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/ic_log_out_foreground"
-            android:icon="@drawable/ic_baseline_person_24"
-            android:textSize="12sp" />
-    </RelativeLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    app:cardCornerRadius="250dp">
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="#949494"
-        android:gravity="center"
-        android:textSize="22sp" />
-<!--    <TextView-->
-<!--        android:id="@+id/userEmail"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:gravity="center"-->
-<!--        android:text="Email:"-->
-<!--        android:textSize="15sp" />-->
+                    <ImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_baseline_person_24" />
+                </androidx.cardview.widget.CardView>
 
+                <!--    <TextView-->
+                <!--        android:id="@+id/userEmail"-->
+                <!--        android:layout_width="wrap_content"-->
+                <!--        android:layout_height="wrap_content"-->
+                <!--        android:gravity="center"-->
+                <!--        android:text="Email:"-->
+                <!--        android:textSize="15sp" />-->
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="198dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/logout"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/ic_log_out_foreground"
+                    android:icon="@drawable/ic_baseline_person_24"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -80,17 +82,19 @@
 
         <Button
             android:id="@+id/btn_favorites"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/favorites"
-            style="?android:attr/buttonBarButtonStyle" />
+
+            android:text="@string/favorites" />
 
         <Button
             android:id="@+id/btn_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+
             android:text="@string/history"
             style="?android:attr/buttonBarButtonStyle" />
 
@@ -104,6 +108,7 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/profileFragmentContainerView"
             android:name="com.example.milkyway.FavoritesFragment"
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="445dp"
             tools:layout="@layout/fragment_favorites" />
