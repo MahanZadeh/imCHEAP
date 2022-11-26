@@ -304,7 +304,8 @@ public class SearchFragment extends Fragment {
                     sortedCities.add(cityName);
                     String itemName = key.get(1);
                     String cCode = key.get(2);
-                    String fullDescription = itemName + ", Price: " + cityInfo.get(key) + " " + cCode;
+                    String fullDescription = itemName + ", \nPrice: " + cityInfo.get(key)
+                            + " " + cCode;
                     costsDescription.add(fullDescription);
                 }
                 bundle.putStringArrayList("Sorted Cities", sortedCities);

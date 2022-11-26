@@ -35,14 +35,14 @@
 
         <TextView
             android:id="@+id/city"
-            android:layout_width="193dp"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="10dp"
-            android:text="@string/city"
-            android:textSize="20sp"
-            android:maxLines="1"
+            android:layout_width="240dp"
+            android:layout_height="27dp"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:text="@string/city"
+            android:textSize="18sp"
+            android:layout_marginTop="-4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -52,19 +52,21 @@
 
         <TextView
             android:id="@+id/cost"
-            android:layout_width="193dp"
-            android:layout_height="32dp"
-            android:width="280dp"
-            android:paddingHorizontal="10dp"
-            android:paddingTop="5dp"
+            android:layout_width="203dp"
+            android:layout_height="56dp"
+            android:width="232dp"
+            android:lineSpacingExtra="-2dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="20dp"
             android:text="@string/cost"
             android:textSize="12sp"
+            android:layout_marginTop="-2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/city"
-            app:layout_constraintVertical_bias="0.379" />
+            app:layout_constraintVertical_bias="0.71" />
 
         <Button
             android:id="@+id/favoriteButton"

@@ -35,13 +35,13 @@
 
         <TextView
             android:id="@+id/cityFav"
-            android:layout_width="193dp"
+            android:layout_width="173dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
             android:paddingHorizontal="10dp"
             android:text="@string/city"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/costFav"
-            android:layout_width="178dp"
+            android:layout_width="163dp"
             android:layout_height="41dp"
             android:width="280dp"
             android:paddingHorizontal="10dp"
@@ -63,7 +63,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/imageViewFav"
             app:layout_constraintTop_toTopOf="@+id/cityFav"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.612" />
 
         <Button
             android:id="@+id/deleteButton"
