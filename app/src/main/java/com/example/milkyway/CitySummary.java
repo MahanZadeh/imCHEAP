@@ -78,7 +78,8 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
 
         TextView cityNameView = findViewById(R.id.summary_city_name);
-        cityNameView.setText(cityName);
+        StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
+        cityNameView.setText(cityNameSb);
         String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
         tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
         AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
