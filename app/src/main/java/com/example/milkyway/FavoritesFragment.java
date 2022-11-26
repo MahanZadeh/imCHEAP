@@ -26,16 +26,15 @@ import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment implements FavoritesItemClickListener{
 
-    RecyclerView recyclerView;
     private DatabaseReference databaseReference;
     private String userID;
     private DatabaseReference userFavData;
-    FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter;
+    private FavoritesRecyclerViewAdapter favoritesRecyclerViewAdapter;
 
-    ArrayList<String> cityArray = new ArrayList<>();
-    ArrayList<String> countryArray = new ArrayList<>();
-    ArrayList<String> costArray = new ArrayList<>();
-    ArrayList<String> keyArray = new ArrayList<>();
+    private final ArrayList<String> cityArray = new ArrayList<>();
+    private final ArrayList<String> countryArray = new ArrayList<>();
+    private final ArrayList<String> costArray = new ArrayList<>();
+    private final ArrayList<String> keyArray = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerView2);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView2);
 
         userFavData = FirebaseDatabase.getInstance().getReference("Fav").child(userID);
 
@@ -71,17 +70,18 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
         return view;
     }
 
-    private void getData(View view) {
+    private void getData(@SuppressWarnings("UnusedParameters") View view) {
         userFavData.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                keyArray.removeAll(keyArray);
-                cityArray.removeAll(cityArray);
-                countryArray.removeAll(countryArray);
-                costArray.removeAll(costArray);
+                keyArray.clear();
+                cityArray.clear();
+                countryArray.clear();
+                costArray.clear();
                 for (DataSnapshot singleNode: snapshot.getChildren()) {
                     FavInfo favInfo = singleNode.getValue(FavInfo.class);
+                    assert favInfo != null;
                     keyArray.add(favInfo.key);
                     cityArray.add(favInfo.city);
                     countryArray.add(favInfo.country);
@@ -92,7 +92,6 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
                 Toast.makeText(requireActivity().getApplicationContext(),
                         "Failed to get data.", Toast.LENGTH_SHORT).show();
             }
@@ -102,7 +101,7 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
     @Override
     public void onClickCitySummary(View view, int position) {
         // Go to city summary page
-        if (countryArray != null) {
+        if (countryArray.size() != 0) {
             Bundle bundle = new Bundle();
             bundle.putString("countryName", countryArray.get(position));
             bundle.putString("cityName", cityArray.get(position));
