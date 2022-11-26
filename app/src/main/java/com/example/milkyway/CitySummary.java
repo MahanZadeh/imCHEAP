@@ -312,6 +312,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                 try {
                     JSONArray prices = response.getJSONArray("prices");
                     int itemId;
+                    int position = 0;
                     double tempPrice;
                     String currencyCode;
                     String itemName;
@@ -325,6 +326,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
                         if (itemId == randomItemId && jsonObjectPrice.has("item_name")) {
                             isExists = true;
+                            position++;
 
                             if (itemName.contains(",")) {
                                 String[] parts = itemName.split(",");
@@ -338,7 +340,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                         }
                     }
                     if (isExists) {
-                        onSuccess();
+                        onSuccess(position);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -358,16 +360,21 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             return null;
         }
 
-        protected void onSuccess() {
+        protected void onSuccess(int position) {
 
             TableLayout tableLayout1 = findViewById(R.id.city_summary_table); // here we grab the tablelayout
-            TableRow tableRow = new TableRow(CitySummary.this); //making a row
-            TextView textView = new TextView(CitySummary.this); //making the text for that row
+            TableRow tableRow = new TableRow(CitySummary.this); // making a row
+            TextView textView = new TextView(CitySummary.this); // making the text for that row
 
             textView.setText(itemPrice);
             textView.setWidth(1000);
             textView.setHeight(100);
             textView.setGravity(Gravity.START);
+
+            // this does not work yet :(
+            if (position % 2 == 0) {
+                textView.setBackgroundColor(0xFF00FF00);
+            }
 
             tableRow.addView(textView); // adding the text to the row
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
