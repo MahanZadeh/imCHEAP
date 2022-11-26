@@ -21,28 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:backgroundTint="@color/white">
-            <ImageView
-                android:id="@+id/cityImage"
-                android:layout_width="163dp"
-                android:layout_height="123dp"
-                app:srcCompat="@drawable/image_not_found"
-                tools:layout_editor_absoluteX="2dp"
-                tools:layout_editor_absoluteY="26dp"
-                tools:ignore="ContentDescription"
-                android:backgroundTint="@color/white"/>
 
-            <TextView
-                android:id="@+id/summary_city_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cityName"
-                android:textStyle="bold"
-                android:layout_toEndOf="@+id/cityImage"
-                android:layout_alignBottom="@+id/cityImage"
-                android:textSize="26sp"
-                android:textColor="#2f8f9d">
+        <ImageView
+            android:id="@+id/cityImage"
+            android:layout_width="163dp"
+            android:layout_height="123dp"
+            app:srcCompat="@drawable/image_not_found"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="26dp"
+            tools:ignore="ContentDescription"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            />
 
-            </TextView>
+        <TextView
+            android:id="@+id/summary_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cityName"
+            android:textStyle="bold"
+            android:layout_toEndOf="@+id/cityImage"
+            android:layout_alignBottom="@+id/cityImage"
+            android:textSize="26sp"
+            android:textColor="#2f8f9d">
+
+        </TextView>
 
         <TextView
             android:id="@+id/temp"
