@@ -17,136 +17,136 @@
 
     </com.github.matteobattilana.weather.WeatherView>
 
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:backgroundTint="@color/white">
-        <ImageView
-            android:id="@+id/cityImage"
-            android:layout_width="163dp"
-            android:layout_height="123dp"
-            app:srcCompat="@drawable/image_not_found"
-            tools:layout_editor_absoluteX="2dp"
-            tools:layout_editor_absoluteY="26dp"
-            tools:ignore="ContentDescription"
-            android:backgroundTint="@color/white"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="@color/white">
+            <ImageView
+                android:id="@+id/cityImage"
+                android:layout_width="163dp"
+                android:layout_height="123dp"
+                app:srcCompat="@drawable/image_not_found"
+                tools:layout_editor_absoluteX="2dp"
+                tools:layout_editor_absoluteY="26dp"
+                tools:ignore="ContentDescription"
+                android:backgroundTint="@color/white"/>
+
+            <TextView
+                android:id="@+id/summary_city_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/cityName"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/cityImage"
+                android:layout_alignBottom="@+id/cityImage"
+                android:textSize="26sp"
+                android:textColor="#2f8f9d">
+
+            </TextView>
 
         <TextView
-            android:id="@+id/summary_city_name"
+            android:id="@+id/temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cityName"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/cityImage"
-            android:layout_alignBottom="@+id/cityImage"
-            android:textSize="26sp"
-            android:textColor="#2f8f9d">
+            android:layout_below="@+id/linearSpinner"
+            android:layout_marginLeft="8dp"
+            android:text="Temp:"/>
 
-        </TextView>
-
-    <TextView
-        android:id="@+id/temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linearSpinner"
-        android:layout_marginLeft="8dp"
-        android:text="Temp:"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearSpinner"
-        android:orientation="vertical"
-        android:layout_below="@+id/cityImage"/>
-<!--    <Spinner-->
-<!--        android:id="@+id/spinner"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:dropDownWidth="50dp"-->
-
-<!--        android:layout_below="@+id/date6"/>-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="165dp">
+            android:layout_height="wrap_content"
+            android:id="@+id/linearSpinner"
+            android:orientation="vertical"
+            android:layout_below="@+id/cityImage"/>
+    <!--    <Spinner-->
+    <!--        android:id="@+id/spinner"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:dropDownWidth="50dp"-->
 
-            <TableRow
+    <!--        android:layout_below="@+id/date6"/>-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="165dp">
 
-                <TableLayout
-                    android:id="@+id/table_layout1"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="50dp">
+                    android:layout_height="match_parent">
 
-                </TableLayout>
-            </TableRow>
+                    <TableLayout
+                        android:id="@+id/table_layout1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="50dp">
 
-        </TableLayout>
-        <ImageView
-            android:id="@+id/sun"
-            android:alpha="0.5"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_baseline_wb_sunny_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05" />
+                    </TableLayout>
+                </TableRow>
 
-        <ImageView
-            android:id="@+id/cloud1"
-            android:visibility="gone"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_baseline_cloud_24"
-            app:tint="@color/white"
-            android:alpha="0.5"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05"/>
+            </TableLayout>
+            <ImageView
+                android:id="@+id/sun"
+                android:alpha="0.5"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:visibility="gone"
+                android:src="@drawable/ic_baseline_wb_sunny_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.05" />
 
-        <ImageView
-            android:id="@+id/cloud2"
-            android:visibility="gone"
-            android:alpha="0.5"
+            <ImageView
+                android:id="@+id/cloud1"
+                android:visibility="gone"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_cloud_24"
+                app:tint="@color/white"
+                android:alpha="0.5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.05"/>
 
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_baseline_cloud_24"
-            app:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"/>
+            <ImageView
+                android:id="@+id/cloud2"
+                android:visibility="gone"
+                android:alpha="0.5"
 
-        <ImageView
-            android:id="@+id/cloud3"
-            android:visibility="gone"
-            android:alpha="0.5"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_cloud_24"
+                app:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5"/>
 
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_baseline_cloud_24"
-            app:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.27"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/cloud3"
+                android:visibility="gone"
+                android:alpha="0.5"
 
-</RelativeLayout>
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/ic_baseline_cloud_24"
+                app:tint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.27"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>
