@@ -3,12 +3,12 @@
     <style name="Theme.MilkyWay" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="fontFamily">@font/poppins_regular</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue_primary</item>
-        <item name="colorPrimaryVariant">@color/blue_dark</item>
+        <item name="colorPrimary">@color/sand</item>
+        <item name="colorPrimaryVariant">@color/sand_dark</item>
         <item name="colorOnPrimary">@color/text_on_primary</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/blue_primary</item>
-        <item name="colorSecondaryVariant">@color/blue_dark</item>
+        <item name="colorSecondary">@color/sand</item>
+        <item name="colorSecondaryVariant">@color/sand_dark</item>
         <item name="colorOnSecondary">@color/text_on_primary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
