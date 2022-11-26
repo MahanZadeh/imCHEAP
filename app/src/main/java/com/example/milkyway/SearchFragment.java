@@ -48,8 +48,6 @@ import java.util.stream.Collectors;
 public class SearchFragment extends Fragment {
 
     Animation animation1;
-    Animation animation2;
-    Animation animation3;
     String countryName;
     Bundle bundle = new Bundle();
     int currentCount = 0;
@@ -57,7 +55,6 @@ public class SearchFragment extends Fragment {
     Random random = new Random();
     String searchChoice;
     int numberOfCities = 10;
-    ProgressBar progressBarSearch;
     ArrayList<String> citiesList = new ArrayList<>();
     HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
@@ -79,20 +76,13 @@ public class SearchFragment extends Fragment {
         SearchViewModel mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         // TODO: Use the ViewModel
 
-//        progressBarSearch = requireView().findViewById(R.id.progressBarSearch);
-
         setNationalitySpinner();
 
         animation1 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
                 R.anim.loading_text1);
-//        animation2 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
-//                R.anim.loading_text2);
-//        animation3 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
-//                R.anim.loading_text3);
 
         Button toResults = requireView().findViewById(R.id.btnSearch);
         toResults.setOnClickListener(view -> {
-//            progressBarSearch.setVisibility(View.VISIBLE);
             // Get selected search choice
             RadioGroup radioGroup = requireView().findViewById(R.id.searchRadioGroup);
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
@@ -175,9 +165,6 @@ public class SearchFragment extends Fragment {
         protected void onPreExecute() {
             super.onPreExecute();
             requireView().findViewById(R.id.loadingScreen).setVisibility(View.VISIBLE);
-//            requireView().findViewById(R.id.sitBack).startAnimation(animation1);
-//            requireView().findViewById(R.id.andRelax).startAnimation(animation2);
-//            requireView().findViewById(R.id.whileLoad).startAnimation(animation3);
             requireView().findViewById(R.id.loadingMessage).startAnimation(animation1);
         }
 
