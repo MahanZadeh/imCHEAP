@@ -61,8 +61,10 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     private final String url = "https://api.openweathermap.org/data/2.5/forecast";
     private final String appid = "fa211ad253385ab5e5f303af6dfebb44";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_city_summary);
         temp = findViewById(R.id.temp);
@@ -71,7 +73,6 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         String cityName = bundle.getString("cityName");
         pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                 + cityName + "&country_name=" + countryName;
-
 
         TextView cityNameView = findViewById(R.id.summary_city_name);
         StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
@@ -100,7 +101,6 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         cloud3 = findViewById(R.id.cloud3);
 
         for (int i = 1; i <= 10; i++) {
-
             AsyncTaskRunner runner = new AsyncTaskRunner();
             try {
                 runner.execute(pricesUrl).get();
@@ -112,15 +112,14 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     public void chooseWeather(String desc, String dayTemp) {
+
         String tempText = "Temp: " + dayTemp + "\u2109";
         temp.setText(tempText);
         if (desc.contains("clouds")) {
@@ -142,6 +141,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             cloud2.setVisibility(View.VISIBLE);
             cloud2.startAnimation(cloud2Anim);
             weatherView.setWeatherData(PrecipType.RAIN);
+
         }else if (desc.contains("clear")) {
             cloud1.setVisibility(View.GONE);
             cloud2.setVisibility(View.GONE);
@@ -161,12 +161,16 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             cloud2.setVisibility(View.VISIBLE);
             cloud2.startAnimation(cloud2Anim);
             weatherView.setWeatherData(PrecipType.SNOW);
-
         }
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class AsyncTaskRunnerWeather extends AsyncTask<String, Void, String> {
+
+        AsyncTaskRunnerWeather() {
+            super();
+        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -175,9 +179,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-
                         JSONArray fiveDayHourlyForecast = response.getJSONArray("list");
-
 
                         for(int i=0; i< fiveDayHourlyForecast.length(); i++) {
                             String tempDate = fiveDayHourlyForecast.getJSONObject(i).getString("dt_txt").substring(0,10);
@@ -186,17 +188,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                             if (!fiveDaysWeather.containsKey(tempDate)) {
                                 oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONObject("main").getString("temp"));
                                 oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main"));
-
                                 fiveDaysWeather.put(tempDate, oneDayWeatherInfo);
-
                             }
-
                         }
-
                         onSuccess();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    } catch (ParseException e) {
+                    } catch (JSONException | ParseException e) {
                         e.printStackTrace();
                     }
                 }
@@ -285,22 +281,16 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                         String dayTemp = tempList.get(6);
                         chooseWeather(desc, dayTemp);
                     }
-
                 }
 
                 @Override
                 public void onNothingSelected(AdapterView<?> adapterView) {
-
                 }
             });
             ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList);
-
             spinner.setAdapter(spinnerArrayAdapter);
-            ((LinearLayout) linearLayout).addView(spinner );
-
-
+            ((LinearLayout) linearLayout).addView(spinner);
         }
-
     }
 
 
