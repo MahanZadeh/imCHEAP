@@ -71,6 +71,9 @@
     <string name="test">test</string>
     <string name="delete">Delete</string>
     <string name="load_message">Sit back and relax\nwhile we retrieve your results!</string>
+    <string name="register">REGISTER</string>
+    <string name="forgot_password">FORGOT PASSWORD</string>
+    <string name="password_hint">Password</string>
 
 
 </resources>
