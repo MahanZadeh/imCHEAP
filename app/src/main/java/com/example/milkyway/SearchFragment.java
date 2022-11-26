@@ -1,7 +1,5 @@
 package com.example.milkyway;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -46,42 +44,32 @@ import java.util.stream.Collectors;
 
 public class SearchFragment extends Fragment {
 
-    Animation animation1;
-    String countryName;
-    Bundle bundle = new Bundle();
-    int currentCount = 0;
-    int totalCount = 10;
-    Random random = new Random();
-    String searchChoice;
-    int numberOfCities = 10;
-    ArrayList<String> citiesList = new ArrayList<>();
-    HashMap<List<String>, Double> cityInfo = new HashMap<>();
+    private Animation animation1;
+    private String countryName;
+    private final Bundle bundle = new Bundle();
+    private int currentCount = 0;
+    private int totalCount = 10;
+    private final Random random = new Random();
+    private String searchChoice;
+    private final ArrayList<String> citiesList = new ArrayList<>();
+    private final HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
     private final String citiesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/cities";
-
-    public static SearchFragment newInstance() {
-        return new SearchFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_search, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        SearchViewModel mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-        // TODO: Use the ViewModel
-
-        setNationalitySpinner();
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         animation1 = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
                 R.anim.loading_text1);
 
-        Button toResults = requireView().findViewById(R.id.btnSearch);
-        toResults.setOnClickListener(view -> {
+        Spinner spinner = view.findViewById(R.id.nationality_spinner);
+
+        setNationalitySpinner(spinner);
+
+        Button toResults = view.findViewById(R.id.btnSearch);
+        toResults.setOnClickListener(View -> {
             // Get selected search choice
             RadioGroup radioGroup = requireView().findViewById(R.id.searchRadioGroup);
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
@@ -95,6 +83,8 @@ public class SearchFragment extends Fragment {
                 runnerCities.execute(citiesUrl);
             }
         });
+
+        return view;
     }
 
     public String provideQuery(String optionText) {
@@ -113,8 +103,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
-    public void setNationalitySpinner() {
-        Spinner spinner = requireView().findViewById(R.id.nationality_spinner);
+    public void setNationalitySpinner(Spinner spinner) {
         ArrayList<String> countries = new ArrayList<>();
 
         InputStream inputStream = requireActivity().getBaseContext().getResources()
@@ -211,6 +200,7 @@ public class SearchFragment extends Fragment {
 
         protected void onSuccess() {
             if (citiesList.size() != 0) {
+                int numberOfCities = 10;
                 for (int i = 0; i < numberOfCities; i++) {
                     String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices";
                     int newRandom = random.nextInt(citiesList.size());
