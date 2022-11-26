@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SearchFragment"
-    android:background="#b3e8e5">
+    android:background="@color/sand">
 
     <LinearLayout
         android:id="@+id/loadingScreen"
@@ -34,13 +34,17 @@
 
     <TextView
         android:id="@+id/textViewCountry"
-        android:layout_width="190dp"
+        android:layout_width="346dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="left"
         android:text="@string/choose_a_country"
-
-        android:textSize="20sp" />
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="10dp"
+        />
 
     <Spinner
     android:id="@+id/nationality_spinner"
@@ -50,15 +54,17 @@
     android:layout_marginTop="10dp"
     android:layout_marginStart="20dp"/>
 
-<TextView
-    android:id="@+id/textViewInterests"
-    android:layout_width="190dp"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:text="@string/select_your_interests"
-    android:textSize="20sp"
-    android:layout_marginTop="20dp"
-    />
+    <TextView
+        android:id="@+id/textViewInterests"
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/select_your_interests"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:paddingTop="20dp"
+        />
 
     <RadioGroup
         android:id="@+id/searchRadioGroup"
@@ -74,35 +80,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/beer"
-            android:buttonTint="#2f8f9d"/>
+            android:textSize="15sp"
+            android:buttonTint="@color/sand_dark"/>
 
         <RadioButton
             android:id="@+id/radioButton2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gasoline"
-            android:buttonTint="#2f8f9d"/>
+            android:textSize="15sp"
+            android:buttonTint="@color/sand_dark"/>
 
         <RadioButton
             android:id="@+id/radioButton3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/cappuccino"
-            android:buttonTint="#2f8f9d"/>
+            android:buttonTint="@color/sand_dark"/>
 
         <RadioButton
             android:id="@+id/radioButton4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/taxi"
-            android:buttonTint="#2f8f9d"/>
+            android:buttonTint="@color/sand_dark"/>
 
         <RadioButton
             android:id="@+id/radioButton5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/restaurant"
-            android:buttonTint="#2f8f9d"/>
+            android:buttonTint="@color/sand_dark"/>
     </RadioGroup>
 
 
@@ -112,16 +120,25 @@
     android:gravity="center"
     android:layout_marginTop="100dp"
     android:orientation="vertical"
-
     >
+
     <Button
         android:id="@+id/btnSearch"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="62dp"
+        android:layout_marginTop="18.7dp"
+        android:layout_marginRight="62dp"
+        android:background="@drawable/blue_fill__rounded_color"
+        android:fontFamily="@font/poppins_medium"
         android:gravity="center"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:text="@string/search"
-        android:textSize="25sp"
-        android:backgroundTint="#2f8f9d"/>
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        />
 </LinearLayout>
 
 
