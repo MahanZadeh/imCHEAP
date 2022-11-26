@@ -75,6 +75,7 @@
     <string name="forgot_password">FORGOT PASSWORD</string>
     <string name="password_hint">Password</string>
     <string name="temp">Temperature: </string>
+    <string name="fun_facts">Fun facts about this city:</string>
 
 
 </resources>
