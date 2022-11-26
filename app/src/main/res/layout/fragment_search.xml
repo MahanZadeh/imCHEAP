@@ -15,11 +15,12 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="80dp"
-            android:layout_height="60dp"
-            android:src="@drawable/paper_airplane"
-            />
+        <ProgressBar
+            android:id="@+id/progressBarRegister"
+            android:indeterminateTint="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/loadingMessage"
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:text="@string/load_message"
             android:layout_marginTop="30dp"
-            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textSize="30sp"
             android:gravity="center_horizontal"/>
     </LinearLayout>
 

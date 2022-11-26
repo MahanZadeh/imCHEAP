@@ -2,7 +2,7 @@
     <string name="app_name">MilkyWay</string>
     <string name="search">SEARCH</string>
     <string name="search_btn">To Search Page</string>
-    <string name="select_your_interests">Select your interests:</string>
+    <string name="select_your_interests">Select an interest:</string>
     <string name="beer">Bottle of Beer</string>
     <string name="choose_a_country">Choose a country</string>
     <string name="gasoline">Gasoline, 1 liter</string>
