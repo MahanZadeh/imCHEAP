@@ -74,7 +74,7 @@
     <string name="register">REGISTER</string>
     <string name="forgot_password">FORGOT PASSWORD</string>
     <string name="password_hint">Password</string>
-    <string name="temp">Temp:</string>
+    <string name="temp">Temperature: </string>
 
 
 </resources>
