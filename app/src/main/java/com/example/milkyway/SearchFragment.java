@@ -112,7 +112,9 @@ public class SearchFragment extends Fragment {
         String line = null;
         try {
             line = bufferedReader.readLine();
-            countries.add(line);
+            if (line != null) {
+                countries.add(line);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +122,9 @@ public class SearchFragment extends Fragment {
             // make use of the line read
             try {
                 line = bufferedReader.readLine();
-                countries.add(line);
+                if (line != null) {
+                    countries.add(line);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
