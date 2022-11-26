@@ -11,10 +11,10 @@
     <string name="restaurant">Meal in inexpensive restaurant</string>
 
 
-    <string name="resultsTitle">Search Results for USA</string>
+    <string name="resultsTitle">Search Results for a Country</string>
     <string name="city">City</string>
     <string name="cost">Cost</string>
-    <string name="image_of_the_city">image of the city</string>
+    <string name="image_of_the_city">Country Flag</string>
     <string name="resultsBack">Back to Search</string>
     <string name="favoriteButton">Save</string>
 
@@ -69,6 +69,8 @@
     <string name="previous">Previous</string>
 
     <string name="test">test</string>
+    <string name="delete">Delete</string>
+    <string name="load_message">Sit back and relax\nwhile we retrieve your results!</string>
 
 
 </resources>
