@@ -11,7 +11,7 @@
         <item name="colorSecondaryVariant">@color/sand_dark</item>
         <item name="colorOnSecondary">@color/text_on_primary</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/sand_dark</item>
         <!-- Customize your theme here. -->
     </style>
 
