@@ -43,11 +43,6 @@ public class Register extends AppCompatActivity {
 
         });
 
-        banner = findViewById(R.id.banner);
-        banner.setOnClickListener(view -> {
-            Intent intent = new Intent(this, MainActivity.class)
-;        });
-
         name = findViewById(R.id.editTextTextPersonName2);
         email = findViewById(R.id.editTextTextEmailAddress);
         password = findViewById(R.id.editTextTextPassword);

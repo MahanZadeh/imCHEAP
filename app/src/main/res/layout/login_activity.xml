@@ -34,7 +34,7 @@
             android:layout_marginLeft="62dp"
             android:layout_marginTop="36.7dp"
             android:layout_marginRight="62dp"
-            android:background="@drawable/sand_border_rounded_cornwe">
+            android:background="@drawable/sand_border_rounded_corner">
 
             <!-- INPUT -->
             <EditText
@@ -71,7 +71,7 @@
             android:layout_marginLeft="62dp"
             android:layout_marginTop="12.7dp"
             android:layout_marginRight="62dp"
-            android:background="@drawable/sand_border_rounded_cornwe">
+            android:background="@drawable/sand_border_rounded_corner">
 
             <!-- INPUT -->
             <EditText
