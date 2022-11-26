@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="#b3e8e5">
+    android:background="@color/white">
 
 >
     <com.github.matteobattilana.weather.WeatherView
@@ -20,7 +20,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="#b3e8e5">
+    android:backgroundTint="@color/white">
         <ImageView
             android:id="@+id/cityImage"
             android:layout_width="163dp"
@@ -29,7 +29,7 @@
             tools:layout_editor_absoluteX="2dp"
             tools:layout_editor_absoluteY="26dp"
             tools:ignore="ContentDescription"
-            android:backgroundTint="#b3e8e5"/>
+            android:backgroundTint="@color/white"/>
 
         <TextView
             android:id="@+id/summary_city_name"

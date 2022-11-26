@@ -14,14 +14,15 @@
         android:background="#FFFAFA"
         android:id="@+id/favItemView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-195dp">
+        tools:layout_editor_absoluteX="-195dp"
+        android:backgroundTint="@color/white">
 
         <ImageView
             android:id="@+id/imageViewFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:background="#b3e8e5"
+            android:background="@color/white"
             android:contentDescription="@string/image_of_the_city"
             android:maxWidth="100dp"
             android:maxHeight="280dp"
