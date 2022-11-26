@@ -360,7 +360,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
         protected void onSuccess() {
 
-            TableLayout tableLayout1 = findViewById(R.id.table_layout1); // here we grab the tablelayout
+            TableLayout tableLayout1 = findViewById(R.id.city_summary_table); // here we grab the tablelayout
             TableRow tableRow = new TableRow(CitySummary.this); //making a row
             TextView textView = new TextView(CitySummary.this); //making the text for that row
 

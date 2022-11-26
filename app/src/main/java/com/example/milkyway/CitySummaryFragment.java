@@ -9,14 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,7 +27,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -155,7 +151,7 @@ public class CitySummaryFragment extends Fragment {
 
         protected void onSuccess() {
 
-            TableLayout tableLayout1 = requireView().findViewById(R.id.table_layout1); // here we grab the tablelayout
+            TableLayout tableLayout1 = requireView().findViewById(R.id.city_summary_table); // here we grab the tablelayout
             final int baseColor = Color.WHITE;
             final int baseRed = Color.red(baseColor);
             final int baseGreen = Color.green(baseColor);

@@ -62,30 +62,6 @@
 
         </TextView>
 
-        <TextView
-            android:id="@+id/temp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearSpinner"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/temp"
-            android:textSize="20sp"
-            />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearSpinner"
-            android:orientation="vertical"
-            android:layout_below="@+id/cityImage"/>
-    <!--    <Spinner-->
-    <!--        android:id="@+id/spinner"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:dropDownWidth="50dp"-->
-
-    <!--        android:layout_below="@+id/date6"/>-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -95,18 +71,39 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="165dp">
 
+                <TableRow>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linearSpinner"
+                        android:layout_marginStart="30dp"
+                        android:orientation="vertical"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/temp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/temp"
+                        android:textSize="20sp"/>
+                </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TableLayout
-                        android:id="@+id/table_layout1"
+                        android:id="@+id/city_summary_table"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="15dp"
-                        android:layout_marginTop="50dp">
+                        android:layout_marginTop="20dp">
 
                     </TableLayout>
+
                 </TableRow>
 
             </TableLayout>
@@ -125,7 +122,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.05" />
+                app:layout_constraintVertical_bias="0.05"
+                android:layout_marginTop="130dp"
+                />
 
             <ImageView
                 android:id="@+id/cloud1"
