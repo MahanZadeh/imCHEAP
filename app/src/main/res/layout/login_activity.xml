@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
 
         <FrameLayout
@@ -23,7 +24,8 @@
                 android:layout_height="198dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="93dp"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                tools:ignore="contentDescription"/>
 
         </FrameLayout>
 
@@ -44,14 +46,16 @@
                 android:layout_toEndOf="@+id/username_icon"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/poppins_regular"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:paddingStart="17dp"
+                android:paddingEnd="17dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
 
             <!-- ICON -->
             <ImageView
@@ -60,7 +64,8 @@
                 android:layout_height="10.3dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="17dp"
-                android:src="@drawable/email" />
+                android:src="@drawable/email"
+                tools:ignore="contentDescription"/>
 
         </RelativeLayout>
 
@@ -86,10 +91,12 @@
                 android:maxLength="20"
                 android:maxLines="1"
                 android:paddingStart="17dp"
+                android:paddingEnd="17dp"
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:textCursorDrawable="@drawable/cursor_color"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:autofillHints="" />
 
             <!-- ICON -->
             <ImageView
@@ -98,7 +105,8 @@
                 android:layout_height="10.3dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="17dp"
-                android:src="@drawable/password" />
+                android:src="@drawable/password"
+                tools:ignore="contentDescription"/>
 
         </RelativeLayout>
 
@@ -116,10 +124,9 @@
             android:gravity="center"
             android:paddingTop="14dp"
             android:paddingBottom="14dp"
-            android:text="Login"
+            android:text="@string/login"
             android:textColor="#ffffff"
-            android:textSize="12sp"
-            />
+            android:textSize="12sp" />
 
         <ProgressBar
             android:id="@+id/progressBar"

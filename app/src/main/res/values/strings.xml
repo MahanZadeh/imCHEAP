@@ -24,7 +24,7 @@
         <item>Gasoline, 1 liter</item>
         <item>Loaf of Fresh White Bread</item>
         <item>Local Cheese</item>
-        <item>McMeal at McDonalds or Alternative Combo Meal</item>
+        <item>McMeal at McDonald\'s or Alternative Combo Meal</item>
         <item>Meal in inexpensive restaurant</item>
         <item>Rent for one bedroom apartment in city centre</item>
         <item>One-way Ticket, Local Transport</item>
@@ -67,6 +67,13 @@
     <string name="select_to_view_5_day_forecast">Select to View 5 Day Forecast</string>
     <string name="fun_facts_loading_message">Loading some fun facts…</string>
     <string name="login_message">Logging you in…</string>
+    <string name="email">Email</string>
+    <string name="reset">Reset</string>
+    <string name="logo">logo</string>
+    <string name="name">Name</string>
+    <string name="profile_icon">profile icon</string>
+    <string name="email_icon">email_icon</string>
+    <string name="password_icon">password_icon</string>
     <string name="facts_failure_message">No facts found this time.\nTry again or check out another city!</string>
 
 
