@@ -28,10 +28,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -72,29 +68,32 @@ public class ProfileFragment extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
-        assert user != null;
-        String userID = user.getUid();
+        if (user == null) {
+            Toast.makeText(requireActivity().getApplicationContext(),
+                "Failed to retrieve user data!", Toast.LENGTH_SHORT).show();
+        } else {
+            String userID = user.getUid();
 
-        final TextView nameView = requireView().findViewById(R.id.userName);
+            final TextView nameView = requireView().findViewById(R.id.userName);
 
-        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProfile = snapshot.getValue(User.class);
+            reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User userProfile = snapshot.getValue(User.class);
 
-                if(userProfile != null){
-                    String name = userProfile.name;
-//                    String email = userProfile.email;
-                    String profileTitle = "Hello " + name;
-                    nameView.setText(profileTitle);
+                    if (userProfile != null) {
+                        String name = userProfile.name;
+                        String profileTitle = "Hello " + name;
+                        nameView.setText(profileTitle);
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(requireActivity().getApplicationContext(),
-                        "Something went wrong!", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Toast.makeText(requireActivity().getApplicationContext(),
+                            "Something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }

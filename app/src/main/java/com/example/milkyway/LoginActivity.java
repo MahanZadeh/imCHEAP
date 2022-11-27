@@ -89,18 +89,22 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    assert user != null;
-                    if (user.isEmailVerified()){
-                        //redirect to user profile
-                        progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
-                        Intent intent = new Intent(getApplicationContext(), LandingPage.class);
-                        startActivity(intent);
+                    if (user != null) {
+                        if (user.isEmailVerified()) {
+                            //redirect to user profile
+                            progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
+                            Intent intent = new Intent(getApplicationContext(), LandingPage.class);
+                            startActivity(intent);
+                        } else {
+                            user.sendEmailVerification();
+                            Toast.makeText(getApplicationContext(),
+                                    "Check your email to verify your account!",
+                                    Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+                        }
                     } else {
-                        user.sendEmailVerification();
                         Toast.makeText(getApplicationContext(),
-                                "Check your email to verify your account!",
-                                Toast.LENGTH_SHORT).show();
-                        progressBar.setVisibility(View.GONE);
+                                "Failed to retrieve user data!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this,

@@ -5,7 +5,7 @@ public class FavInfo {
     public String key, country, city, cost;
 
     public FavInfo() {
-
+        // Required empty constructor
     }
 
     public FavInfo(String key, String country, String city, String cost){

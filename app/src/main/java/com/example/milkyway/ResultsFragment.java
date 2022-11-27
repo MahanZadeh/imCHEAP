@@ -1,8 +1,6 @@
 package com.example.milkyway;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,22 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Locale;
 
 public class ResultsFragment extends Fragment implements ResultsItemClickListener{
 
-    RecyclerView recyclerView;
-    View view;
-    String[] cities, costs;
-    String countryName;
-    boolean noResults = false;
-
-    private FirebaseUser user;
-    private DatabaseReference reference;
-    private String userID;
+    private String[] cities, costs;
+    private String countryName;
+    private boolean noResults = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,8 +52,8 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_results, container, false);
-        recyclerView = view.findViewById(R.id.recyclerView);
+        View view = inflater.inflate(R.layout.fragment_results, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
@@ -107,28 +98,38 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
     @Override
     public void onClickFavorites(View view, int position) {
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Fav");
-        userID = user.getUid();
-        String city = cities[position];
-        String country = countryName;
-        String cost = costs[position];
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            user.getUid();
+            String userID = user.getUid();
+            String city = cities[position];
+            String country = countryName;
+            String cost = costs[position];
 
-        String key = FirebaseDatabase.getInstance().getReference("Fav")
-                .child(userID).push().getKey();
-        FavInfo favInfo = new FavInfo(key, country, city, cost);
+            String key = FirebaseDatabase.getInstance().getReference("Fav")
+                    .child(userID).push().getKey();
+            FavInfo favInfo = new FavInfo(key, country, city, cost);
 
-        assert key != null;
-        FirebaseDatabase.getInstance().getReference("Fav")
-                .child(userID).child(key)
-                .setValue(favInfo).addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        Toast.makeText(requireActivity().getApplicationContext(),
-                                "Added to favorites!", Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(requireActivity().getApplicationContext(),
-                                "Failed to save to favorites!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            if (key != null) {
+                FirebaseDatabase.getInstance().getReference("Fav")
+                        .child(userID).child(key)
+                        .setValue(favInfo).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(requireActivity().getApplicationContext(),
+                                        "Added to favorites!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(requireActivity().getApplicationContext(),
+                                        "Failed to save to favorites!",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            } else {
+                Toast.makeText(requireActivity().getApplicationContext(),
+                        "Failed to retrieve user favorites data!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(requireActivity().getApplicationContext(),
+                    "Failed to retrieve user data!", Toast.LENGTH_SHORT).show();
+        }
     }
 }
