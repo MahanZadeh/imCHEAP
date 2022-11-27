@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -62,6 +64,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     TextView temp;
     ArrayList<String> descriptionList = new ArrayList<>();
     int position = 0;
+    TableLayout tableLayout1;
+    int count = 0;
+    int maxPriceCalls = 10;
+
+    RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,11 +76,15 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_city_summary);
         temp = findViewById(R.id.temp);
+        String tempText = "Temp: ";
+        temp.setText(tempText);
         Bundle bundle = this.getIntent().getExtras().getBundle("bundle") ;
         String countryName = bundle.getString("countryName");
         String cityName = bundle.getString("cityName");
         pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                 + cityName + "&country_name=" + countryName;
+
+        relativeLayout = requireViewById(R.id.loadingFunFacts);
 
         TextView cityNameView = findViewById(R.id.summary_city_name);
         StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
@@ -103,7 +114,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         cloud2 = findViewById(R.id.cloud2);
         cloud3 = findViewById(R.id.cloud3);
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= maxPriceCalls; i++) {
             AsyncTaskRunner runner = new AsyncTaskRunner();
             try {
                 runner.execute(pricesUrl).get();
@@ -173,6 +184,12 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
         AsyncTaskRunnerWeather() {
             super();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            relativeLayout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -344,6 +361,8 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
                     }
                     if (isExists) {
                         onSuccess(position);
+                    } else {
+                        maxPriceCalls--;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -365,7 +384,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
         protected void onSuccess(int position) {
 
-            TableLayout tableLayout1 = findViewById(R.id.city_summary_table); // here we grab the tablelayout
+            tableLayout1 = findViewById(R.id.city_summary_table); // here we grab the tablelayout
 
             TableRow tableRow = new TableRow(CitySummary.this); // making a row
             TextView textView = new TextView(CitySummary.this); // making the text for that row
@@ -385,7 +404,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             tableLayout1.addView(tableRow); // THIS is where we add the row to the table layout
 
             tableLayout1.setForegroundGravity(Gravity.CENTER);
+            count++;
+            if (count == maxPriceCalls) {
+                relativeLayout.setVisibility(View.INVISIBLE);
+                tableLayout1.setVisibility(View.VISIBLE);
+            }
         }
-
     }
 }
