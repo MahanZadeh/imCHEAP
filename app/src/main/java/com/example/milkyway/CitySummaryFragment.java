@@ -2,12 +2,12 @@ package com.example.milkyway;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.Gravity;
 import android.widget.TableLayout;
@@ -15,7 +15,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -33,63 +32,30 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.matteobattilana.weather.PrecipType;
 import com.github.matteobattilana.weather.WeatherView;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CitySummaryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CitySummaryFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     String pricesUrl;
@@ -107,40 +73,9 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
 
     RelativeLayout relativeLayout;
 
-//    String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name=Taipei&country_name=Taiwan";
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public CitySummaryFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CitySummaryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CitySummaryFragment newInstance(String param1, String param2) {
-        CitySummaryFragment fragment = new CitySummaryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
 
         @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -150,54 +85,63 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         temp = requireView().findViewById(R.id.temp);
         String tempText = "Temp: ";
         temp.setText(tempText);
-        //Bundle bundle = requireActivity().getIntent().getExtras().getBundle("bundle") ;
         Bundle bundle = this.getArguments();
-        String countryName = bundle.getString("countryName");
-        String cityName = bundle.getString("cityName");
-        pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
-                + cityName + "&country_name=" + countryName;
+        if (bundle != null) {
+            String countryName = bundle.getString("countryName");
+            String cityName = bundle.getString("cityName");
 
-        relativeLayout = requireView().findViewById(R.id.loadingFunFacts);
+            pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
+                    + cityName + "&country_name=" + countryName;
 
-        TextView cityNameView = requireView().findViewById(R.id.summary_city_name);
-        StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
-        cityNameView.setText(cityNameSb);
-        String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
-        String url = "https://api.openweathermap.org/data/2.5/forecast";
-        String appid = "fa211ad253385ab5e5f303af6dfebb44";
-        tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
-        AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
-        runnerWeather.execute(tempUrl);
+            relativeLayout = requireView().findViewById(R.id.loadingFunFacts);
 
-        ImageView image = getView().findViewById(R.id.cityImage);
-        Picasso.get()
-                .load("https://countryflagsapi.com/png/" + countryName)
-                .resize(600, 400) // resizes the image to these dimensions (in pixel)
-                .centerCrop()
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.image_not_found)
-                .into(image);
+            TextView cityNameView = requireView().findViewById(R.id.summary_city_name);
+            StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
+            cityNameView.setText(cityNameSb);
+            String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
+            String url = "https://api.openweathermap.org/data/2.5/forecast";
+            String appid = "fa211ad253385ab5e5f303af6dfebb44";
+            tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
+            AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
+            runnerWeather.execute(tempUrl);
 
-        sunAnim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.sun);
-        cloud1Anim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.cloud1);
-        cloud2Anim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),R.anim.cloud2);
-        cloud3Anim = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.cloud3);
-        sun = getView().findViewById(R.id.sun);
-        cloud1 = getView().findViewById(R.id.cloud1);
-        cloud2 = getView().findViewById(R.id.cloud2);
-        cloud3 = getView().findViewById(R.id.cloud3);
+            ImageView image = requireView().findViewById(R.id.cityImage);
+            Picasso.get()
+                    .load("https://countryflagsapi.com/png/" + countryName)
+                    .resize(600, 400) // resizes the image to these dimensions (in pixel)
+                    .centerCrop()
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.image_not_found)
+                    .into(image);
 
-        for (int i = 1; i <= maxPriceCalls; i++) {
-            AsyncTaskRunner runner = new AsyncTaskRunner();
-            try {
-                runner.execute(pricesUrl).get();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
+            sunAnim = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+                    R.anim.sun);
+            cloud1Anim = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+                    R.anim.cloud1);
+            cloud2Anim = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+                    R.anim.cloud2);
+            cloud3Anim = AnimationUtils.loadAnimation(requireActivity().getApplicationContext(),
+                    R.anim.cloud3);
+            sun = requireView().findViewById(R.id.sun);
+            cloud1 = requireView().findViewById(R.id.cloud1);
+            cloud2 = requireView().findViewById(R.id.cloud2);
+            cloud3 = requireView().findViewById(R.id.cloud3);
+
+            for (int i = 1; i <= maxPriceCalls; i++) {
+                AsyncTaskRunner runner = new AsyncTaskRunner();
+                try {
+                    runner.execute(pricesUrl).get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            Toast.makeText(requireActivity().getApplicationContext(),
+                    "There has been an error processing city data", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -275,33 +219,31 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         @Override
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        JSONArray fiveDayHourlyForecast = response.getJSONArray("list");
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0],
+                    null, response -> {
+                try {
+                    JSONArray fiveDayHourlyForecast = response.getJSONArray("list");
 
-                        for(int i=0; i< fiveDayHourlyForecast.length(); i++) {
-                            String tempDate = fiveDayHourlyForecast.getJSONObject(i).getString("dt_txt").substring(0,10);
-                            ArrayList<String> oneDayWeatherInfo = new ArrayList<>();
+                    for(int i=0; i< fiveDayHourlyForecast.length(); i++) {
+                        String tempDate = fiveDayHourlyForecast.getJSONObject(i)
+                                .getString("dt_txt").substring(0,10);
+                        ArrayList<String> oneDayWeatherInfo = new ArrayList<>();
 
-                            if (!fiveDaysWeather.containsKey(tempDate)) {
-                                oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONObject("main").getString("temp"));
-                                oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main"));
-                                fiveDaysWeather.put(tempDate, oneDayWeatherInfo);
-                            }
+                        if (!fiveDaysWeather.containsKey(tempDate)) {
+                            oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i)
+                                    .getJSONObject("main").getString("temp"));
+                            oneDayWeatherInfo.add(fiveDayHourlyForecast.getJSONObject(i)
+                                    .getJSONArray("weather").getJSONObject(0)
+                                    .getString("main"));
+                            fiveDaysWeather.put(tempDate, oneDayWeatherInfo);
                         }
-                        onSuccess();
-                    } catch (JSONException | ParseException e) {
-                        e.printStackTrace();
                     }
+                    onSuccess();
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(requireActivity().getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            }, error -> Toast.makeText(requireActivity().getApplicationContext(), error.toString(),
+                    Toast.LENGTH_SHORT).show());
             queue.add(request);
             return null;
         }
@@ -317,23 +259,29 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             View linearLayout =  requireView().findViewById(R.id.linearSpinner);
             Spinner spinner = new Spinner(requireActivity().getApplicationContext());
             spinner.setDropDownWidth(300);
-//            spinner.setMinimumWidth(100);
             spinner.setBackgroundColor(0);
-//            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
-            spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            spinner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout
+                    .LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT));
 
             DateFormat formatter = new SimpleDateFormat("EEEE", currentLocale);
-            Iterator<Map.Entry<String, ArrayList<String>>> itr = fiveDaysWeather.entrySet().iterator();
             Set<String> keys = fiveDaysWeather.keySet();
             ArrayList<String> tempList = new ArrayList<>();
             for (String key : keys) {
-                String description = fiveDaysWeather.get(key).get(1);
-                String temperature = fiveDaysWeather.get(key).get(0);
+                String description = Objects.requireNonNull(fiveDaysWeather.get(key)).get(1);
+                String temperature = Objects.requireNonNull(fiveDaysWeather.get(key)).get(0);
                 descriptionList.add(description);
                 tempList.add(temperature);
-                @SuppressLint("SimpleDateFormat") Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(key);
-                String day = formatter.format(date1);
-                spinnerList.add(day.substring(0, 3));
+                @SuppressLint("SimpleDateFormat") Date date1 =
+                        new SimpleDateFormat("yyyy-MM-dd").parse(key);
+                if (date1 != null) {
+                    String day = formatter.format(date1);
+                    spinnerList.add(day.substring(0, 3));
+                } else {
+                    Toast.makeText(requireActivity().getApplicationContext(),
+                            "There has been an error processing date data",
+                            Toast.LENGTH_SHORT).show();
+                }
+
 
 // Clouds (few, scattered, overcast, broken), rain (light, moderate)   clear sky
 
@@ -387,7 +335,9 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
                 public void onNothingSelected(AdapterView<?> adapterView) {
                 }
             });
-            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(requireActivity().getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, spinnerList);
+            ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(requireActivity()
+                    .getApplicationContext(), android.R.layout.simple_spinner_dropdown_item,
+                    spinnerList);
             spinner.setAdapter(spinnerArrayAdapter);
             ((LinearLayout) linearLayout).addView(spinner);
         }
@@ -407,7 +357,8 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(requireActivity().getApplicationContext());
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0],
+                    null, response -> {
                 boolean isExists = false;
 
                 try {
@@ -447,11 +398,12 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }, error -> Toast.makeText(requireActivity().getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show()) {
+            }, error -> Toast.makeText(requireActivity().getApplicationContext(), error.toString(),
+                    Toast.LENGTH_SHORT).show()) {
 
                 /** Passing some request headers* */
                 @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
+                public Map<String, String> getHeaders() {
                     HashMap<String, String> headers = new HashMap<>();
                     headers.put("X-RapidAPI-Key", "b81516d2e7msh9653b7faa822afdp115f6fjsn863c3bf66af5");
                     headers.put("X-RapidAPI-Host", "cost-of-living-and-prices.p.rapidapi.com");
@@ -464,7 +416,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
 
         protected void onSuccess(int position) {
 
-            tableLayout1 = getView().findViewById(R.id.city_summary_table); // here we grab the tablelayout
+            tableLayout1 = requireView().findViewById(R.id.city_summary_table); // here we grab the tablelayout
 
             TableRow tableRow = new TableRow(requireActivity().getApplicationContext()); // making a row
             TextView textView = new TextView(requireActivity().getApplicationContext()); // making the text for that row
