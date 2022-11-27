@@ -25,6 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -210,7 +211,10 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
 
     public void chooseWeather(String desc, String dayTemp) {
 
-        String tempText = "Temp: " + dayTemp + "\u2109";
+        double tempCelsius = Double.parseDouble(dayTemp) - 273.15;
+        DecimalFormat value = new DecimalFormat("#.#");
+
+        String tempText = "Temp: " + value.format(tempCelsius) + "\u2103";
         temp.setText(tempText);
         if (desc.contains("clouds")) {
             sun.setVisibility(View.GONE);
