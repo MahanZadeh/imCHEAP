@@ -20,7 +20,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@drawable/sand_bg">
+            android:background="@drawable/sand_bg"
+            tools:ignore="UselessParent">
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -40,7 +41,9 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_baseline_person_24" />
+                        android:src="@drawable/ic_baseline_person_24"
+                        tools:ignore="contentDescription"/>
+
                 </androidx.cardview.widget.CardView>
 
                 <!--    <TextView-->

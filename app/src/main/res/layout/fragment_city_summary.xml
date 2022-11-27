@@ -44,8 +44,7 @@
             tools:ignore="ContentDescription"
             android:backgroundTint="@color/white"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="20dp"
-            />
+            android:layout_marginStart="20dp" />
 
         <TextView
             android:id="@+id/summary_city_name"
@@ -57,8 +56,7 @@
             android:layout_alignBottom="@+id/cityImage"
             android:textSize="26sp"
             android:textColor="@color/white"
-            android:layout_marginStart="10dp"
-            >
+            android:layout_marginStart="10dp">
 
         </TextView>
 
@@ -91,15 +89,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/fun_facts_loading_message"
                     android:layout_marginTop="455dp"
-                    android:layout_marginStart="113dp"/>
+                    android:layout_marginStart="113dp" />
             </RelativeLayout>
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="180dp" >
+                android:layout_marginTop="180dp">
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/forecast"
                         android:layout_width="wrap_content"
@@ -108,7 +107,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/select_to_view_5_day_forecast"
                         android:textSize="20sp"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
                 </TableRow>
 
                 <TableRow android:layout_width="259dp">
@@ -124,6 +123,7 @@
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/temp"
                         android:layout_width="wrap_content"
@@ -132,10 +132,11 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/temp"
                         android:textSize="20sp"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
                         android:id="@+id/fun_facts"
                         android:layout_width="wrap_content"
@@ -144,7 +145,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/fun_facts"
                         android:textSize="20sp"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
                 </TableRow>
 
                 <TableRow
@@ -160,15 +161,14 @@
                         android:layout_marginTop="20dp"
                         android:paddingEnd="20dp"
                         android:paddingStart="0dp"
-                        android:visibility="gone">
-                    </TableLayout>
+                        android:visibility="gone" />
 
                 </TableRow>
 
             </TableLayout>
 
 
-<!-- Weather Animation -->
+            <!-- Weather Animation -->
 
             <ImageView
                 android:id="@+id/sun"
@@ -183,7 +183,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.05"
                 android:layout_marginTop="130dp"
-                />
+                tools:ignore="contentDescription" />
 
             <ImageView
                 android:id="@+id/cloud1"
@@ -197,7 +197,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.05"/>
+                app:layout_constraintVertical_bias="0.05"
+                tools:ignore="contentDescription" />
 
             <ImageView
                 android:id="@+id/cloud2"
@@ -211,7 +212,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.5"/>
+                app:layout_constraintVertical_bias="0.5"
+                tools:ignore="contentDescription"/>
 
             <ImageView
                 android:id="@+id/cloud3"
@@ -225,7 +227,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.27"/>
+                app:layout_constraintVertical_bias="0.27"
+                tools:ignore="contentDescription"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
