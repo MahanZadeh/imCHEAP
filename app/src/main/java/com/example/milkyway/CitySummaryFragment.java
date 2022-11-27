@@ -170,7 +170,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         String url = "https://api.openweathermap.org/data/2.5/forecast";
         String appid = "fa211ad253385ab5e5f303af6dfebb44";
         tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
-        AsyncTaskRunner runnerWeather = new AsyncTaskRunner();
+        AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
         runnerWeather.execute(tempUrl);
 
         ImageView image = getView().findViewById(R.id.cityImage);

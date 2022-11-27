@@ -94,19 +94,14 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             bundle.putString("countryName", countryName);
             bundle.putString("cityName", cities[position]);
 
-            // //use this for activity CitySummary.java
-            Intent intent = new Intent(getActivity(), CitySummary.class);
-            intent.putExtra("bundle", bundle);
-            startActivity(intent);
-
-            // //use this for CitySummaryFragment.java
-//            Fragment citySummaryFragment = new CitySummaryFragment();
-//            citySummaryFragment.setArguments(bundle);
-//            getParentFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, citySummaryFragment)
-//                    .addToBackStack("tag")
-//                    .commit();
+             //use this for CitySummaryFragment.java
+            Fragment citySummaryFragment = new CitySummaryFragment();
+            citySummaryFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, citySummaryFragment)
+                    .addToBackStack("tag")
+                    .commit();
         }
     }
 
