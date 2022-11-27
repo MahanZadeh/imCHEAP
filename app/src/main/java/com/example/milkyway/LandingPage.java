@@ -11,8 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.w3c.dom.Text;
-
 public class LandingPage extends AppCompatActivity{
     private ProgressBar progressBar;
     private TextView loggingYouInMessage;
