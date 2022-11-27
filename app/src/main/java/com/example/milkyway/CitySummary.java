@@ -1,6 +1,8 @@
 package com.example.milkyway;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -58,6 +61,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     String tempUrl;
     TextView temp;
     ArrayList<String> descriptionList = new ArrayList<>();
+    int position = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,11 +215,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             weatherView = findViewById(R.id.weather_view);
 
             ArrayList<String> spinnerList = new ArrayList<>();
-            spinnerList.add("5 Day Forecast");
+            spinnerList.add("> Select");
 
             View linearLayout =  findViewById(R.id.linearSpinner);
             Spinner spinner = new Spinner(getApplicationContext());
-            spinner.setDropDownWidth(200);
+            spinner.setDropDownWidth(300);
 //            spinner.setMinimumWidth(100);
             spinner.setBackgroundColor(0);
 //            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
@@ -305,13 +309,13 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         @Override
         protected String doInBackground(String... strings) {
             RequestQueue queue = Volley.newRequestQueue(CitySummary.this);
+
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, strings[0], null, response -> {
                 boolean isExists = false;
 
                 try {
                     JSONArray prices = response.getJSONArray("prices");
                     int itemId;
-                    int position = 0;
                     double tempPrice;
                     String currencyCode;
                     String itemName;
@@ -362,6 +366,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         protected void onSuccess(int position) {
 
             TableLayout tableLayout1 = findViewById(R.id.city_summary_table); // here we grab the tablelayout
+
             TableRow tableRow = new TableRow(CitySummary.this); // making a row
             TextView textView = new TextView(CitySummary.this); // making the text for that row
 
@@ -369,10 +374,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             textView.setWidth(1000);
             textView.setHeight(100);
             textView.setGravity(Gravity.START);
+            textView.setPadding(0,0,5,5);
 
-            // this does not work yet :(
-            if (position % 2 == 0) {
-                textView.setBackgroundColor(0xFF00FF00);
+            if (position % 2 != 0) {
+                textView.setBackgroundColor(ContextCompat.getColor(textView.getContext(),
+                        R.color.extra_light_sand));
             }
 
             tableRow.addView(textView); // adding the text to the row
