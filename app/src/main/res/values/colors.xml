@@ -20,4 +20,6 @@
 
     <color name="sand">#B9B0A2</color>
     <color name="sand_dark">#726B61</color>
+    <color name="light_sand">#E5E1DD</color>
+    <color name="extra_light_sand">#F0EEEB</color>
 </resources>
