@@ -216,11 +216,11 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             weatherView = findViewById(R.id.weather_view);
 
             ArrayList<String> spinnerList = new ArrayList<>();
-            spinnerList.add("5 Day Forecast");
+            spinnerList.add("> Select");
 
             View linearLayout =  findViewById(R.id.linearSpinner);
             Spinner spinner = new Spinner(getApplicationContext());
-            spinner.setDropDownWidth(200);
+            spinner.setDropDownWidth(300);
 //            spinner.setMinimumWidth(100);
             spinner.setBackgroundColor(0);
 //            spinner.setBackgroundTintMode(PorterDuff.Mode.DARKEN);
@@ -375,11 +375,9 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
             textView.setWidth(1000);
             textView.setHeight(100);
             textView.setGravity(Gravity.START);
+            textView.setPadding(0,0,5,5);
 
-            if (position % 2 == 0) {
-                textView.setBackgroundColor(ContextCompat.getColor(textView.getContext(),
-                        R.color.light_sand));
-            } else {
+            if (position % 2 != 0) {
                 textView.setBackgroundColor(ContextCompat.getColor(textView.getContext(),
                         R.color.extra_light_sand));
             }
