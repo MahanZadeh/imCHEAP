@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -134,7 +135,10 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
     public void chooseWeather(String desc, String dayTemp) {
 
-        String tempText = "Temp: " + dayTemp + "\u2109";
+        double tempCelsius = Double.parseDouble(dayTemp) - 273.15;
+        DecimalFormat value = new DecimalFormat("#.#");
+
+        String tempText = "Temp: " + value.format(tempCelsius) + "\u2103";
         temp.setText(tempText);
         if (desc.contains("clouds")) {
             sun.setVisibility(View.GONE);
