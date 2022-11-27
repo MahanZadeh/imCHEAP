@@ -26,7 +26,7 @@ public class LandingPage extends AppCompatActivity{
         handler.postDelayed(() -> {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new SearchFragment())
-                    .commit();
+                    .commitAllowingStateLoss();
             progressBar.setVisibility(View.GONE);
         }, 2000);
 
