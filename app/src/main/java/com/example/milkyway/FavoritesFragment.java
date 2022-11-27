@@ -106,17 +106,13 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
             bundle.putString("countryName", countryArray.get(position));
             bundle.putString("cityName", cityArray.get(position));
 
-            Intent intent = new Intent(getActivity(), CitySummary.class);
-            intent.putExtra("bundle", bundle);
-            startActivity(intent);
-
-//            Fragment citySummaryFragment = new CitySummaryFragment();
-//            citySummaryFragment.setArguments(bundle);
-//            getParentFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragment_container, citySummaryFragment)
-//                    .addToBackStack("tag")
-//                    .commit();
+            Fragment citySummaryFragment = new CitySummaryFragment();
+            citySummaryFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, citySummaryFragment)
+                    .addToBackStack("tag")
+                    .commit();
         }
     }
 
