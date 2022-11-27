@@ -59,9 +59,6 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     TextView temp;
     ArrayList<String> descriptionList = new ArrayList<>();
 
-    private final String url = "https://api.openweathermap.org/data/2.5/forecast";
-    private final String appid = "fa211ad253385ab5e5f303af6dfebb44";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -78,6 +75,8 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
         StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
         cityNameView.setText(cityNameSb);
         String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
+        String url = "https://api.openweathermap.org/data/2.5/forecast";
+        String appid = "fa211ad253385ab5e5f303af6dfebb44";
         tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
         AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
         runnerWeather.execute(tempUrl);

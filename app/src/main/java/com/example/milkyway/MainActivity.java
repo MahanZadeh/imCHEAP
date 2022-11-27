@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int SPLASH_SCREEN_TIMEOUT = 2500;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         fadOut.setDuration(2000);
         ImageView image = findViewById(R.id.imageView2);
         image.setAnimation(fadOut);
+        int SPLASH_SCREEN_TIMEOUT = 2500;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
