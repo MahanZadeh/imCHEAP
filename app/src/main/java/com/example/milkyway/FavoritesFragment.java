@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -110,7 +111,7 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
             citySummaryFragment.setArguments(bundle);
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, citySummaryFragment)
+                    .replace(R.id.profileFrame, citySummaryFragment)
                     .addToBackStack("tag")
                     .commit();
         }
