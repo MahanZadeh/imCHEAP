@@ -111,16 +111,15 @@
                         android:textColor="@color/black"/>
                 </TableRow>
 
-                <TableRow android:layout_width="259dp">
-
+                <TableRow android:layout_width="50dp">
                     <LinearLayout
                         android:id="@+id/linearSpinner"
-                        android:layout_width="256dp"
+                        android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginEnd="40dp"
                         android:orientation="vertical"
                         android:background="@color/extra_light_sand" />
-
                 </TableRow>
 
                 <TableRow>
