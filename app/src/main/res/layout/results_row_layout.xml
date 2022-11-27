@@ -70,7 +70,7 @@
 
         <Button
             android:id="@+id/favoriteButton"
-            android:layout_width="65dp"
+            android:layout_width="75dp"
             android:layout_height="33dp"
             android:layout_marginStart="192dp"
             android:text="@string/favoriteButton"

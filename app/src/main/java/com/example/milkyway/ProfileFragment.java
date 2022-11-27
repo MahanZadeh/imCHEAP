@@ -1,8 +1,6 @@
 package com.example.milkyway;
 
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class ProfileFragment extends Fragment {
-
-    //private MenuItem logout;
-    private Button logout;
-    private FirebaseUser user;
-    private DatabaseReference reference;
-    private String userID;
 
     public static ProfileFragment newInstance() {
         return new ProfileFragment();
@@ -71,21 +62,20 @@ public class ProfileFragment extends Fragment {
             ft.addToBackStack("name"); // name can be null
             ft.commit();
         });
-        logout = requireView().findViewById(R.id.logout);
+        Button logout = requireView().findViewById(R.id.logout);
         logout.setOnClickListener(nextView -> {
-            FirebaseAuth.getInstance().signOut();;
+            FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(requireActivity().getApplicationContext(),
                     LoginActivity.class));
         });
 
-        // BELOW IS MAHAN
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        userID = user.getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+        assert user != null;
+        String userID = user.getUid();
 
         final TextView nameView = requireView().findViewById(R.id.userName);
-//        final TextView emailView = getView().findViewById(R.id.userEmail);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -94,10 +84,9 @@ public class ProfileFragment extends Fragment {
 
                 if(userProfile != null){
                     String name = userProfile.name;
-                    String email = userProfile.email;
+//                    String email = userProfile.email;
                     String profileTitle = "Hello " + name;
                     nameView.setText(profileTitle);
-//                    emailView.setText(email);
                 }
             }
 
