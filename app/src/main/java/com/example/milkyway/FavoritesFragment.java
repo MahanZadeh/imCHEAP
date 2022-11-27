@@ -1,7 +1,6 @@
 package com.example.milkyway;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,20 +41,24 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Fav");
-        assert user != null;
-        userID = user.getUid();
+
+        if (user != null) {
+            userID = user.getUid();
+            userFavData = FirebaseDatabase.getInstance().getReference("Fav").child(userID);
+        } else {
+            Toast.makeText(requireActivity().getApplicationContext(),
+                    "Failed to retrieve user data!", Toast.LENGTH_SHORT).show();
+        }
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorites, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView2);
-
-        userFavData = FirebaseDatabase.getInstance().getReference("Fav").child(userID);
 
         String flagUrl = "https://countryflagsapi.com/png/";
 
@@ -81,11 +84,16 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
                 costArray.clear();
                 for (DataSnapshot singleNode: snapshot.getChildren()) {
                     FavInfo favInfo = singleNode.getValue(FavInfo.class);
-                    assert favInfo != null;
-                    keyArray.add(favInfo.key);
-                    cityArray.add(favInfo.city);
-                    countryArray.add(favInfo.country);
-                    costArray.add(favInfo.cost);
+                    if (favInfo != null) {
+                        keyArray.add(favInfo.key);
+                        cityArray.add(favInfo.city);
+                        countryArray.add(favInfo.country);
+                        costArray.add(favInfo.cost);
+                    } else {
+                        Toast.makeText(requireActivity().getApplicationContext(),
+                                "Failed to retrieve user favorites info!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
                 favoritesRecyclerViewAdapter.notifyDataSetChanged();
             }
