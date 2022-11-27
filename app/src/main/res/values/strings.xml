@@ -2,13 +2,8 @@
     <string name="app_name">MilkyWay</string>
     <string name="search">SEARCH</string>
     <string name="search_btn">To Search Page</string>
-    <string name="select_your_interests">Select an interest:</string>
-    <string name="beer">Bottle of Beer</string>
+    <string name="select_your_interest">Select an interest:</string>
     <string name="choose_a_country">Choose a country</string>
-    <string name="gasoline">Gasoline, 1 liter</string>
-    <string name="cappuccino">Cappuccino</string>
-    <string name="taxi">Taxi, price for 1 hour Waiting</string>
-    <string name="restaurant">Meal in inexpensive restaurant</string>
 
 
     <string name="resultsTitle">Search Results for a Country</string>
@@ -18,32 +13,25 @@
     <string name="resultsBack">Back to Search</string>
     <string name="favoriteButton">Save</string>
 
-    <string-array name="cities">
-        <item>Bakersfield, California</item>
-        <item>New York, New York</item>
-        <item>Los Angeles, California</item>
-        <item>Dallas, Texas</item>
-        <item>Mobile, Alabama</item>
-        <item>Des Moines, Iowa</item>
-        <item>Miami, Florida</item>
-        <item>Spokane, Washington</item>
-        <item>Chicago, Illinois</item>
-        <item>Boulder, Colorado</item>
-        <item>Kansas City, Missouri</item>
-    </string-array>
-
-    <string-array name="costs">
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
-        <item>Beer: $5, Jeans: $10, Bike: $100</item>
+    <string-array name="search_options">
+        <item>Bottle of Beer</item>
+        <item>Bottle/Can of Coca-Cola</item>
+        <item>Bottle of Water</item>
+        <item>Bottle of Wine</item>
+        <item>Cappuccino</item>
+        <item>Cinema ticket, 1 Seat</item>
+        <item>Eggs, 12 pack</item>
+        <item>Gasoline, 1 liter</item>
+        <item>Loaf of Fresh White Bread</item>
+        <item>Local Cheese</item>
+        <item>McMeal at McDonalds or Alternative Combo Meal</item>
+        <item>Meal in inexpensive restaurant</item>
+        <item>Rent for one bedroom apartment in city centre</item>
+        <item>One-way Ticket, Local Transport</item>
+        <item>Pack of Cigarettes</item>
+        <item>Pair of Jeans</item>
+        <item>Prepaid Mobile, price per 1 min, No Discounts or Plans</item>
+        <item>Taxi, price for 1 hour Waiting</item>
     </string-array>
 
     <string name="profile">Profile</string>
