@@ -1,6 +1,5 @@
 package com.example.milkyway;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,14 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPassword extends AppCompatActivity {
 
     private EditText emailEditText;
-    private Button resetPasswordButton;
     FirebaseAuth auth;
 
     @Override
@@ -26,13 +22,11 @@ public class ForgotPassword extends AppCompatActivity {
         setContentView(R.layout.activity_forgot_password);
 
         emailEditText = findViewById(R.id.emailForgotPassword);
-        resetPasswordButton = findViewById(R.id.resetPassword);
+        Button resetPasswordButton = findViewById(R.id.resetPassword);
 
         auth = FirebaseAuth.getInstance();
 
-        resetPasswordButton.setOnClickListener(view -> {
-            resetPassword();
-        });
+        resetPasswordButton.setOnClickListener(view -> resetPassword());
 
 
     }
@@ -52,15 +46,12 @@ public class ForgotPassword extends AppCompatActivity {
             return;
         }
 
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(ForgotPassword.this, "Check your email to reset your password", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                }else {
-                    Toast.makeText(ForgotPassword.this, "Try again!", Toast.LENGTH_SHORT).show();
-                }
+        auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                Toast.makeText(ForgotPassword.this, "Check your email to reset your password", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            }else {
+                Toast.makeText(ForgotPassword.this, "Try again!", Toast.LENGTH_SHORT).show();
             }
         });
 
