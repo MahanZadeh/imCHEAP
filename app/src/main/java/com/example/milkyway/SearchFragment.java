@@ -115,13 +115,37 @@ public class SearchFragment extends Fragment {
         switch (optionText) {
             case "Bottle of Beer":
                 return "Beer";
+            case "Bottle/Can of Coca-Cola":
+                return "Coca-Cola";
+            case "Bottle of Water":
+                return "Water";
+            case "Bottle of Wine":
+                return "Wine";
+            case "Cinema ticket, 1 Seat":
+                return "Cinema";
+            case "Eggs, 12 pack":
+                return "Eggs";
+            case "Loaf of Fresh White Bread":
+                return "Loaf";
+            case "McMeal at McDonalds or Alternative Combo Meal":
+                return "McMeal";
+            case "Local Cheese":
             case "Gasoline, 1 liter":
             case "Cappuccino":
+            case "One-way Ticket, Local Transport":
                 return optionText;
             case "Taxi, price for 1 hour Waiting":
                 return "Taxi";
             case "Meal in inexpensive restaurant":
                 return "Meal in Inexpensive Restaurant";
+            case "Rent for one bedroom apartment in city centre":
+                return "One bedroom apartment in city centre";
+            case "Pack of Cigarettes":
+                return "Cigarettes";
+            case "Pair of Jeans":
+                return "Jeans";
+            case "Prepaid Mobile, price per 1 min, No Discounts or Plans":
+                return "Prepaid Mobile";
             default:
                 return null;
         }
