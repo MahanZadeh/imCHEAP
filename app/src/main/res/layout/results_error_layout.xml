@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/errorLayout"
     android:layout_width="match_parent"
     android:layout_height="600dp"
     android:layout_margin="10dp">
@@ -9,7 +10,8 @@
     <TextView
         android:id="@+id/cost"
         android:layout_width="193dp"
-        android:layout_height="32dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="70dp"
         android:width="280dp"
         android:gravity="center"
         android:paddingHorizontal="0dp"
@@ -17,18 +19,18 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.369" />
+        app:layout_constraintVertical_bias="0.394" />
 
     <TextView
         android:id="@+id/city"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="254dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="70dp"
         android:layout_marginTop="168dp"
         android:gravity="center"
-        android:paddingHorizontal="0dp"
         android:text="@string/city"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"

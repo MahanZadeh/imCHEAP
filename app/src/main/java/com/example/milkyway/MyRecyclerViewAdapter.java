@@ -76,7 +76,9 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             image = itemView.findViewById(R.id.imageView);
             button = itemView.findViewById(R.id.favoriteButton);
             itemView.setOnClickListener(this);
-//            image.setOnClickListener(this);
+            if (image != null) {
+                image.setOnClickListener(this);
+            }
             if (button != null) {
                 button.setOnClickListener(this);
             }
