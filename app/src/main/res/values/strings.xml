@@ -67,6 +67,7 @@
     <string name="select_to_view_5_day_forecast">Select to View 5 Day Forecast</string>
     <string name="fun_facts_loading_message">Loading some fun facts…</string>
     <string name="login_message">Logging you in…</string>
+    <string name="facts_failure_message">No facts found this time.\nTry again or check out another city!</string>
 
 
 </resources>

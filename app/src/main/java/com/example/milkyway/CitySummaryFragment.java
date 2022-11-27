@@ -71,7 +71,8 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
     int count = 0;
     int maxPriceCalls = 10;
 
-    RelativeLayout relativeLayout;
+    RelativeLayout factsLoadingLayout;
+    RelativeLayout factsFailureLayout;
 
     public CitySummaryFragment() {
         // Required empty public constructor
@@ -97,7 +98,9 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                     + cityName + "&country_name=" + countryName;
 
-            relativeLayout = requireView().findViewById(R.id.loadingFunFacts);
+            factsLoadingLayout = requireView().findViewById(R.id.loadingFunFacts);
+            tableLayout1 = requireView().findViewById(R.id.city_summary_table);
+            factsFailureLayout = requireView().findViewById(R.id.factsLoadFailure);
 
             TextView cityNameView = requireView().findViewById(R.id.summary_city_name);
             StringBuilder cityNameSb = new StringBuilder("City Highlight of " + cityName);
@@ -180,7 +183,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             cloud2.startAnimation(cloud2Anim);
             weatherView.setWeatherData(PrecipType.RAIN);
 
-        }else if (desc.contains("clear")) {
+        } else if (desc.contains("clear")) {
             cloud1.setVisibility(View.GONE);
             cloud2.setVisibility(View.GONE);
             cloud3.setVisibility(View.GONE);
@@ -200,7 +203,6 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             cloud2.startAnimation(cloud2Anim);
             weatherView.setWeatherData(PrecipType.SNOW);
         }
-
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -213,7 +215,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            relativeLayout.setVisibility(View.VISIBLE);
+            factsLoadingLayout.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -242,14 +244,23 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
-            }, error -> Toast.makeText(requireActivity().getApplicationContext(), error.toString(),
-                    Toast.LENGTH_SHORT).show());
+            }, error -> onFailure());
             queue.add(request);
             return null;
         }
 
+        protected void onFailure() {
+            Toast.makeText(requireActivity().getApplicationContext(),
+                    "Could not retrieve weather data for this city",
+                    Toast.LENGTH_SHORT).show();
+            String tempText = temp.getText().toString();
+            if (tempText.equals("Temp: ")) {
+                tempText = tempText + "N/A";
+                temp.setText(tempText);
+            }
+        }
+
         protected void onSuccess() throws ParseException {
-//            int[] buttonViews = {R.id.date1, R.id.date2, R.id.date3, R.id.date4, R.id.date5, R.id.date6};
             Locale currentLocale = Locale.getDefault();
             weatherView = requireView().findViewById(R.id.weather_view);
 
@@ -390,10 +401,14 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
                             break;
                         }
                     }
-                    if (isExists) {
+                    if (isExists || (((count + 1) == maxPriceCalls) && maxPriceCalls != 0)) {
                         onSuccess(position);
                     } else {
                         maxPriceCalls--;
+                    }
+                    if (maxPriceCalls == 0) {
+                        factsLoadingLayout.setVisibility(View.INVISIBLE);
+                        factsFailureLayout.setVisibility(View.VISIBLE);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -416,8 +431,6 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
 
         protected void onSuccess(int position) {
 
-            tableLayout1 = requireView().findViewById(R.id.city_summary_table); // here we grab the tablelayout
-
             TableRow tableRow = new TableRow(requireActivity().getApplicationContext()); // making a row
             TextView textView = new TextView(requireActivity().getApplicationContext()); // making the text for that row
 
@@ -438,11 +451,10 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             tableLayout1.setForegroundGravity(Gravity.CENTER);
             count++;
             if (count == maxPriceCalls) {
-                relativeLayout.setVisibility(View.INVISIBLE);
+                factsLoadingLayout.setVisibility(View.INVISIBLE);
                 tableLayout1.setVisibility(View.VISIBLE);
             }
         }
     }
-
 }
 
