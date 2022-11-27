@@ -53,6 +53,7 @@ public class SearchFragment extends Fragment {
     private int totalCount = 10;
     private final Random random = new Random();
     private String searchChoice;
+    private boolean noLineBreak = false;
     private final ArrayList<String> citiesList = new ArrayList<>();
     private final HashMap<List<String>, Double> cityInfo = new HashMap<>();
 
@@ -127,6 +128,7 @@ public class SearchFragment extends Fragment {
             case "Loaf of Fresh White Bread":
                 return "Loaf";
             case "McMeal at McDonalds or Alternative Combo Meal":
+                noLineBreak = true;
                 return "McMeal";
             case "Local Cheese":
             case "Gasoline, 1 liter":
@@ -144,6 +146,7 @@ public class SearchFragment extends Fragment {
             case "Pair of Jeans":
                 return "Jeans";
             case "Prepaid Mobile, price per 1 min, No Discounts or Plans":
+                noLineBreak = true;
                 return "Prepaid Mobile";
             default:
                 return null;
@@ -344,7 +347,8 @@ public class SearchFragment extends Fragment {
                     sortedCities.add(cityName);
                     String itemName = key.get(1);
                     String cCode = key.get(2);
-                    String fullDescription = itemName + ", \nPrice: " + cityInfo.get(key)
+                    String formattedPrice = (noLineBreak) ? ", Price: " : ", \nPrice: ";
+                    String fullDescription = itemName + formattedPrice + cityInfo.get(key)
                             + " " + cCode;
                     costsDescription.add(fullDescription);
                 }
