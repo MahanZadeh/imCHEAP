@@ -180,7 +180,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
     }
 
     @SuppressLint("StaticFieldLeak")
-    private class AsyncTaskRunnerWeather extends AsyncTask<String, Void, String> {
+    class AsyncTaskRunnerWeather extends AsyncTask<String, Void, String> {
 
         AsyncTaskRunnerWeather() {
             super();
@@ -315,7 +315,7 @@ public class CitySummary extends AppCompatActivity implements AdapterView.OnItem
 
 
     @SuppressLint("StaticFieldLeak")
-    private class AsyncTaskRunner extends AsyncTask<String, Void, String> {
+    class AsyncTaskRunner extends AsyncTask<String, Void, String> {
 
         AsyncTaskRunner() {
             super();

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/road_trip"
     android:orientation="vertical"
-    tools:context=".SearchFragment"
-    android:background="@drawable/road_trip">
+    tools:context=".SearchFragment">
 
     <LinearLayout
         android:id="@+id/loadingScreen"
@@ -17,20 +17,20 @@
 
         <ProgressBar
             android:id="@+id/progressBarRegister"
-            android:indeterminateTint="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@android:color/white"
             android:visibility="visible" />
 
         <TextView
             android:id="@+id/loadingMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/load_message"
             android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:text="@string/load_message"
             android:textColor="@color/white"
-            android:textSize="30sp"
-            android:gravity="center_horizontal"/>
+            android:textSize="30sp" />
     </LinearLayout>
 
 
@@ -40,21 +40,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="start"
+        android:paddingStart="30dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/choose_a_country"
         android:textColor="@color/white"
-        android:textSize="30sp"
-        android:paddingStart="30dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="20dp"
-        />
+        android:textSize="30sp" />
 
     <Spinner
-    android:id="@+id/nationality_spinner"
-    android:layout_width="190dp"
-    android:layout_height="48dp"
-    android:gravity="start"
-    android:layout_marginTop="10dp"
-    android:layout_marginStart="50dp"/>
+        android:id="@+id/nationality_spinner"
+        android:layout_width="190dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/textViewInterests"
@@ -63,13 +62,12 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         android:gravity="center"
+        android:paddingStart="30dp"
+        android:paddingTop="20dp"
+        android:paddingEnd="5dp"
         android:text="@string/select_your_interest"
         android:textColor="@color/white"
-        android:textSize="30sp"
-        android:paddingTop="20dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="5dp"
-        />
+        android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="350dp"
@@ -83,46 +81,43 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="50dp"
-            android:checkedButton="@+id/radioButton1" >
+            android:checkedButton="@+id/radioButton1">
 
             <RadioButton
-                android:layout_marginBottom="-10dp"
                 android:id="@+id/radioButton1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:layout_marginBottom="-10dp"
                 android:backgroundTint="@color/white"
-                android:textSize="20sp"
-                android:buttonTint="@color/sand"/>
+                android:buttonTint="@color/sand"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
         </RadioGroup>
     </ScrollView>
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_marginTop="40dp"
-    android:orientation="vertical"
-    >
-
-    <Button
-        android:id="@+id/btnSearch"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="62dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="62dp"
-        android:background="@drawable/sand_fill__rounded_color"
-        android:fontFamily="@font/poppins_medium"
+        android:layout_marginTop="40dp"
         android:gravity="center"
-        android:text="@string/search"
-        android:textColor="@color/black"
-        android:textSize="12sp" />
+        android:orientation="vertical">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="62dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="62dp"
+            android:background="@drawable/sand_fill__rounded_color"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="@string/search"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
 
-
+    </LinearLayout>
 
 
 </LinearLayout>

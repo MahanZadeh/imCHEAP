@@ -12,6 +12,8 @@
         <item name="colorOnSecondary">@color/text_on_primary</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/sand_dark</item>
+        <!-- Navigation bar color. -->
+        <item name="android:navigationBarColor">@color/sand_dark</item>
         <!-- Customize your theme here. -->
     </style>
 

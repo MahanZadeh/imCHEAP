@@ -362,6 +362,7 @@ public class SearchFragment extends Fragment {
             getParentFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, resultsFragment)
+                    .addToBackStack("tag")
                     .commit();
         }
     }

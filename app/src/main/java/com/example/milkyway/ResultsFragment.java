@@ -39,7 +39,6 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
         super.onCreate(savedInstanceState);
 
         // Get search results
-        Log.e("COMING FROM SEARCH FRAGMENT TO RESULTS FRAGMENT NOTICE", "NOTICE DEBUG MESSAGE");
         Bundle bundle = this.getArguments();
         if (bundle != null && bundle.getStringArrayList("Sorted Cities") != null) {
             cities = bundle.getStringArrayList("Sorted Cities").toArray(new String[0]);
@@ -94,9 +93,20 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
             Bundle bundle = new Bundle();
             bundle.putString("countryName", countryName);
             bundle.putString("cityName", cities[position]);
-            Intent intent = new Intent(getActivity(), CitySummary.class);
-            intent.putExtra("bundle", bundle);
-            startActivity(intent);
+
+            // //use this for CitySummary.java
+//            Intent intent = new Intent(getActivity(), CitySummary.class);
+//            intent.putExtra("bundle", bundle);
+//            startActivity(intent);
+
+            // //use this for CitySummaryFragment.java
+            Fragment citySummaryFragment = new CitySummaryFragment();
+            citySummaryFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, citySummaryFragment)
+                    .addToBackStack("tag")
+                    .commit();
         }
     }
 
