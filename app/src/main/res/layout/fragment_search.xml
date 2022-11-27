@@ -60,78 +60,48 @@
         android:id="@+id/textViewInterests"
         android:layout_width="354dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:text="@string/select_your_interests"
+        android:text="@string/select_your_interest"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:paddingTop="40dp"
+        android:paddingTop="20dp"
         android:paddingStart="30dp"
         android:paddingEnd="5dp"
         />
 
-    <RadioGroup
-        android:id="@+id/searchRadioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="50dp"
-        android:checkedButton="@+id/radioButton1" >
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="280dp"
+        android:fadeScrollbars="false"
+        android:scrollbarThumbVertical="@android:color/white">
 
-        <RadioButton
-            android:layout_marginTop="10dp"
-            android:id="@+id/radioButton1"
-            android:layout_width="match_parent"
+        <RadioGroup
+            android:id="@+id/searchRadioGroup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/beer"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="20sp"
-            android:buttonTint="@color/sand"/>
+            android:layout_gravity="start"
+            android:layout_marginStart="50dp"
+            android:checkedButton="@+id/radioButton1" >
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/gasoline"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:buttonTint="@color/sand"/>
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/cappuccino"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:buttonTint="@color/sand"/>
-
-        <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/taxi"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:buttonTint="@color/sand"/>
-
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/restaurant"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:buttonTint="@color/sand"/>
-    </RadioGroup>
-
+            <RadioButton
+                android:layout_marginBottom="-10dp"
+                android:id="@+id/radioButton1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
+                android:textSize="20sp"
+                android:buttonTint="@color/sand"/>
+        </RadioGroup>
+    </ScrollView>
 
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="40dp"
     android:orientation="vertical"
     >
 
@@ -141,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="62dp"
-        android:layout_marginTop="18.7dp"
+        android:layout_marginTop="0dp"
         android:layout_marginRight="62dp"
         android:background="@drawable/sand_fill__rounded_color"
         android:fontFamily="@font/poppins_medium"

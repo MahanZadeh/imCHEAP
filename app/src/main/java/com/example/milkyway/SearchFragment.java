@@ -6,8 +6,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +41,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -65,13 +68,34 @@ public class SearchFragment extends Fragment {
                 R.anim.loading_text1);
 
         Spinner spinner = view.findViewById(R.id.nationality_spinner);
-
         setNationalitySpinner(spinner);
+
+        // Create search option checkboxes
+        RadioGroup radioGroup = view.findViewById(R.id.searchRadioGroup);
+        String[] searchOptions = getResources().getStringArray(R.array.search_options);
+        RadioButton rb = view.findViewById(R.id.radioButton1);
+        rb.setText(searchOptions[0]);
+        for (int i = 1; i < searchOptions.length; i++) {
+            RadioButton radioButton = new RadioButton(getContext());
+            radioButton.setId(1 + i);
+            radioButton.setText(searchOptions[i]);
+            int color = ContextCompat.getColor(requireContext(), R.color.white);
+            radioButton.setTextColor(color);
+            radioButton.setBackgroundTintList(requireContext().getColorStateList(R.color.white));
+            radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
+            radioButton.setButtonTintList(requireContext().getColorStateList(R.color.sand));
+            RadioGroup.LayoutParams params = new RadioGroup.LayoutParams(
+                    RadioGroup.LayoutParams.WRAP_CONTENT,
+                    RadioGroup.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(0, 10, 0, 0);
+            radioButton.setLayoutParams(params);
+            radioGroup.addView(radioButton);
+        }
 
         Button toResults = view.findViewById(R.id.btnSearch);
         toResults.setOnClickListener(View -> {
             // Get selected search choice
-            RadioGroup radioGroup = requireView().findViewById(R.id.searchRadioGroup);
             int radioButtonID = radioGroup.getCheckedRadioButtonId();
             RadioButton radioButton = radioGroup.findViewById(radioButtonID);
             String selectedText = (String) radioButton.getText();
@@ -90,12 +114,12 @@ public class SearchFragment extends Fragment {
     public String provideQuery(String optionText) {
         switch (optionText) {
             case "Bottle of Beer":
-                return "Beer"; // needs full query
+                return "Beer";
             case "Gasoline, 1 liter":
             case "Cappuccino":
                 return optionText;
             case "Taxi, price for 1 hour Waiting":
-                return "Taxi"; // needs full query
+                return "Taxi";
             case "Meal in inexpensive restaurant":
                 return "Meal in Inexpensive Restaurant";
             default:
