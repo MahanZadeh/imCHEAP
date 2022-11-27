@@ -170,7 +170,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         String url = "https://api.openweathermap.org/data/2.5/forecast";
         String appid = "fa211ad253385ab5e5f303af6dfebb44";
         tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
-        CitySummaryFragment.AsyncTaskRunner runnerWeather = new CitySummaryFragment.AsyncTaskRunner();
+        AsyncTaskRunner runnerWeather = new AsyncTaskRunner();
         runnerWeather.execute(tempUrl);
 
         ImageView image = getView().findViewById(R.id.cityImage);
@@ -192,7 +192,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
         cloud3 = getView().findViewById(R.id.cloud3);
 
         for (int i = 1; i <= maxPriceCalls; i++) {
-            CitySummaryFragment.AsyncTaskRunner runner = new CitySummaryFragment.AsyncTaskRunner();
+            AsyncTaskRunner runner = new AsyncTaskRunner();
             try {
                 runner.execute(pricesUrl).get();
             } catch (ExecutionException | InterruptedException e) {

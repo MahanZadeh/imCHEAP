@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.w3c.dom.Text;
+
 public class LandingPage extends AppCompatActivity{
     private ProgressBar progressBar;
+    private TextView loggingYouInMessage;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -19,6 +23,7 @@ public class LandingPage extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing_page);
         progressBar = findViewById(R.id.progressBar);
+        loggingYouInMessage = findViewById(R.id.loggingYouIn);
         progressBar.setVisibility(View.VISIBLE);
 
 
@@ -28,6 +33,7 @@ public class LandingPage extends AppCompatActivity{
                     .replace(R.id.fragment_container, new SearchFragment())
                     .commitAllowingStateLoss();
             progressBar.setVisibility(View.GONE);
+            loggingYouInMessage.setVisibility(View.GONE);
         }, 2000);
 
         BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation);
