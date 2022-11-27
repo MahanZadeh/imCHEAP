@@ -422,7 +422,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             TextView textView = new TextView(requireActivity().getApplicationContext()); // making the text for that row
 
             textView.setText(itemPrice);
-            textView.setWidth(1000);
+            textView.setWidth(900);
             textView.setHeight(100);
             textView.setGravity(Gravity.START);
             textView.setPadding(0,0,5,5);
