@@ -36,7 +36,6 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        //setHasOptionsMenu(true);
 
         // Change fragment when favorites button is clicked
         Button btn_favorites = requireView().findViewById(R.id.btn_favorites);

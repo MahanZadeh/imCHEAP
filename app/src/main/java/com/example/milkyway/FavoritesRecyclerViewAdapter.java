@@ -16,9 +16,13 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<FavoritesRecyclerViewAdapter.MyViewHolder> {
-    Context c;
-    ArrayList<String> keys, countries, cities, costs;
-    String url;
+
+    private final Context c;
+    private final ArrayList<String> keys;
+    private final ArrayList<String> countries;
+    private final ArrayList<String> cities;
+    private final ArrayList<String> costs;
+    private final String url;
     private FavoritesItemClickListener clickListener;
 
     public FavoritesRecyclerViewAdapter(Context c,ArrayList<String> keys,
@@ -52,7 +56,6 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
                 .error(R.drawable.image_not_found)
                 .into(holder.image);
         holder.hiddenInfoKey.setText(keys.get(position));
-//        holder.hiddenInfoKey.setVisibility(View.GONE);
     }
 
 
@@ -67,22 +70,23 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView text1, text2, hiddenInfoKey;
-        ImageView image;
-        Button button;
+        private final TextView text1;
+        private final TextView text2;
+        private final TextView hiddenInfoKey;
+        private final ImageView image;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             text1 = itemView.findViewById(R.id.cityFav);
             text2 = itemView.findViewById(R.id.costFav);
             image = itemView.findViewById(R.id.imageViewFav);
-            button = itemView.findViewById(R.id.deleteButton);
+            Button button = itemView.findViewById(R.id.deleteButton);
             hiddenInfoKey = itemView.findViewById(R.id.hiddenInfoKey);
 
             itemView.setOnClickListener(this);
             image.setOnClickListener(this);
             button.setOnClickListener(this);
         }
-
 
         @Override
         public void onClick(View view) {
