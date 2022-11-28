@@ -55,7 +55,8 @@
                 android:paddingBottom="15dp"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="12sp"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:imeOptions="actionNext" />
 
             <!-- ICON -->
             <ImageView
@@ -96,7 +97,8 @@
                 android:paddingBottom="15dp"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="12sp"
-                android:autofillHints="" />
+                android:autofillHints=""
+                android:imeOptions="actionNext"/>
 
             <!-- ICON -->
             <ImageView
