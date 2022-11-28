@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (user != null) {
                         if (user.isEmailVerified()) {
                             //redirect to user profile
-                            progressBar.setVisibility(View.GONE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
+                            progressBar.setVisibility(View.INVISIBLE); //added here so that when they go back to login page, the progress bar no longer spins indefinitely
                             Intent intent = new Intent(getApplicationContext(), LandingPage.class);
                             startActivity(intent);
                         } else {
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(),
                                     "Check your email to verify your account!",
                                     Toast.LENGTH_SHORT).show();
-                            progressBar.setVisibility(View.GONE);
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                     } else {
                         Toast.makeText(getApplicationContext(),
