@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgotPassword extends AppCompatActivity {
 
     private EditText emailEditText;
-    FirebaseAuth auth;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,6 @@ public class ForgotPassword extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         resetPasswordButton.setOnClickListener(view -> resetPassword());
-
-
     }
 
     private void resetPassword(){
@@ -56,6 +54,5 @@ public class ForgotPassword extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

@@ -11,7 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LandingPage extends AppCompatActivity{
+public class LandingPage extends AppCompatActivity {
+
     private ProgressBar progressBar;
     private TextView loggingYouInMessage;
 
@@ -35,7 +36,6 @@ public class LandingPage extends AppCompatActivity{
         }, 2000);
 
         BottomNavigationView bottomNavigationView= findViewById(R.id.bottom_navigation);
-
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;

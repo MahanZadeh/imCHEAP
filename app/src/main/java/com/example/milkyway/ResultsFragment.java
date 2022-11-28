@@ -59,11 +59,11 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
         String flagUrl = "https://countryflagsapi.com/png/";
         String url = flagUrl + countryName;
-        MyRecyclerViewAdapter myRecyclerViewAdapter = new MyRecyclerViewAdapter(getActivity(),
+        ResultsRecyclerViewAdapter resultsRecyclerViewAdapter = new ResultsRecyclerViewAdapter(getActivity(),
             cities, costs, url);
-        myRecyclerViewAdapter.setClickListener(this);
+        resultsRecyclerViewAdapter.setClickListener(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        recyclerView.setAdapter(myRecyclerViewAdapter);
+        recyclerView.setAdapter(resultsRecyclerViewAdapter);
 
         return view;
     }

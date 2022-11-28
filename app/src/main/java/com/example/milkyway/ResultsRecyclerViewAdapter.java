@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.MyViewHolder> {
+public class ResultsRecyclerViewAdapter extends RecyclerView.Adapter<ResultsRecyclerViewAdapter.MyViewHolder> {
 
-    Context c;
-    String[] cities, costs;
-    String url;
+    private final Context c;
+    private final String[] cities;
+    private final String[] costs;
+    private final String url;
     private ResultsItemClickListener clickListener;
 
-    public MyRecyclerViewAdapter(Context c, String[] cities, String[] costs, String url) {
+    public ResultsRecyclerViewAdapter(Context c, String[] cities, String[] costs, String url) {
         this.c = c;
         this.cities = cities;
         this.costs = costs;
@@ -66,15 +67,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView text1, text2;
-        ImageView image;
-        Button button;
+        private final TextView text1;
+        private final TextView text2;
+        private final ImageView image;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             text1 = itemView.findViewById(R.id.city);
             text2 = itemView.findViewById(R.id.cost);
             image = itemView.findViewById(R.id.imageView);
-            button = itemView.findViewById(R.id.favoriteButton);
+            Button button = itemView.findViewById(R.id.favoriteButton);
             itemView.setOnClickListener(this);
             if (image != null) {
                 image.setOnClickListener(this);

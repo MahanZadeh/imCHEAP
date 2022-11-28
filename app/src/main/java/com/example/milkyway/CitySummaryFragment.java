@@ -78,21 +78,19 @@ import java.util.Set;
 
 public class CitySummaryFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    String pricesUrl;
-    Animation sunAnim,cloud1Anim,cloud2Anim, cloud3Anim;
-    ImageView sun,cloud1,cloud2, cloud3;
-    Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
-    WeatherView weatherView;
-    String tempUrl;
-    TextView temp;
-    ArrayList<String> descriptionList = new ArrayList<>();
-    int position = 0;
-    TableLayout tableLayout1;
-    int count = 0;
-    int maxPriceCalls = 10;
+    private Animation sunAnim,cloud1Anim,cloud2Anim, cloud3Anim;
+    private ImageView sun,cloud1,cloud2, cloud3;
+    private final Map<String, ArrayList<String>> fiveDaysWeather = new LinkedHashMap<>();
+    private WeatherView weatherView;
+    private TextView temp;
+    private final ArrayList<String> descriptionList = new ArrayList<>();
+    private int position = 0;
+    private TableLayout tableLayout1;
+    private int count = 0;
+    private int maxPriceCalls = 10;
 
-    RelativeLayout factsLoadingLayout;
-    RelativeLayout factsFailureLayout;
+    private RelativeLayout factsLoadingLayout;
+    private RelativeLayout factsFailureLayout;
 
     public CitySummaryFragment() {
         // Required empty public constructor
@@ -115,7 +113,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             String countryName = bundle.getString("countryName");
             String cityName = bundle.getString("cityName");
 
-            pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
+            String pricesUrl = "https://cost-of-living-and-prices.p.rapidapi.com/prices?city_name="
                     + cityName + "&country_name=" + countryName;
 
             factsLoadingLayout = requireView().findViewById(R.id.loadingFunFacts);
@@ -128,7 +126,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             String lowerCaseCityName = cityName.toLowerCase(Locale.ROOT);
             String url = "https://api.openweathermap.org/data/2.5/forecast";
             String appid = "fa211ad253385ab5e5f303af6dfebb44";
-            tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
+            String tempUrl = url + "?q=" + lowerCaseCityName + "&appid=" + appid;
             AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
             runnerWeather.execute(tempUrl);
 
@@ -382,7 +380,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             super();
         }
 
-        String itemPrice;
+        private String itemPrice;
 
         @Override
         protected String doInBackground(String... strings) {

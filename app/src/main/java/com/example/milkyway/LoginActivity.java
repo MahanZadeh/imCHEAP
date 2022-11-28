@@ -39,14 +39,8 @@ public class LoginActivity extends AppCompatActivity {
         logIn.setOnClickListener(view -> userLogin());
 
         editTextEmail = findViewById(R.id.editTextEmail);
-        editTextEmail.setOnClickListener(view -> {
-
-        });
 
         editTextPassword = findViewById(R.id.editTextPassword);
-        editTextPassword.setOnClickListener(view -> {
-
-        });
 
         progressBar = findViewById(R.id.progressBar);
 
