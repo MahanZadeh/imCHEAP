@@ -56,6 +56,26 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Set;
 
+//The code for part of the weather (rain and snow) animation is from:
+
+//Copyright 2019 Matteo Battilana
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//	http://www.apache.org/licenses/LICENSE-2.0
+//
+//Unless required by applicable law or agreed to in writing, software
+//distributed under the License is distributed on an "AS IS" BASIS,
+//WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//See the License for the specific language governing permissions and
+//limitations under the License.
+
+//The starting code for part of the weather (sun and clouds) transition animation is from:
+//
+//https://m-ify-education.blogspot.com/2022/02/android-studio-sun-and-clouds-splash.html
+
 public class CitySummaryFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     String pricesUrl;
