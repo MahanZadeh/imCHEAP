@@ -42,22 +42,14 @@ public class ProfileFragment extends Fragment {
         Button btn_favorites = requireView().findViewById(R.id.btn_favorites);
         btn_favorites.setOnClickListener(nextView -> {
             FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            Fragment favs = new FavoritesFragment();
-            ft.replace(R.id.profileFragmentContainerView, favs);
+            Fragment favorites = new FavoritesFragment();
+            ft.replace(R.id.profileFragmentContainerView, favorites);
             ft.setReorderingAllowed(true);
             ft.addToBackStack("name"); // name can be null
             ft.commit();
         });
 
-        // Change fragment when history button is clicked
-        Button btn_history = requireView().findViewById(R.id.btn_history);
-        btn_history.setOnClickListener(nextView -> {
-            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
-            ft.replace(R.id.profileFragmentContainerView, HistoryFragment.class, null);
-            ft.setReorderingAllowed(true);
-            ft.addToBackStack("name"); // name can be null
-            ft.commit();
-        });
+        // Log out button
         Button logout = requireView().findViewById(R.id.logout);
         logout.setOnClickListener(nextView -> {
             FirebaseAuth.getInstance().signOut();
