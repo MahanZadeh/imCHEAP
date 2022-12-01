@@ -50,7 +50,7 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
         holder.text1.setText(cities.get(position));
         holder.text2.setText(costs.get(position));
         String country = countries.get(position).toLowerCase(Locale.ROOT);
-        country = country.substring(0, 1).toUpperCase() + country.substring(1);
+        country = FlagApi.capitalizeWords(country);
         String code = FlagApi.country_code_lookup(country);
         String flagUrl = url + code + ".png";
         Picasso.get()

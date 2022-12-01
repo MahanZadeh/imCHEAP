@@ -132,7 +132,7 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
 
             String flagUrl = "https://flagcdn.com/w640/";
             String country = countryName.toLowerCase(Locale.ROOT);
-            country = country.substring(0, 1).toUpperCase() + country.substring(1);
+            country = FlagApi.capitalizeWords(country);
             String code = FlagApi.country_code_lookup(country);
             flagUrl = flagUrl + code + ".png";
 
