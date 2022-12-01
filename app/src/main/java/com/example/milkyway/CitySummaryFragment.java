@@ -130,9 +130,15 @@ public class CitySummaryFragment extends Fragment implements AdapterView.OnItemS
             AsyncTaskRunnerWeather runnerWeather = new AsyncTaskRunnerWeather();
             runnerWeather.execute(tempUrl);
 
+            String flagUrl = "https://flagcdn.com/w640/";
+            String country = countryName.toLowerCase(Locale.ROOT);
+            country = country.substring(0, 1).toUpperCase() + country.substring(1);
+            String code = FlagApi.country_code_lookup(country);
+            flagUrl = flagUrl + code + ".png";
+
             ImageView image = requireView().findViewById(R.id.cityImage);
             Picasso.get()
-                    .load("https://countryflagsapi.com/png/" + countryName)
+                    .load(flagUrl)
                     .resize(600, 400) // resizes the image to these dimensions (in pixel)
                     .centerCrop()
                     .placeholder(R.drawable.placeholder)

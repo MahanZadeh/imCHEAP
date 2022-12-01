@@ -60,7 +60,7 @@ public class FavoritesFragment extends Fragment implements FavoritesItemClickLis
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView2);
 
-        String flagUrl = "https://countryflagsapi.com/png/";
+        String flagUrl = "https://flagcdn.com/w640/";
 
         favoritesRecyclerViewAdapter = new FavoritesRecyclerViewAdapter(view.getContext(),
                 keyArray, countryArray, cityArray, costArray, flagUrl);

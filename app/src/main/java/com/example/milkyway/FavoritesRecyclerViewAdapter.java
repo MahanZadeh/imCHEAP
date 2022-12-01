@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<FavoritesRecyclerViewAdapter.MyViewHolder> {
 
@@ -48,8 +49,12 @@ public class FavoritesRecyclerViewAdapter extends RecyclerView.Adapter<Favorites
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.text1.setText(cities.get(position));
         holder.text2.setText(costs.get(position));
+        String country = countries.get(position).toLowerCase(Locale.ROOT);
+        country = country.substring(0, 1).toUpperCase() + country.substring(1);
+        String code = FlagApi.country_code_lookup(country);
+        String flagUrl = url + code + ".png";
         Picasso.get()
-                .load(url + countries.get(position))
+                .load(flagUrl)
                 .resize(800, 600) // resizes the image to these dimensions (in pixel)
                 .centerCrop()
                 .placeholder(R.drawable.placeholder)
