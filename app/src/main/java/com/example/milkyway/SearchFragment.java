@@ -127,7 +127,7 @@ public class SearchFragment extends Fragment {
                 return "Eggs";
             case "Loaf of Fresh White Bread":
                 return "Loaf";
-            case "McMeal at McDonalds or Alternative Combo Meal":
+            case "McMeal at McDonald's or Alternative Combo Meal":
                 noLineBreak = true;
                 return "McMeal";
             case "Local Cheese":
