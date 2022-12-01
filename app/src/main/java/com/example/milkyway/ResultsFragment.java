@@ -57,8 +57,11 @@ public class ResultsFragment extends Fragment implements ResultsItemClickListene
 
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
-        String flagUrl = "https://countryflagsapi.com/png/";
-        String url = flagUrl + countryName;
+        String flagUrl = "https://flagcdn.com/w640/";
+        String country = countryName;
+        country = country.substring(0, 1).toUpperCase() + country.substring(1);
+        String code = FlagApi.country_code_lookup(country);
+        String url = flagUrl + code + ".png";
         ResultsRecyclerViewAdapter resultsRecyclerViewAdapter = new ResultsRecyclerViewAdapter(getActivity(),
             cities, costs, url);
         resultsRecyclerViewAdapter.setClickListener(this);
