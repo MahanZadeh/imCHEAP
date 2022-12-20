@@ -3,6 +3,9 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace 'com.example.milkyway'
     compileSdk 32
@@ -13,6 +16,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        buildConfigField "String", "KEY_CITY_PRICE", localProperties['citiesPricesApiKey']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
